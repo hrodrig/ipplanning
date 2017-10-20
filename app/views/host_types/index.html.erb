@@ -1,0 +1,44 @@
+<%= render '/common/header' %>
+<p id="notice"><%= notice %></p>
+
+<h1 class="h2"><%= t('host_types') %> (<%= @host_types.count.to_s %>)</h1>
+
+<% if @host_types.present? %>
+  <table class="table table-condensed table-striped table-hover table-bordered" id="tableofrows">
+    <thead>
+      <tr class="table_tr">
+        <th class="text-center">#</th>
+        <th class="text-center"><%= t('name') %></th>
+        <th class="text-center"><%= t('description') %></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% i = 1 %>
+      <% @host_types.each do |host_type| %>
+        <tr>
+          <td class="text-center"><%= i.to_s %></td>
+          <td>
+            <%= link_to host_type.name, host_type %>
+            <div class="buttongroup">
+              <%= link_to t('edit'), edit_host_type_path(host_type), class: 'btn btn-link' %>
+              <%= link_to t('destroy'), host_type, method: :delete, data: { confirm: t('are_you_sure'), class: 'btn btn-link' } %>
+            </div>
+          </td>
+          <td>
+            <%= host_type.description %>
+          </td>
+        </tr>
+        <% i+= 1 %>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-info">
+    <%= t('not_found_host_types') %>
+  </div>
+<% end %>
+
+<br />
+
+<%= link_to t('add_host_type'), new_host_type_path, class: 'btn btn-primary' %>

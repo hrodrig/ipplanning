@@ -1,0 +1,5 @@
+<ul class="nav nav-tabs">
+  <% @vlans.each do |vlan| %>
+  <li<% if vlan.number == @vlan.number %> class="active"<% end %>><%= link_to vlan.number, vlan_path(vlan) %></li>
+  <% end %>
+</ul>

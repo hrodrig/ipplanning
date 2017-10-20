@@ -1,0 +1,13 @@
+<%= render '/common/header' %>
+<% if notice.present? %><div class="alert alert-info"><%= notice %></div><% end %>
+
+<h1><%= Setting.find_by_name('WebsiteName').value %></h1>
+
+<% @vlans.each do |vlan| %>
+  <% if vlan.ips.count == 0 %>
+    <%= t('not_assigned_ips') %>
+  <% else %>
+    <%= render 'vlan', vlan: vlan %>
+  <% end %>
+  <hr />
+<% end %>

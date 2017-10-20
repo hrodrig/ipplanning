@@ -1,0 +1,14 @@
+<%= render '/common/header' %>
+<h1 class="h2"><%= t('editing_host_type') %></h1>
+<% if notice.present? %><div class="alert alert-info"><%= notice %></div><% end %>
+
+<%= render 'form', host_type: @host_type %>
+
+<%= link_to t('back'), :back, class: 'btn btn-default' %>
+<%= link_to t('vlans'), :vlans, class: 'btn btn-link' %>
+<%= link_to t('ips'), :ips, class: 'btn btn-link' %>
+<%= link_to t('external_ips'), :externalips, class: 'btn btn-link' %>
+<%= link_to t('hosts'), :hosts, class: 'btn btn-link' %>
+<%= link_to t('infraestructures'), :infraestructures, class: 'btn btn-link' %>
+<%= link_to t('environments'), :environments, class: 'btn btn-link' %>
+<%= link_to t('host_types'), :host_types, class: 'btn btn-link' %>

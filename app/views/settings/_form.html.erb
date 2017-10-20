@@ -1,0 +1,38 @@
+<%= form_with(model: setting, local: true, html: {class: "form-horizontal"}) do |form| %>
+  <% if setting.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(setting.errors.count, "error") %> prohibited this setting from being saved:</h2>
+      <ul>
+      <% setting.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :value, t('value') + ' :', class: "col-sm-2 control-label upcase" %>
+    <div class="col-sm-10">
+      <%= form.text_field :value, id: :setting_value, class: "form-control", placeholder: t('placeholder_setting_value') %>
+      <p class="help-block"><%= t('placeholder_setting_value_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description, t('description') + ' :', class: "col-sm-2 control-label upcase" %>
+    <div class="col-sm-10">
+      <%= form.text_area :notes, id: :setting_description, class: "form-control", placeholder: t('placeholder_setting_description') %>
+      <p class="help-block"><%= t('placeholder_setting_description_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-2 control-label">&nbsp;</div>
+    <div class="col-sm-10">
+      <div class="actions">
+        <%= form.submit t('ok'), class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+
+<% end %>

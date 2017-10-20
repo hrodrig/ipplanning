@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  number: 1
+  name: MyText
+  network: MyString
+  netmask: 1
+  gateway: MyString
+  notes: MyText
+
+two:
+  number: 1
+  name: MyText
+  network: MyString
+  netmask: 1
+  gateway: MyString
+  notes: MyText

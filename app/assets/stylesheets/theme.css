@@ -1,0 +1,32 @@
+.gateway_row{
+  color: white;
+  background-color: #1E90FF;
+  text-decoration-color: green;
+}
+.field_with_errors{
+  background-color: #920641;
+  color: red;
+}
+.table_tr{
+  background-color:#00b888 !important;
+}
+.table_tr_vlan{
+  background-color: #D02630;
+}
+.table th{
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #FCB430;
+}
+.upcase{
+  text-transform: uppercase;
+  font-weight: bold;
+}
+table#tableofrows tr td div.buttongroup {
+  display: none;
+}
+table#tableofrows tr:hover td div.buttongroup {
+  display: block;
+}

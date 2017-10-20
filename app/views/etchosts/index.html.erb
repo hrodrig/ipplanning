@@ -1,0 +1,15 @@
+<%= render '/common/header' %>
+<h1 class="h2"><%= t('etc_hosts') %></h1>
+<% if notice.present? %><div class="alert alert-info"><%= notice %></div><% end %>
+
+<pre>
+<%= Ip.generate_etc_hosts %>
+</pre>
+
+<%= link_to t('download'), download_etc_hosts_path, class: 'btn btn-primary', title: t('download_file') %>
+<p>
+    <%= t('download_instructions') %>
+    <br />
+    <code>wget -O /tmp/hosts <%= request.base_url %>/etc/hosts/download && cp /etc/hosts /etc/hosts.bck-`date '+%Y%m%d%H%M'` && mv -f /tmp/hosts /etc/hosts;
+</code>
+</p>

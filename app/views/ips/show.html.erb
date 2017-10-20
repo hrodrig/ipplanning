@@ -1,0 +1,79 @@
+<%= render '/common/header' %>
+<% if notice.present? %><div class="alert alert-info"><%= notice %></div><% end %>
+
+<% if @ip.include_in_etc_hosts.present? %>
+  <pre class="alert alert-info"><h4><kbd><%= @ip.address %></kbd>&nbsp;<kbd><%= @ip.long_hostname %></kbd>&nbsp;<kbd><%= @ip.short_hostname %></kbd></h4></pre>
+<% else %>
+  <pre class="alert alert-danger"><h4><s><kbd><%= @ip.address %></kbd>&nbsp;<kbd><%= @ip.long_hostname %></kbd>&nbsp;<kbd><%= @ip.short_hostname %></kbd></s></h4></pre>
+<% end %>
+
+<table class="table table-condensed table-striped table-hover table-bordered">
+  <tr>
+    <th class="text-center" colspan="2"><h4><%= t('public_information') %></h4></th>
+  </tr>
+  <tr>
+    <th class="text-right col-sm-3"><%= t('vlan_descriptor_ip') %>:</th>
+    <td><%= @ip.vlan.number %> / <% if @ip.vlan.descriptor.present? %><%= @ip.vlan.descriptor %><% else %>---<% end %> / <%= @ip.address.to_s %></td>
+  </tr>
+  <tr>
+    <th class="text-right"><%= t('hostname') %>:</th>
+    <td><%= @ip.hostname_with_descriptor.html_safe %></td>
+  </tr>
+  <tr>
+    <th class="text-right"><%= t('hostname_alias') %>:</th>
+    <td><%= @ip.hostname_alias %></td>
+  </tr>
+  <tr>
+    <th class="text-right"><%= t('complete_hostname_alias') %>:</th>
+    <td><%= @ip.complete_hostname_alias %></td>
+  </tr>
+  <tr>
+    <th class="text-right"><%= t('description') %>:</th>
+    <td>
+      <% if @ip.host.present? %>
+        <%= @ip.host.description.html_safe %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th class="text-right"><%= t('extras_ips') %>:</th>
+    <td>
+      <% if @ip.host.present? %>
+        <%= @ip.host.all_ips_except_this(@ip.address).html_safe %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th class="text-center" colspan="2"><h4><%= t('private_information') %></h4></th>
+  </tr>
+  <tr>
+    <th class="text-right"><%= t('include_in_etc_hosts') %>?</th>
+    <td><%= get_icon @ip.include_in_etc_hosts %></td>
+  </tr>
+  <tr>
+    <th class="text-right"><%= t('use_vlan_descriptor') %>?</th>
+    <td><%= get_icon @ip.use_vlan_descriptor %></td>
+  </tr>
+  <tr>
+    <th class="text-right"><%= t('is_reserved') %>?</th>
+    <td><%= get_icon @ip.is_reserved %></td>
+  </tr>
+  <tr>
+    <th class="text-right"><%= t('use_domain_name') %>?</th>
+    <td><%= get_icon @ip.use_domain_name %></td>
+  </tr>
+  <tr>
+    <th class="text-right"><%= t('notes') %>:</th>
+    <td>
+      <% if @ip.notes.present? %>
+        <%= @ip.notes %>
+      <% end %>
+    </td>
+  </tr>
+</table>
+
+<%= link_to t('back'), :back, class: 'btn btn-default' %>
+<%= link_to t('hosts'), hosts_path, class: 'btn btn-default' %>
+<%= link_to t('ips'), ips_path, class: 'btn btn-default' %>
+<%= link_to t('vlans'), vlans_path, class: 'btn btn-default' %>
+<%= link_to t('edit'), edit_ip_path(@ip), class: 'btn btn-primary'  %>

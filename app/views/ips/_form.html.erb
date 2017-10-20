@@ -1,0 +1,92 @@
+<%= form_with(model: ip, local: true, html: {class: "form-horizontal"}) do |form| %>
+  <% if ip.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(ip.errors.count, "error") %> <%= t('prohibited_this_information_from_being_saved') %>:</h2>
+
+      <ul>
+      <% ip.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :vlan, t('vlan_id') + ' / ' + t('vlan_descriptor') + ' / ' + t('ip_address'), class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= ip.vlan.number %> / <% if ip.vlan.descriptor.present? %><%= ip.vlan.descriptor %><% else %>---<% end %> / <%= ip.address.to_s %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :address, t('hostname')+':', class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <h4><%= ip.hostname_with_descriptor.html_safe %></h4>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :hostname_alias, t('short_hostname_alias')+':', class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= form.text_field :hostname_alias, id: :hostname_alias, class: "form-control", placeholder: t('placeholder_ip_hostname_alias') %>
+      <p class="help-block"><%= t('placeholder_ip_hostname_alias_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :use_domain_name, t('use_domain_name')+'?', class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= form.check_box :use_domain_name, id: :ip_use_domain_name %>
+      <p class="help-block"><%= t('placeholder_ip_use_domain_name_help') %><strong><%= Setting.find_by_name('DomainName').value %></strong></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :complete_hostname_alias, t('complete_hostname')+':', class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= form.text_field :complete_hostname_alias, id: :complete_hostname_alias, class: "form-control", placeholder: "(Opcional)" %>
+      <p class="help-block"><%= t('placeholder_ip_complete_hostname_alias_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :include_in_etc_hosts, t('include_in_etc_hosts')+'?', class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= form.check_box :include_in_etc_hosts, id: :ip_include_in_etc_hosts %>
+      <p class="help-block"><%= t('placeholder_ip_include_in_etc_hosts_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :use_vlan_descriptor, t('use_vlan_descriptor')+'?', class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= form.check_box :use_vlan_descriptor, id: :ip_use_vlan_descriptor %>
+      <p class="help-block"><%= t('placeholder_ip_descriptor_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :is_reserved, t('is_reserved')+'?', class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= form.check_box :is_reserved, id: :ip_is_reserved %>
+      <p class="help-block"><%= t('placeholder_ip_reserved_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :notes, t('notes')+':', class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= form.text_area :notes, id: :ip_notes, class: "form-control" %>
+      <p class="help-block"><%= t('placeholder_ip_notes_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-3 control-label">&nbsp;</div>
+    <div class="col-sm-9">
+      <div class="actions">
+        <%= form.submit t('ok'), class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+<% end %>

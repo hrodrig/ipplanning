@@ -1,0 +1,2 @@
+module ExternalipsHelper
+end

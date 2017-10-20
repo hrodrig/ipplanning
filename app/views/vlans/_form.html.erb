@@ -1,0 +1,86 @@
+<%= form_with(model: vlan, local: true, html: {class: "form-horizontal"}) do |form| %>
+  <% if vlan.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(vlan.errors.count, "error") %> <%= t('prohibited_this_information_from_being_saved') %>:</h2>
+      <ul>
+      <% vlan.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :number, t('id') + ' :', class: "col-sm-2 control-label upcase" %>
+    <div class="col-sm-10">
+      <%= form.number_field :number, id: :vlan_number, class: "form-control", placeholder: t('placeholder_vlan_id') %>
+      <p class="help-block"><%= t('placeholder_vlan_id_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :name, t('name') + ' :', class: "col-sm-2 control-label upcase" %>
+    <div class="col-sm-10">
+      <%= form.text_field :name, id: :vlan_name, class: "form-control", placeholder: t('placeholder_vlan_name') %>
+      <p class="help-block"><%= t('placeholder_vlan_name_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :descriptor, t('descriptor') + ' :', class: "col-sm-2 control-label upcase" %>
+    <div class="col-sm-10">
+      <%= form.text_field :descriptor, id: :vlan_descriptor, class: "form-control", placeholder: t('placeholder_vlan_descriptor') %>
+      <p class="help-block"><%= t('placeholder_vlan_descriptor_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :network, t('network') + ' :', class: "col-sm-2 control-label upcase" %>
+    <div class="col-sm-10">
+      <%= form.text_field :network, id: :vlan_network, class: "form-control", placeholder: t('placeholder_vlan_network') %>
+      <p class="help-block"><%= t('placeholder_vlan_network_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :netmask, t('netmask') + ' :', class: "col-sm-2 control-label upcase" %>
+    <div class="col-sm-10">
+      <%= form.text_field :netmask, id: :vlan_netmask, class: "form-control", placeholder: t('placeholder_vlan_netmask') %>
+      <p class="help-block"><%= t('placeholder_vlan_netmask_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :gateway, t('gateway') + ' :', class: "col-sm-2 control-label upcase" %>
+    <div class="col-sm-10">
+      <%= form.text_field :gateway, id: :vlan_gateway, class: "form-control", placeholder: t('placeholder_vlan_default_gateway') %>
+      <p class="help-block"><%= t('placeholder_vlan_default_gateway_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :include_in_etc_hosts, t('include_in_etc_hosts') + ' ?', class: "col-sm-2 control-label upcase" %>
+    <div class="col-sm-10">
+      <%= form.check_box :include_in_etc_hosts, id: :vlan_include_in_etc_hosts %>
+      <p class="help-block"><%= t('placeholder_vlan_include_in_etc_hosts_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :notes, t('notes') + ' :', class: "col-sm-2 control-label upcase" %>
+    <div class="col-sm-10">
+      <%= form.text_area :notes, id: :vlan_notes, class: "form-control", placeholder: t('placeholder_vlan_notes') %>
+      <p class="help-block"><%= t('placeholder_vlan_notes_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-2 control-label">&nbsp;</div>
+    <div class="col-sm-10">
+      <div class="actions">
+        <%= form.submit t('ok'), class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+
+<% end %>

@@ -1,0 +1,75 @@
+<%= render '/common/header' %>
+<h1><%= t('vlan') %><%= @vlan.number.to_s %> (<%= link_to t('show_all'), vlans_path %>)</h1>
+<% if notice.present? %><div class="alert alert-info"><%= notice %></div><% end %>
+
+<%= render 'menu_vlans' %>
+
+<ul>
+  <li><strong><%= t('vlan_id') %> / <%= t('vlan_name') %></strong>: <%= @vlan.number.to_s %> / <%= @vlan.name %></li>
+  <% if @vlan.descriptor.present? %><li><strong><%= t('vlan_descriptor') %></strong>: <%= @vlan.descriptor %></li><% end %>
+  <li><strong><%= t('network') %> / <%= t('netmask') %> / <%= t('gateway') %></strong>: <%= @vlan.network %> / <%= @vlan.netmask.to_s %> / <%= @vlan.gateway %></li>
+  <li><strong><%= t('ips_assigned') %> / <%= t('ips_used') %></strong>: <%= @vlan.ips.count.to_s %> / <%= @vlan.used_ips %></li>
+  <li><strong><%= t('include_in_etc_hosts') %></strong>: <%= get_icon @vlan.include_in_etc_hosts %></li>
+  <% if @vlan.notes.present? %><li><strong><%= t('notes') %></strong>: <%= @vlan.notes.html_safe %></li><% end %>
+</ul>
+
+<p>
+  <%= link_to t('edit'), edit_vlan_path(@vlan), class: 'btn btn-primary' %>
+</p>
+
+<table class="table table-condensed table-striped table-hover table-bordered">
+  <thead>
+    <tr class="table_tr">
+      <th width="5%" class="text-center"><%= t('ip') %></th>
+      <th width="5%" class="text-center"><%= t('complete_hostname') %></th>
+      <th width="5%" class="text-center"><%= t('short_hostname') %></th>
+      <th width="10%" class="text-center"><%= t('additional_information') %></th>
+      <th width="50%" class="text-center"><%= t('notes') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @vlan.ips.each do |ip| %>
+    <% if ip.address == @vlan.gateway %>
+    <tr class="danger">
+    <% else %>
+    <tr>
+    <% end %>
+      <td style="text-align: center;">
+        <a name="<%= ip.address %>"><%= link_to ip.address, ip_path(ip), title: t('show') %>
+      </td>
+      <td nowrap="nowrap">
+        <%= ip.hostname_with_descriptor.html_safe %>
+        <% if ip.hostname_alias.present? and ip.host.present? %>
+          <br />
+          <p>
+            <kbd><%= t('hostname_alias_with_host') %>: <%= ip.host.name %></kbd>
+          </p>
+        <% end %>
+
+        <% if ip.host.nil? and ip.hostname_alias.nil? %>
+          <span class="text-center"><%= link_to '+', add_host_to_ip_path(ip), class: 'btn btn-primary btn-xs' %></span>
+        <% end %>
+      </td>
+      <td style="text-align: center;" nowrap="nowrap">
+        <%= ip.short_hostname %>
+      </td>
+      <td>
+        <% if ip.host.present? %>
+          <% if ip.host.other_ips(ip.address).present? %>
+            <table class="table table-condensed table-bordered">
+            <% ip.host.other_ips(ip.address).each do |ip| %>
+              <tr><td width="100px"><%= link_to ip.address, ip_path(ip) %></td><td><%= ip.long_hostname %></td><td><%= ip.short_hostname %></td></tr>
+            <% end %>
+          </table>
+          <% end %>
+        <% end %>
+      </td>
+      <td>
+        <% if ip.host.present? %>
+          <%= ip.host.description.html_safe %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,7 @@
+<%= render '/common/header' %>
+<h1 class="h2"><%= t('add_host_to_ip') %>: <%= @ip.address %></h1>
+<% if notice.present? %><div class="alert alert-info"><%= notice %></div><% end %>
+
+<%= render 'form_host', host: @host %>
+
+<%= link_to t('back'), :back, class: 'btn btn-default' %>

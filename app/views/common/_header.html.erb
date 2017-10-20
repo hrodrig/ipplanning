@@ -1,0 +1,9 @@
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 100%;">
+	<tbody>
+		<tr>
+			<td width="33%"><%= image_tag Setting.find_by_name('HeaderLeftImage').value if Setting.find_by_name('HeaderLeftImage').present? %></td>
+			<td style="text-align: center;" width="33%"><%= Setting.find_by_name('HeaderCentralTitle').value.html_safe if Setting.find_by_name('HeaderCentralTitle').present? %></td>
+			<td style="text-align: right;" width="33%"><%= image_tag Setting.find_by_name('HeaderRightImage').value if Setting.find_by_name('HeaderRightImage').present? %></td>
+		</tr>
+	</tbody>
+</table>

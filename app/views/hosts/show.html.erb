@@ -1,0 +1,52 @@
+<%= render '/common/header' %>
+<% if notice.present? %><div class="alert alert-info"><%= notice %></div><% end %>
+
+<p>
+  <strong><%= t('name') %>:</strong>
+  <%= @host.name %>
+</p>
+
+<p>
+  <strong><%= t('notes') %>:</strong>
+  <%= @host.description.html_safe %>
+</p>
+
+<% if @host.ips.count > 0 %>
+  <ul class="well">
+    <% @host.ips.each do |ip| %>
+      <li><%= ip.address %> <%= link_to t('destroy'), destroy_ip_from_host_path(@host, ip), method: :delete, data: { confirm: t('are_you_sure') } %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+
+<table class="table table-condensed">
+  <tr>
+    <th class="text-center" width="33%"><%= t('infraestructure') %></th>
+    <th class="text-center" width="33%"><%= t('environment') %></th>
+    <th class="text-center" width="33%"><%= t('host_type') %></th>
+  </tr>
+  <tr>
+    <td class="text-center"><%= @host.infraestructure.name if @host.infraestructure.present? %></td>
+    <td class="text-center"><%= @host.environment.name if @host.environment.present? %></td>
+    <td class="text-center"><%= @host.host_type.name if @host.host_type.present? %></td>
+  </tr>
+  <tr>
+    <th class="text-center"><%= t('memory_size') %></th>
+    <th class="text-center"><%= t('sockets') %></th>
+    <th class="text-center"><%= t('cores') %></th>
+  </tr>
+  <tr>
+    <td class="text-center"><%= @host.memory_size %></td>
+    <td class="text-center"><%= @host.total_sockets %></td>
+    <td class="text-center"><%= @host.total_vcpus %></td>
+  </tr>
+</table>
+
+<%= link_to t('back'), :back, class: 'btn btn-default' %>
+<%= link_to t('hosts'), hosts_path, class: 'btn btn-link' %>
+<%= link_to t('ips'), ips_path, class: 'btn btn-link' %>
+<%= link_to t('vlans'), vlans_path, class: 'btn btn-link' %>
+<%= link_to t('add_ip'), add_ip_to_host_path(@host), class: 'btn btn-danger' %>
+<%= link_to t('edit'), edit_host_path(@host), class: 'btn btn-primary' %>
+<%= link_to t('add'), new_host_path, class: 'btn btn-default' %>

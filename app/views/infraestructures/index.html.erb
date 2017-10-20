@@ -1,0 +1,43 @@
+<%= render '/common/header' %>
+<h1 class="h2"><%= t('infraestructures') %> (<%= @infraestructures.count.to_s %>)</h1>
+<% if notice.present? %><div class="alert alert-info"><%= notice %></div><% end %>
+
+<% if @infraestructures.present? %>
+  <table class="table table-condensed table-striped table-hover table-bordered" id="tableofrows">
+    <thead>
+      <tr class="table_tr">
+        <th class="text-center">#</th>
+        <th class="text-center"><%= t('name') %></th>
+        <th class="text-center"><%= t('description') %></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% i = 1 %>
+      <% @infraestructures.each do |infraestructure| %>
+        <tr>
+          <td class="text-center"><%= i.to_s %></td>
+          <td>
+            <%= link_to infraestructure.name, infraestructure %>
+            <div class="buttongroup">
+              <%= link_to t('edit'), edit_infraestructure_path(infraestructure), class: 'btn btn-link' %>
+              <%= link_to t('destroy'), infraestructure, method: :delete, data: { confirm: t('are_you_sure'), class: 'btn btn-link' } %>
+            </div>
+          </td>
+          <td>
+            <%= infraestructure.description %>
+          </td>
+        </tr>
+        <% i+= 1 %>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-info">
+    <%= t('not_found_infraestructures') %>
+  </div>
+<% end %>
+
+<br />
+
+<%= link_to t('add_infraestructure'), new_infraestructure_path, class: 'btn btn-primary' %>

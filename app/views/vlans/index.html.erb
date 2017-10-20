@@ -1,0 +1,54 @@
+<%= render '/common/header' %>
+<h1 class="h2"><%= t('vlans') %> (<%= @vlans.count.to_s %>)</h1>
+<% if notice.present? %><div class="alert alert-info"><%= notice %></div><% end %>
+
+<% if @vlans.present? %>
+  <table class="table table-condensed table-striped table-hover table-bordered" id="tableofrows">
+    <thead>
+      <tr class="table_tr">
+        <th width="5%" style="text-align: center;"><%= t('id') %></th>
+        <th style="text-align: center;"><%= t('name') %></th>
+        <th width="15%" style="text-align: center;"><%= t('network') %></th>
+        <th width="10%" style="text-align: center;"><%= t('gateway') %></th>
+        <th width="10%" style="text-align: center;"><%= t('ips') %><br /><%= t('total') %> / <%= t('used') %></th>
+        <th width="5%" style="text-align: center;"><%= t('notes') %></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @vlans.each do |vlan| %>
+        <tr>
+          <td style="text-align: center;"><%= vlan.number %></td>
+          <td style="text-align: center;">
+            <%= vlan.name %>
+            <% if vlan.ips.empty? %>
+              <br /><span style="color: red;">ipcalc <%= vlan.network %>/<%= vlan.netmask %> <%= link_to t('generate'), generate_network_path(vlan) %></span>
+            <% end %>
+
+            <div class="buttongroup">
+              <%= link_to t('edit'), edit_vlan_path(vlan), class: 'btn btn-link' %>
+              <%= link_to t('destroy'), vlan, method: :delete, data: { confirm: t('are_you_sure'), class: 'btn btn-link' } %>
+            </div>
+
+          </td>
+          <td style="text-align: center;"><%= link_to "#{vlan.network}/#{vlan.netmask}", vlan_path(vlan) %></td>
+          <td style="text-align: center;"><%= vlan.gateway %></td>
+          <td style="text-align: center;"><%= vlan.ips.count.to_s %> / <%= vlan.used_ips %></td>
+          <td class="text-center">
+            <% if vlan.include_in_etc_hosts == false %>
+              <%= image_tag 'edit-delete.png', title: t('not_include_in_hosts_file') %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-info">
+    <%= t('not_found_vlans') %>
+  </div>
+<% end %>
+
+<br />
+
+<%= link_to t('add_vlan'), new_vlan_path, class: 'btn btn-primary' %>

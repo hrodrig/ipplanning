@@ -1,0 +1,86 @@
+<%= form_with(model: host, local: true, html: {class: "form-horizontal"}) do |form| %>
+  <table class="table table-condensed table-striped table-hover table-bordered">
+    <tr>
+      <td colspan="2">
+        <% if host.errors.any? %>
+          <div class="alert alert-danger">
+            <h2><%= pluralize(host.errors.count, "error") %> <%= t('prohibited_this_information_from_being_saved') %>:</h2>
+
+            <ul>
+            <% host.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td width="60%">
+        <%= form.text_field :name, id: :host_name, class: "form-control", placeholder: t('placeholder_hosts_hostname') %>
+        <br />
+        <%= form.text_area :description, id: :host_description, class: "form-control", placeholder: t('placeholder_hosts_description') %>
+      </td>
+      <td>
+        <% if action_name == 'edit' %>
+          <% if host.ips.count > 0 %>
+            <ul>
+              <% host.ips.each do |ip| %>
+                <li><%= ip.address %> <%= link_to t('destroy'), destroy_ip_from_host_path(host, ip), method: :delete %></li>
+              <% end %>
+            </ul>
+          <% end %>
+          <%= link_to t('add_ip'), add_ip_to_host_path(@host), class: 'btn btn-danger' %>
+        <% else %>
+          <div class="alert alert-info"><%= t('create_host_to_add_ip') %></div>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+
+  <table class="table table-condensed table-striped table-hover table-bordered">
+    <tr class="table_tr">
+      <th class="text-center" width="33%"><%= t('infraestructure') %></th>
+      <th class="text-center" width="33%"><%= t('environment') %></th>
+      <th class="text-center" width="33%"><%= t('host_type') %></th>
+    </tr>
+    <tr>
+      <td class="text-center">
+        <%= form.select :infraestructure_id, Infraestructure.order(:name).collect{|row| [row.name, row.id]} %>
+      </td>
+      <td class="text-center">
+        <%= form.select :environment_id, Environment.order(:name).collect{|row| [row.name, row.id]} %>
+      </td>
+      <td class="text-center">
+        <%= form.select :host_type_id, HostType.order(:name).collect{|row| [row.name, row.id]} %>
+      </td>
+    </tr>
+    <tr class="table_tr">
+      <th class="text-center"><%= t('memory_size') %></th>
+      <th class="text-center"><%= t('sockets') %></th>
+      <th class="text-center"><%= t('cores') %></th>
+    </tr>
+    <tr>
+      <td class="text-center">
+        <%= form.text_field :memory_size, id: :memory_size, class: "form-control", placeholder: t('placeholder_hosts_memory_size') %>
+      </td>
+      <td class="text-center">
+        <%= form.text_field :total_sockets, id: :total_sockets, class: "form-control", placeholder: t('placeholder_hosts_total_sockets') %>
+      </td>
+      <td class="text-center">
+        <%= form.text_field :total_vcpus, id: :total_vcpus, class: "form-control", placeholder: t('placeholder_hosts_total_vcpus') %>
+      </td>
+    </tr>
+  </table>
+
+
+  <div class="form-group">
+    <div class="col-sm-2 control-label">&nbsp;</div>
+    <div class="col-sm-10">
+      <div class="actions">
+        <%= form.submit t('ok'), class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+
+<% end %>

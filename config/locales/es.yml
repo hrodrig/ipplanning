@@ -1,0 +1,462 @@
+# IPPLANNING: Ip Address Management System
+# Copyright (c) 2016-2017 Hermes Rodríguez, hejeroaz@gmail.com
+#
+# The MIT License (MIT)
+#
+# Copyright (c) 2014 Evan Wallace
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# ----------------------------------------------------------------------------
+es:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "La validación falló: %{errors}"
+        restrict_dependent_destroy:
+          has_one: No se puede eliminar el registro porque existe un %{record} dependiente
+          has_many: No se puede eliminar el registro porque existen %{record} dependientes
+  date:
+    abbr_day_names:
+    - dom
+    - lun
+    - mar
+    - mié
+    - jue
+    - vie
+    - sáb
+    abbr_month_names:
+    -
+    - ene
+    - feb
+    - mar
+    - abr
+    - may
+    - jun
+    - jul
+    - ago
+    - sep
+    - oct
+    - nov
+    - dic
+    day_names:
+    - domingo
+    - lunes
+    - martes
+    - miércoles
+    - jueves
+    - viernes
+    - sábado
+    formats:
+      default: "%-d/%-m/%Y"
+      long: "%-d de %B de %Y"
+      short: "%-d de %b"
+    month_names:
+    -
+    - enero
+    - febrero
+    - marzo
+    - abril
+    - mayo
+    - junio
+    - julio
+    - agosto
+    - septiembre
+    - octubre
+    - noviembre
+    - diciembre
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: alrededor de 1 hora
+        other: alrededor de %{count} horas
+      about_x_months:
+        one: alrededor de 1 mes
+        other: alrededor de %{count} meses
+      about_x_years:
+        one: alrededor de 1 año
+        other: alrededor de %{count} años
+      almost_x_years:
+        one: casi 1 año
+        other: casi %{count} años
+      half_a_minute: medio minuto
+      less_than_x_minutes:
+        one: menos de 1 minuto
+        other: menos de %{count} minutos
+      less_than_x_seconds:
+        one: menos de 1 segundo
+        other: menos de %{count} segundos
+      over_x_years:
+        one: más de 1 año
+        other: más de %{count} años
+      x_days:
+        one: 1 día
+        other: "%{count} días"
+      x_minutes:
+        one: 1 minuto
+        other: "%{count} minutos"
+      x_months:
+        one: 1 mes
+        other: "%{count} meses"
+      x_years:
+        one: 1 año
+        other: "%{count} años"
+      x_seconds:
+        one: 1 segundo
+        other: "%{count} segundos"
+    prompts:
+      day: Día
+      hour: Hora
+      minute: Minutos
+      month: Mes
+      second: Segundos
+      year: Año
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: debe ser aceptado
+      blank: no puede estar en blanco
+      present: debe estar en blanco
+      confirmation: no coincide
+      empty: no puede estar vacío
+      equal_to: debe ser igual a %{count}
+      even: debe ser par
+      exclusion: está reservado
+      greater_than: debe ser mayor que %{count}
+      greater_than_or_equal_to: debe ser mayor que o igual a %{count}
+      inclusion: no está incluido en la lista
+      invalid: no es válido
+      less_than: debe ser menor que %{count}
+      less_than_or_equal_to: debe ser menor que o igual a %{count}
+      model_invalid: "La validación falló: %{errors}"
+      not_a_number: no es un número
+      not_an_integer: debe ser un entero
+      odd: debe ser impar
+      requerido: debe existir
+      taken: ya está en uso
+      too_long:
+        one: "es demasiado largo (1 carácter máximo)"
+        other: "es demasiado largo (%{count} caracteres máximo)"
+      too_short:
+        one: "es demasiado corto (1 carácter mínimo)"
+        other: "es demasiado corto (%{count} caracteres mínimo)"
+      wrong_length:
+        one: "no tiene la longitud correcta (1 carácter exactos)"
+        other: "no tiene la longitud correcta (%{count} caracteres exactos)"
+      other_than: debe ser distinto de %{count}
+    template:
+      body: 'Se encontraron problemas con los siguientes campos:'
+      header:
+        one: No se pudo guardar este/a %{model} porque se encontró 1 error
+        other: No se pudo guardar este/a %{model} porque se encontraron %{count} errores
+  helpers:
+    select:
+      prompt: Por favor seleccione
+    submit:
+      create: Crear %{model}
+      submit: Guardar %{model}
+      update: Actualizar %{model}
+  number:
+    currency:
+      format:
+        delimiter: "."
+        format: "%n %u"
+        precision: 2
+        separator: ","
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "€"
+    format:
+      delimiter: "."
+      precision: 3
+      separator: ","
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion: mil millones
+          million:
+            one: millón
+            other: millones
+          quadrillion: mil billones
+          thousand: mil
+          trillion:
+            one: billón
+            other: billones
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 1
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: ''
+        format: "%n %"
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: " y "
+      two_words_connector: " y "
+      words_connector: ", "
+  time:
+    am: am
+    formats:
+      default: "%A, %-d de %B de %Y %H:%M:%S %z"
+      long: "%-d de %B de %Y %H:%M"
+      short: "%-d de %b %H:%M"
+    pm: pm
+  add_environment: Agregar ambiente
+  add_external_ip: Agregar ip externa
+  add_host_type: Agregar tipo de host
+  add_host: Agregar host
+  add_infraestructure: Agregar infraestructura
+  add_ip_to: Agregar ip a
+  add_ip: agregar ip
+  add_vlan: Agregar vlan
+  add: Agregar
+  adding_external_ip: Agregando ip externa
+  adding_host_type: Agregando tipo de host
+  adding_infraestructure: Agregando infraestructura
+  adding_ip: Agregando ip
+  additional_information: Información adicional
+  are_you_sure_to_delete_this_ip: '¿Seguro que desea eliminar esta dirección ip? Tenga presente que la información de las direcciones ips debe ser consistente. Si Ud. elimina esta dirección ip, deberá de agregarla luego desde la cónsola.'
+  are_you_sure: ¿Está Ud. seguro?
+  assign_this_ip_to_host: Asignar estar dirección ip a un host
+  back_to_environments: Volver a los ambientes
+  back_to_hosts: Volver a los hosts
+  back_to_infraestructures: Volver a las infraestructuras
+  back_to_ips: Volver a las ips
+  back_to_vlans: Volver a las vlans
+  back: Regresar
+  complete_hostname_alias: Alias del nombre de host completo
+  complete_hostname: Nombre de host
+  create_host_to_add_ip: Por favor, añada este nuevo host antes de agregarle cualquier dirección ip.
+  description: Descripción
+  destroy_session: Salir
+  destroy: Borrar
+  download_file: Descargar archivo
+  download_instructions: "Ud. puede descargar el contenido del archivo hosts generado (como root) con los siguientes comandos: "
+  download: Descargar
+  edit_environment: Editar ambiente
+  edit_external_ip: Editar ip externa
+  edit_host_type: Editar tipo de host
+  edit_host: Editar host
+  edit_infraestructure: Editar infraestructura
+  edit_ip: Editar ip
+  edit_vlan: Editar vlan
+  edit: Editar
+  editing_environment: Editando ambiente
+  editing_external_ip: Editando ip externa
+  editing_host_type: Editando tipo de host
+  editing_host: Editando host
+  editing_infraestructure: Editando infraestructura
+  editing_infraestructure: Editing Infraestructure
+  editing_ip: Editando ip
+  editing_setting: Editando configuraciones
+  editing_vlan: Editando vlan
+  environment_description: Descripción
+  environment_hosts: Hosts
+  environment_name: Nombre
+  environment_was_successfully_created: El ambiente fue creado con éxito.
+  environment_was_successfully_destroyed: El ambiente fue eliminado con éxito.
+  environment_was_successfully_updated: El ambiente fue actualizado con éxito.
+  environment: Ambiente
+  environments: Ambientes
+  etc_hosts_generation: generación del archivo hosts
+  etc_hosts: '/etc/hosts'
+  external_ips: Ips externas
+  externalip_address: Dirección ip
+  externalip_hostname: Nombre completo
+  externalip_notes: Notas
+  externalip_short_hostname: Nombre corto
+  externalip_was_successfully_created: La dirección ip externa fue creada con éxito.
+  externalip_was_successfully_destroyed: La dirección ip externa fue eliminada con éxito.
+  externalip_was_successfully_updated: La dirección ip externa fue actualizada con éxito.
+  extras_ips: Ips adicionales
+  gateway: Gateway
+  generate: generar
+  home_page: Home
+  host_created: El host fue creado con éxito.
+  host_destroyed: El host fue eliminado con éxito.
+  host_ip_address_created: La dirección ip del host fue creada con éxito.
+  host_ip_address_destroyed: La dirección ip del host fue eliminada con éxito.
+  host_type_description: Descripción
+  host_type_hosts: Hosts
+  host_type_name: Nombre
+  host_type_was_successfully_created: El tipo de host fue creado con éxito.
+  host_type_was_successfully_destroyed: El tipo de host fue eliminado con éxito.
+  host_type_was_successfully_updated: El tipo de host fue actualizado con éxito.
+  host_type: Tipo de host
+  host_types: Tipos de hosts
+  host_updated: El host fue actualizado con éxito.
+  hostname_alias_with_host: Alias de
+  hostname_alias: Nombre de host alias
+  hostname: Nombre de host
+  hosts: Hosts
+  include_in_etc_hosts: Incluir en /etc/hosts
+  infraestructure_description: Descripción
+  infraestructure_hosts: Hosts
+  infraestructure_name: Nombre
+  infraestructure_notes: Notas
+  infraestructure_was_successfully_created: La infraestructura fue creada con éxito.
+  infraestructure_was_successfully_destroyed: La infraestructura fue eliminada con éxito.
+  infraestructure_was_successfully_updated: La infraestructura fue actualizada con éxito.
+  infraestructure: Infraestructura
+  infraestructures: Infraestructuras
+  ip_address_added_to_host: La dirección ip fue añadida al host con éxito.
+  ip_address_created: La dirección ip fue creada con éxito.
+  ip_address_destroyed: La dirección ip fue eliminada con éxito.
+  ip_address_updated: La dirección ip fue actualizada con éxito.
+  ip_address: Dirección ip
+  ip: IP
+  ips_assigned: IPs asignadas
+  ips_total: IPs totales
+  ips_used: IPs usadas
+  ips: IPs
+  is_reserved: Está reservada
+  legend_ip_reserved: esta dirección ip está reservada. No puede asociarla con ningún host.
+  legend_not_include_in_hosts_file: esta dirección ip no será incluida en el contenido del archivo hosts generado.
+  legend_not_use_domain_name: a este nombre de host o alias no le será añadido el nombre del dominio utilizado
+  legend_not_use_hostname_alias: este nombre de host será reemplazado con un alias
+  legend_not_use_vlan_descriptor: a este nombre de host o alias no le será añadido el descriptor de la vlan
+  legend: Leyenda
+  memory_size: 'Tamaño de Memoria (GB)'
+  name: Nombre
+  netmask: Máscara
+  network: Red
+  new_host: Agregar Host
+  new_infraestructure: Agregar Infraestructura
+  new_sesion: Iniciar sesión
+  not_include_in_hosts_file: No incluido en el archivo hosts generado
+  not_use_domain_name: No usar el nombre de dominio
+  not_use_this_ip: Esta dirección ip está reservada
+  not_use_vlan_descriptor: No usar el descriptor de la vlan
+  notes: Notas
+  ok: Aceptar
+  placeholder_environment_description_help: 'Añada aquí cualquier información relacionada con el ambiente. (opcional)'
+  placeholder_environment_description: 'Notas acerca de este ambiente. (opcional)'
+  placeholder_environment_name_help: 'Nombre del ambiente. Debe ser único. (requerido)'
+  placeholder_environment_name: 'Nombre del ambiente. (requerido)'
+  placeholder_externalip_address_help: 'Dirección ip. Debe ser única. (requerida)'
+  placeholder_externalip_address: 'Dirección ip. Debe ser única. (requerida)'
+  placeholder_externalip_hostname_help: 'Nombre completo del host. Debe ser único. (requerido)'
+  placeholder_externalip_hostname: 'Nombre completo del host. Debe ser único. (requerido)'
+  placeholder_externalip_include_in_etc_hosts_help: 'Seleccione esta opción si desea que la información relacionada sea añadida al contenido del hosts generado.'
+  placeholder_externalip_notes_help: 'Alguna notas. (opcional)'
+  placeholder_externalip_notes: 'Más información relacionada. (opcional)'
+  placeholder_externalip_short_hostname_help: 'Nombre de host corto. Debe ser único. (requerido)'
+  placeholder_externalip_short_hostname: 'Hostname corto. Debe ser único. (requerido)'
+  placeholder_host_type_description_help: 'Agregue aquí cualquier otra información relacionada con el tipo de host. (opcional)'
+  placeholder_host_type_description: 'Algunas notas acerca de este tipo de host. (opcional)'
+  placeholder_host_type_name_help: 'Ingrese el nombre para este tipo de host. Debe ser único. (requerido)'
+  placeholder_host_type_name: 'Nombre del tipo de host. Debe ser único. (requerido)'
+  placeholder_hosts_description: 'Información pública acerca de este hosts. (opcional)'
+  placeholder_hosts_hostname: 'Nombre de host. Debe ser único.'
+  placeholder_hosts_memory_size: 'Memoria asignada en GB. (opcional)'
+  placeholder_hosts_total_sockets: 'Sockets virtuales o físicos asignados. (opcional)'
+  placeholder_hosts_total_vcpus: 'CPUs virtuales asignados. (opcional)'
+  placeholder_infraestructure_description_help: 'Información extra relacionada con la infraestructura. (opcional)'
+  placeholder_infraestructure_description: 'Notas acerca de la infraestructura. (opcional)'
+  placeholder_infraestructure_name_help: 'Nombre de la infraestructura. Debe ser único. (requerido)'
+  placeholder_infraestructure_name: 'Nombre de la infraestructura. Debe ser único. (requerido)'
+  placeholder_ip_complete_hostname_alias_help: 'Agregue aquí el alias para el hostname completo.Solamente requerido si no se utiliza el nombre de dominio.'
+  placeholder_ip_descriptor_help: 'Agregar descriptor de VLAN al hostname de la dirección ip'
+  placeholder_ip_hostname_alias_help: 'Hostname alias. Debe ser único si es indicado.'
+  placeholder_ip_hostname_alias: 'Hostname alias'
+  placeholder_ip_include_in_etc_hosts_help: 'Seleccione esta opción si desea que la información relacionada con la dirección ip sea agregada al archivo de host generado.'
+  placeholder_ip_notes_help: 'Agregue aquí cualquier otra información relacionada con la dirección ip. (opcional)'
+  placeholder_ip_reserved_help: 'Si la dirección ip está reservada no puede poseer un alias para el hostname.'
+  placeholder_ip_use_domain_name_help: 'Seleccione oara agregar el nombre de dominio: '
+  placeholder_setting_description_help: 'Ingrese cualquier otra información relacionada con el parámetro. (opcional)'
+  placeholder_setting_description: 'Algunas notas adicionales para este parámetro. (opcional)'
+  placeholder_setting_value_help: 'Ingrese aquí el valor para este parámetro de la plataforma. Algunas opciones son opcionales. Preste especial atención a esto !'
+  placeholder_setting_value: 'Valor para éste parámetro.'
+  placeholder_vlan_default_gateway_help: 'Dirección de la puerta de enlace predeterminada. (requerido) Ejem: 10.0.0.1'
+  placeholder_vlan_default_gateway: 'Puerta de enlace predeterminada. Ejem: 10.0.0.1'
+  placeholder_vlan_descriptor_help: 'VLAN Descriptor. Debe ser único. El uso de una palabra descriptor es útil cuando un host posee muchas interfaces y Ud. desea mantener el mismo nombre de host pero añadiendo esta palabra corta utilizada como descriptor relacionada con la vlan. (opcional) Ejem: bck'
+  placeholder_vlan_descriptor: 'Descriptor de VLAN. Debe ser único. Ejem: bck'
+  placeholder_vlan_id_help: 'VLAN Id o VLAN Tag. Debe ser único. (requerido) Ejem: 100 '
+  placeholder_vlan_id: VLAN ID o VLAN Tag
+  placeholder_vlan_include_in_etc_hosts_help: 'Seleccione si desea que la información relaciona con la vlan sea añadida al contenido del archivo hosts generado.'
+  placeholder_vlan_include_in_etc_hosts: ''
+  placeholder_vlan_name_help: 'Nombre de VLAN. Debe ser único. (requerido) Ejem: LiveMigration'
+  placeholder_vlan_name: Nombre
+  placeholder_vlan_netmask_help: 'Parte de la máscara de red en formato CIDR. (requerido) Ejem: 24'
+  placeholder_vlan_netmask: 'Máscara de red. Ejem: 24, ..'
+  placeholder_vlan_network_help: 'Dirección ip para la red en formato CIDR. Tenga cuidado que el mismo segmento de red exista en otra vlan. (requerido) Ejem: 10.0.0.0'
+  placeholder_vlan_network: 'Red. Ejem: 10.0.0.0'
+  placeholder_vlan_notes_help: 'Agregue informaión relaciona con la vlan. (opcional)'
+  placeholder_vlan_notes: 'Información opcional.'
+  platform_settings: Configuración de la plataforma
+  private_information: Información Privada
+  prohibited_this_information_from_being_saved: prohiben que esta información sea guardada
+  public_information: Información Pública
+  reserved: reservado
+  setting_parameter: Parámetro
+  setting_value: Valor
+  setting_was_successfully_updated: El parámetro de configuración fue actualizado con éxito.
+  short_hostname: Nombre corto
+  show_all: Ver todo
+  show: Ver
+  sockets: Sockets
+  toggle_navigation: Intercambiar navegación
+  total: total
+  use_domain_name: Usar nombre de dominio
+  use_hostname_alias: 'Usar alias para nombre de host: '
+  use_vlan_descriptor: Utilizar descriptor de VLAN
+  used: usado
+  vlan_descriptor_ip: 'VLAN / Descriptor / IP'
+  vlan_descriptor: Descriptor
+  vlan_id: VLAN ID
+  vlan_name: Nombre
+  vlan_network_segment_was_created: El segmento de red para la vlan fue creado con éxito.
+  vlan_was_successfully_created: La vlan fue creada con éxito.
+  vlan_was_successfully_destroyed: La vlan fue eliminada con éxito.
+  vlan_was_successfully_updated: La vlan fue actualizada con éxito.
+  vlan: VLAN
+  vlans: VLANs
+  add_host_to_ip: Agregar host a la ip
+  not_assigned_ips: 'No existen direcciones ips en asignadas !'
+  orphaned_ips_message: 'Existen direcciones ips no asignadas a vlan alguna. Por favor, elimínelas desde la consola: <code>Ip.where(vlan_id: nil).delete_all</code>'
+  not_found_vlans: 'No existen vlans. Por favor, cree al menos una vlan.'
+  not_found_vlans_ips: 'No existen vlans. Por favor, cree al menos una vlan para poder agregar las direcciones ips.'
+  not_found_externalips: 'No existen direcciones ips externas. Por favor, cree al menos una vlan.'
+  not_found_hosts: 'No existen hosts. Por favor, cree al menos uno.'
+  not_found_infraestructures: 'No existen infraestructuras. Por favor, cree al menos una.'
+  not_found_environments: 'No existen ambientes. Por favor, cree al menos uno.'
+  not_found_host_types: 'No existen tipos de hosts. Por favor, cree al menos uno.'

@@ -1,0 +1,54 @@
+<table class="table table-condensed table-striped table-hover table-bordered">
+  <thead>
+    <tr class="table_tr">
+      <th width="10%" class="text-center"><%= t('ip') %></th>
+      <th width="25%" class="text-center" nowrap="true"><%= t('complete_hostname') %></th>
+      <th width="10%" class="text-center" nowrap="true"><%= t('short_hostname') %></th>
+      <th width="20%" class="text-center" nowrap="true"><%= t('additional_information') %></th>
+      <th class="text-center"><%= t('notes') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% vlan.ips.each do |ip| %>
+    <% if ip.address == vlan.gateway %>
+    <tr class="danger">
+    <% else %>
+    <tr>
+    <% end %>
+      <td style="text-align: center;" width="5%">
+        <a name="<%= ip.address %>">
+        <%= ip.address %>
+        </a>
+        <%= ip.notes %>
+      </td>
+      <td width="10%">
+        <% if ip.is_reserved? %>
+          <%= ip.long_hostname %>
+        <% else %>
+          <%= ip.text_hostname_with_descriptor %>
+        <% end %>
+
+        <% if ip.hostname_alias.present? and ip.host.present? %>
+          <br />
+          <p>
+            <kbd><%= t('hostname_alias_with_host') %>: <%= ip.host.name %></kbd>
+          </p>
+        <% end %>
+      </td>
+      <td style="text-align: center;" width="10%">
+        <%= ip.short_hostname %>
+      </td>
+      <td width="20%">
+        <% if ip.host.present? %>
+          <%= ip.host.all_ips_except_this(ip.address).html_safe %>
+        <% end %>
+      </td>
+      <td>
+        <% if ip.host.present? %>
+          <%= ip.host.description.html_safe %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

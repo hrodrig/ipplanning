@@ -1,0 +1,39 @@
+<%= form_with(model: environment, local: true, html: {class: "form-horizontal"}) do |form| %>
+  <% if environment.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(environment.errors.count, "error") %> <%= t('prohibited_this_information_from_being_saved') %>:</h2>
+
+      <ul>
+      <% environment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :name, t('name') + ' :', class: "col-sm-2 control-label upcase" %>
+    <div class="col-sm-10">
+      <%= form.text_field :name, id: :environment_name, class: "form-control", placeholder: t('placeholder_environment_name') %>
+      <p class="help-block"><%= t('placeholder_environment_name_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description, t('description') + ' :', class: "col-sm-2 control-label upcase" %>
+    <div class="col-sm-10">
+      <%= form.text_area :description, id: :environment_description, class: "form-control", placeholder: t('placeholder_environment_description') %>
+      <p class="help-block"><%= t('placeholder_environment_description_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-2 control-label">&nbsp;</div>
+    <div class="col-sm-10">
+      <div class="actions">
+        <%= form.submit t('ok'), class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+
+<% end %>

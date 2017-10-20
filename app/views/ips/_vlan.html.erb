@@ -1,0 +1,115 @@
+<ul>
+  <li><strong><%= t('vlan_id') %> / <%= t('vlan_name') %></strong>: <%= vlan.number.to_s %> / <%= vlan.name %></li>
+  <% if vlan.descriptor.present? %><li><strong><%= t('vlan_descriptor') %></strong>: <%= vlan.descriptor %></li><% end %>
+  <li><strong><%= t('network') %> / <%= t('netmask') %> / <%= t('gateway') %></strong>: <%= vlan.network %> / <%= vlan.netmask.to_s %> / <%= vlan.gateway %></li>
+  <li><strong><%= t('ips_assigned') %> / <%= t('ips_used') %></strong>: <%= vlan.ips.count.to_s %> / <%= vlan.used_ips %></li>
+  <li><strong><%= t('include_in_etc_hosts') %></strong>: <%= get_icon vlan.include_in_etc_hosts %></li>
+  <% if vlan.notes.present? %><li><strong><%= t('notes') %></strong>: <%= vlan.notes.html_safe %></li><% end %>
+</ul>
+
+<table class="table table-condensed table-striped table-hover table-bordered" id="tableofrows">
+  <thead>
+    <tr class="table_tr">
+      <th width="30%" class="text-center"><%= t('address') %></th>
+      <th class="text-center"><%= t('complete_hostname') %></th>
+      <th class="text-center"><%= t('hostname') %></th>
+      <th width="10%" class="text-center"><%= t('extras_ips') %></th>
+      <th width="10%" class="text-center"><%= t('notes') %></th>
+      <th class="text-center">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% vlan.ips.each do |ip| %>
+    <% if ip.address == vlan.gateway %>
+    <tr class="danger">
+    <% elsif ip.is_reserved? %>
+    <tr class="warning">
+    <% else %>
+    <tr>
+    <% end %>
+      <td style="text-align: center;">
+        <a name="<%= ip.address %>">
+          <%= ip.address %>
+          <div class="buttongroup">
+            <%= link_to t('edit'), edit_ip_path(ip), class: 'btn btn-link' %>
+            <%= link_to t('destroy'), ip, method: :delete, data: { confirm: t('are_you_sure_to_delete_this_ip'), class: 'btn btn-link' } %>
+          </div>
+        </a>
+      </td>
+      <td>
+        <% if ip.host.nil? and ip.hostname_alias.nil? and ip.is_reserved.nil? %>
+          <span class="text-center"><%= link_to '+', add_host_to_ip_path(ip), title: t('assign_this_ip_to_host'), class: 'btn btn-primary btn-xs' %></span>
+        <% else %>
+          <% if ip.is_reserved? %>
+            <%= ip.long_hostname %>
+          <% else %>
+            <%= ip.hostname_with_descriptor.html_safe %>
+          <% end %>
+          <% if ip.hostname_alias.present? and ip.host.present? %>
+            <br />
+            <p>
+              <kbd><%= t('hostname_alias_with_host') %>: <%= ip.host.name %></kbd>
+            </p>
+          <% end %>
+        <% end %>
+      </td>
+      <td>
+        <%= ip.short_hostname %>
+      </td>
+      <td>
+        <% if ip.host.present? %>
+          <%= ip.host.all_ips_except_this(ip.address).html_safe %>
+        <% end %>
+      </td>
+      <td>
+        <% if ip.notes? %>
+          <br /><%= ip.notes %>
+        <% end %>
+      </td>
+      <td class="text-center">
+        <table>
+          <tr>
+            <td>
+              <% if ip.include_in_etc_hosts == false %>
+                <%= image_tag 'edit-delete.png', title: t('not_include_in_hosts_file') %>
+              <% else %>
+                <%= image_tag 'empty-24.png' %>
+              <% end %>
+            </td>
+            <td>
+              <% if ip.use_vlan_descriptor == false %>
+                <%= image_tag 'network-error.png', title: t('not_use_vlan_descriptor') %>
+              <% else %>
+                <%= image_tag 'empty-24.png' %>
+              <% end %>
+            </td>
+            <td>
+              <% if ip.host.present? %>
+                <% if ip.hostname_alias.present? %>
+                  <%= image_tag 'task-due.png', title: t('use_hostname_alias') + ip.host.name %>
+                <% end %>
+              <% else %>
+                <%= image_tag 'empty-24.png' %>
+              <% end %>
+            </td>
+            <td>
+              <% if ip.is_reserved == true %>
+                <%= image_tag 'geany-close-all.png', title: t('is_reserved') %>
+              <% else %>
+                <%= image_tag 'empty-24.png' %>
+              <% end %>
+            </td>
+            <td>
+              <% if ip.use_domain_name == false %>
+                <%= image_tag 'application-exit.png', title: t('not_use_domain_name') %>
+              <% else %>
+                <%= image_tag 'empty-24.png' %>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

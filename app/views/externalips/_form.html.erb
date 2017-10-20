@@ -1,0 +1,62 @@
+<%= form_with(model: externalip, local: true, html: {class: "form-horizontal"}) do |form| %>
+  <% if externalip.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(externalip.errors.count, "error") %> <%= t('prohibited_this_information_from_being_saved') %>:</h2>
+      <ul>
+      <% externalip.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :address, t('externalip_address') + ' :', class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= form.text_field :address, id: :externalip_address, class: "form-control", placeholder: t('placeholder_externalip_address') %>
+      <p class="help-block"><%= t('placeholder_externalip_address_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :hostname, t('externalip_hostname') + ' :', class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= form.text_field :hostname, id: :externalip_hostname, class: "form-control", placeholder: t('placeholder_externalip_hostname') %>
+      <p class="help-block"><%= t('placeholder_externalip_hostname_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :short_hostname, t('externalip_short_hostname') + ' :', class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= form.text_field :short_hostname, id: :externalip_short_hostname, class: "form-control", placeholder: t('placeholder_externalip_short_hostname') %>
+      <p class="help-block"><%= t('placeholder_externalip_short_hostname_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :include_in_etc_hosts, t('include_in_etc_hosts') + ' ?', class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= form.check_box :include_in_etc_hosts, id: :externalip_include_in_etc_hosts %>
+      <p class="help-block"><%= t('placeholder_externalip_include_in_etc_hosts_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :notes, t('externalip_notes') + ' :', class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= form.text_area :notes, id: :externalip_notes, class: "form-control", placeholder: t('placeholder_externalip_notes') %>
+      <p class="help-block"><%= t('placeholder_externalip_notes_help') %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-2 control-label">&nbsp;</div>
+    <div class="col-sm-10">
+      <div class="actions">
+        <%= form.submit t('ok'), class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+
+<% end %>

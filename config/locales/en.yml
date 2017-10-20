@@ -1,0 +1,458 @@
+# IPPLANNING: Ip Address Management System
+# Copyright (c) 2016-2017 Hermes Rodríguez, hejeroaz@gmail.com
+#
+# The MIT License (MIT)
+#
+# Copyright (c) 2014 Evan Wallace
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# ----------------------------------------------------------------------------
+en:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "Validation failed: %{errors}"
+        restrict_dependent_destroy:
+          has_one: "Cannot delete record because a dependent %{record} exists"
+          has_many: "Cannot delete record because dependent %{record} exist"
+  date:
+    abbr_day_names:
+    - Sun
+    - Mon
+    - Tue
+    - Wed
+    - Thu
+    - Fri
+    - Sat
+    abbr_month_names:
+    -
+    - Jan
+    - Feb
+    - Mar
+    - Apr
+    - May
+    - Jun
+    - Jul
+    - Aug
+    - Sep
+    - Oct
+    - Nov
+    - Dec
+    day_names:
+    - Sunday
+    - Monday
+    - Tuesday
+    - Wednesday
+    - Thursday
+    - Friday
+    - Saturday
+    formats:
+      default: "%Y-%m-%d"
+      long: "%B %d, %Y"
+      short: "%b %d"
+    month_names:
+    -
+    - January
+    - February
+    - March
+    - April
+    - May
+    - June
+    - July
+    - August
+    - September
+    - October
+    - November
+    - December
+    order:
+    - :year
+    - :month
+    - :day
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: about 1 hour
+        other: about %{count} hours
+      about_x_months:
+        one: about 1 month
+        other: about %{count} months
+      about_x_years:
+        one: about 1 year
+        other: about %{count} years
+      almost_x_years:
+        one: almost 1 year
+        other: almost %{count} years
+      half_a_minute: half a minute
+      less_than_x_minutes:
+        one: less than a minute
+        other: less than %{count} minutes
+      less_than_x_seconds:
+        one: less than 1 second
+        other: less than %{count} seconds
+      over_x_years:
+        one: over 1 year
+        other: over %{count} years
+      x_days:
+        one: 1 day
+        other: "%{count} days"
+      x_minutes:
+        one: 1 minute
+        other: "%{count} minutes"
+      x_months:
+        one: 1 month
+        other: "%{count} months"
+      x_years:
+        one: 1 year
+        other: "%{count} years"
+      x_seconds:
+        one: 1 second
+        other: "%{count} seconds"
+    prompts:
+      day: Day
+      hour: Hour
+      minute: Minute
+      month: Month
+      second: Seconds
+      year: Year
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: must be accepted
+      blank: can't be blank
+      present: must be blank
+      confirmation: doesn't match %{attribute}
+      empty: can't be empty
+      equal_to: must be equal to %{count}
+      even: must be even
+      exclusion: is reserved
+      greater_than: must be greater than %{count}
+      greater_than_or_equal_to: must be greater than or equal to %{count}
+      inclusion: is not included in the list
+      invalid: is invalid
+      less_than: must be less than %{count}
+      less_than_or_equal_to: must be less than or equal to %{count}
+      model_invalid: "Validation failed: %{errors}"
+      not_a_number: is not a number
+      not_an_integer: must be an integer
+      odd: must be odd
+      required: must exist
+      taken: has already been taken
+      too_long:
+        one: is too long (maximum is 1 character)
+        other: is too long (maximum is %{count} characters)
+      too_short:
+        one: is too short (minimum is 1 character)
+        other: is too short (minimum is %{count} characters)
+      wrong_length:
+        one: is the wrong length (should be 1 character)
+        other: is the wrong length (should be %{count} characters)
+      other_than: must be other than %{count}
+    template:
+      body: 'There were problems with the following fields:'
+      header:
+        one: 1 error prohibited this %{model} from being saved
+        other: "%{count} errors prohibited this %{model} from being saved"
+  helpers:
+    select:
+      prompt: Please select
+    submit:
+      create: Create %{model}
+      submit: Save %{model}
+      update: Update %{model}
+  number:
+    currency:
+      format:
+        delimiter: ","
+        format: "%u%n"
+        precision: 2
+        separator: "."
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "$"
+    format:
+      delimiter: ","
+      precision: 3
+      separator: "."
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion: Billion
+          million: Million
+          quadrillion: Quadrillion
+          thousand: Thousand
+          trillion: Trillion
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: ''
+        format: "%n%"
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: ", and "
+      two_words_connector: " and "
+      words_connector: ", "
+  time:
+    am: am
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      long: "%B %d, %Y %H:%M"
+      short: "%d %b %H:%M"
+    pm: pm
+  add_environment: Add Environment
+  add_external_ip: Add External Ip
+  add_host_type: Add host type
+  add_host: Add host
+  add_infraestructure: Add Infraestructure
+  add_ip_to: Add ip to
+  add_ip: add ip
+  add_vlan: Add VLAN
+  add: Add
+  adding_external_ip: Adding External Ip
+  adding_host_type: Adding Host Type
+  adding_infraestructure: Adding Infraestructure
+  adding_ip: Adding Ip
+  additional_information: Additional information
+  are_you_sure_to_delete_this_ip: 'Are you sure to delete this IP address? Take care that IP address information must be consistent. If you remove this IP address, rails console must be required to add again.'
+  are_you_sure: Are you sure?
+  assign_this_ip_to_host: Assign this ip address to host
+  back_to_environments: Back to environments
+  back_to_hosts: Back to hosts
+  back_to_infraestructures: Back to infraestructures
+  back_to_ips: Back to IPs
+  back_to_vlans: Back to VLANs
+  back: Back
+  complete_hostname_alias: Complete hostname alias
+  complete_hostname: Complete hostname
+  create_host_to_add_ip: Please, create this new host prior to add any ip address.
+  description: Description
+  destroy_session: Close session
+  destroy: Destroy
+  download_file: Download file
+  download_instructions: "You can download generated hosts file (as root) with: "
+  download: Download
+  edit_environment: Edit Environment
+  edit_external_ip: Edit External IP
+  edit_host_type: Edit Host Type
+  edit_host: Edit Host
+  edit_infraestructure: Edit Infraestructure
+  edit_ip: Edit IP
+  edit_vlan: Edit VLAN
+  edit: Edit
+  editing_environment: Editing Environment
+  editing_external_ip: Editing External IP
+  editing_host_type: Editing Host Type
+  editing_host: Editing Host
+  editing_infraestructure: Editing Infraestructure
+  editing_infraestructure: Editing Infraestructure
+  editing_ip: Editing IP
+  editing_setting: Editing setting
+  editing_vlan: Editing VLAN
+  environment_description: Description
+  environment_hosts: Hosts
+  environment_name: Name
+  environment_was_successfully_created: Environment was successfully created.
+  environment_was_successfully_destroyed: Environment was successfully destroyed.
+  environment_was_successfully_updated: Environment was successfully updated.
+  environment: Environment
+  environments: Environments
+  etc_hosts_generation: hosts file generation
+  etc_hosts: '/etc/hosts'
+  external_ips: External IPs
+  externalip_address: IP address
+  externalip_hostname: Complete hostname
+  externalip_notes: Notes
+  externalip_short_hostname: Short hostname
+  externalip_was_successfully_created: External ip address wass successfully created.
+  externalip_was_successfully_destroyed: External ip address wass successfully destroyed.
+  externalip_was_successfully_updated: External ip address wass successfully updated.
+  extras_ips: Extras IPs
+  gateway: Gateway
+  generate: generate
+  home_page: Home
+  host_created: Host was successfully created.
+  host_destroyed: Host was successfully destroyed.
+  host_ip_address_created: Host ip address was successfully created.
+  host_ip_address_destroyed: Host ip address was successfully destroyed.
+  host_type_description: Description
+  host_type_hosts: Hosts
+  host_type_name: Name
+  host_type_was_successfully_created: Host type was successfully created.
+  host_type_was_successfully_destroyed: Host type was successfully destroyed.
+  host_type_was_successfully_updated: Host type was successfully updated.
+  host_type: Host type
+  host_types: Host types
+  host_updated: Host was successfully updated.
+  hostname_alias_with_host: Hostname aliases with host
+  hostname_alias: Hostname alias
+  hostname: Hostname
+  hosts: Hosts
+  include_in_etc_hosts: Include in /etc/hosts
+  infraestructure_description: Description
+  infraestructure_hosts: Hosts
+  infraestructure_name: Name
+  infraestructure_notes: Notes
+  infraestructure_was_successfully_created: Infraestructure was successfully created.
+  infraestructure_was_successfully_destroyed: Infraestructure was successfully destroyed.
+  infraestructure_was_successfully_updated: Infraestructure was successfully updated.
+  infraestructure: Infraestructure
+  infraestructures: Infraestructures
+  ip_address_added_to_host: IP address was successfully added to Host
+  ip_address_created: IP address was successfully created.
+  ip_address_destroyed: IP address was successfully destroyed.
+  ip_address_updated: IP address was successfully updated.
+  ip_address: IP address
+  ip: IP
+  ips_assigned: Assigned IPs
+  ips_total: Total IPs
+  ips_used: Used IPs
+  ips: IPs
+  is_reserved: Is reserved
+  legend_ip_reserved: This IP address is reserved. You can not assign this to any host
+  legend_not_include_in_hosts_file: This IP address will not be included in the generated hosts file
+  legend_not_use_domain_name: this hostname or hostname alias will not append domain name
+  legend_not_use_hostname_alias: this hostname will be replaced with an hostname alias
+  legend_not_use_vlan_descriptor: this hostname or hostname alias will not append VLAN descriptor
+  legend: Legend
+  memory_size: 'Memory size (GB)'
+  name: Name
+  netmask: Netmask
+  network: Network
+  new_host: Add Host
+  new_infraestructure: Add Infraestructure
+  new_sesion: Iniciar sesión
+  not_include_in_hosts_file: Not included in generated hosts file
+  not_use_domain_name: Not use defined domain name
+  not_use_this_ip: This IP address is reserved
+  not_use_vlan_descriptor: Not use VLAN descriptor
+  notes: Notes
+  ok: Ok
+  placeholder_environment_description_help: 'Add here any restricted information environment related. (optional)'
+  placeholder_environment_description: 'Notes about this environment. (optional)'
+  placeholder_environment_name_help: 'Environment name. Must be unique. (required)'
+  placeholder_environment_name: 'Environment name. (required)'
+  placeholder_externalip_address_help: 'Ip address. Must be unique. (required)'
+  placeholder_externalip_address: 'Ip address. Must be unique. (required)'
+  placeholder_externalip_hostname_help: 'Complete hostname. Must be unique. (required)'
+  placeholder_externalip_hostname: 'Complete hostname. Must be unique. (required)'
+  placeholder_externalip_include_in_etc_hosts_help: 'Select this option if you want that ip related information will be added to generated hosts file.'
+  placeholder_externalip_notes_help: 'Some notes. (optional)'
+  placeholder_externalip_notes: 'More related information (optional)'
+  placeholder_externalip_short_hostname_help: 'Short hostname. Must be unique. (required)'
+  placeholder_externalip_short_hostname: 'Short hostname. Must be unique. (required)'
+  placeholder_host_type_description_help: 'Add here any restricted information host type related. (optional)'
+  placeholder_host_type_description: 'Some notes about this host type. (optional)'
+  placeholder_host_type_name_help: 'Add here host type name. Must be unique. (required)'
+  placeholder_host_type_name: 'Host type name. Must be unique. (required)'
+  placeholder_hosts_description: 'Public information about this host. (optional)'
+  placeholder_hosts_hostname: 'Hostname. Must be unique.'
+  placeholder_hosts_memory_size: 'Assigned memory size in GB. (optional)'
+  placeholder_hosts_total_sockets: 'Assigned virtual or physical sockets. (optional)'
+  placeholder_hosts_total_vcpus: 'Assigned or virtual CPUs. The total of CPUS will be the sockets count by vCPU per socket. (optional)'
+  placeholder_infraestructure_description_help: 'Add here any restricted information infraestructure related. (optional)'
+  placeholder_infraestructure_description: 'Some notes about this infraestructure. (optional)'
+  placeholder_infraestructure_name_help: 'Add here infraestructure name. Must be unique. (required)'
+  placeholder_infraestructure_name: 'Infraestructure name. Must be unique. (required)'
+  placeholder_ip_complete_hostname_alias_help: 'Entry complete FQDN hostname alias. Only required if not use domain name.'
+  placeholder_ip_descriptor_help: 'Add VLAN descriptor to ip address hostname'
+  placeholder_ip_hostname_alias_help: 'Hostname alias. Must be unique if added.'
+  placeholder_ip_hostname_alias: 'Hostname alias'
+  placeholder_ip_include_in_etc_hosts_help: 'Select this option if you want that ip related information will be added to generated hosts file.'
+  placeholder_ip_notes_help: 'Add here any restricted information ip related. (optional)'
+  placeholder_ip_reserved_help: 'If ip address is reserved, can not have hostname alias. Never will be added to generated hosts file.'
+  placeholder_ip_use_domain_name_help: 'Select to add domain name: '
+  placeholder_setting_description_help: 'Add here any restricted information setting related. (optional)'
+  placeholder_setting_description: 'Some notes about this setting. (optional)'
+  placeholder_setting_value_help: 'Add here value for this platform setting. Some settings could be optional. Take care about this !'
+  placeholder_setting_value: 'Value for this setting.'
+  placeholder_vlan_default_gateway_help: 'CIDR Default gateway address. (required) Ex: 10.0.0.1'
+  placeholder_vlan_default_gateway: 'Default gateway. Ex: 10.0.0.1'
+  placeholder_vlan_descriptor_help: 'VLAN Descriptor. Must be unique. This descriptor it is usefull when one hosts has many interfaces and you want to keep the same hostname but adding a short word vlan related. (optional) Ex: bck'
+  placeholder_vlan_descriptor: 'VLAN Descriptor. Must be unique. Ex: bck'
+  placeholder_vlan_id_help: 'VLAN Id or VLAN Tag. Must be unique. (required) Ex: 100 '
+  placeholder_vlan_id: VLAN ID or VLAN Tag
+  placeholder_vlan_include_in_etc_hosts_help: 'Select this if you want that vlan related information will be added to generated hosts file.'
+  placeholder_vlan_include_in_etc_hosts: ''
+  placeholder_vlan_name_help: 'VLAN Name. Must be unique. (required) Ex: LiveMigration'
+  placeholder_vlan_name: VLAN Name
+  placeholder_vlan_netmask_help: 'CIDR Netmask Part. (required) Ex: 24'
+  placeholder_vlan_netmask: 'Netmask. Ex: 24, ..'
+  placeholder_vlan_network_help: 'CIDR Network Address. Take care if the same network space address exist in another VLAN. (required) Ex: 10.0.0.0'
+  placeholder_vlan_network: 'Network. Ex: 10.0.0.0'
+  placeholder_vlan_notes_help: 'Add here any restricted information vlan related. (optional)'
+  placeholder_vlan_notes: 'Optional information.'
+  platform_settings: Plattform settings
+  private_information: Private information
+  prohibited_this_information_from_being_saved: prohibited this information from being saved
+  public_information: Public information
+  reserved: Reserved
+  setting_parameter: Parameter
+  setting_value: Value
+  setting_was_successfully_updated: Setting was successfully updated.
+  short_hostname: Short hostname
+  show_all: Show all
+  show: Show
+  sockets: Sockets
+  toggle_navigation: Toogle navigation
+  total: total
+  use_domain_name: Use domain name
+  use_hostname_alias: 'Use hostname alias: '
+  use_vlan_descriptor: Use VLAN descriptor
+  used: used
+  vlan_descriptor_ip: 'VLAN / Descriptor / IP'
+  vlan_descriptor: VLAN descriptor
+  vlan_id: VLAN ID
+  vlan_name: VLAN Name
+  vlan_network_segment_was_created: Vlan network segment was created
+  vlan_was_successfully_created: Vlan was successfully created
+  vlan_was_successfully_destroyed: Vlan was successfully destroyed
+  vlan_was_successfully_updated: Vlan was successfully updated
+  vlan: VLAN
+  vlans: VLANs
+  add_host_to_ip: Add host to ip
+  not_assigned_ips: 'There are not assigned ips'
+  orphaned_ips_message: 'Orphaned ips found. Please remove them with: <code>Ip.where(vlan_id: nil).delete_all</code>'
+  not_found_vlans: 'There are not vlans. Please add one.'
+  not_found_vlans_ips: 'There are not vlans or ips. Please add one vlan prior to add any ip address.'
+  not_found_externalips: 'There are not external ips address. Please add one.'
+  not_found_hosts: 'There are not hosts. Please add one.'
+  not_found_infraestructures: 'There are not infraestructures. Please add one.'
+  not_found_environments: 'There are not environments. Please add one.'
+  not_found_host_types: 'There are not hosts types. Please add one.'

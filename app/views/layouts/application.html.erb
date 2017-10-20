@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      <% if @page_title.present? %>
+        <%= @page_title %>
+      <% else %>
+        <%= Setting.find_by_name('WebsiteName').value %>
+      <% end %>
+    </title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="container">
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only"><%= t('toggle_navigation') %></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="<%= root_path %>"><%= Setting.find_by_name('Brand').value %></a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="/"><%= t('home') %></a></li>
+
+                <% if admin_signed_in? %>
+                <li<% if controller_name == 'vlans'%> class="active"<% end %>><a href="/vlans"><%= t('vlans') %></a></li>
+                <li<% if controller_name == 'ips'%> class="active"<% end %>><a href="/ips"><%= t('ips') %></a></li>
+                <li<% if controller_name == 'externalips'%> class="active"<% end %>><a href="/externalips"><%= t('external_ips') %></a></li>
+                <li<% if controller_name == 'hosts'%> class="active"<% end %>><a href="/hosts"><%= t('hosts') %></a></li>
+
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= t('platform_settings') %> <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li<% if controller_name == 'infraestructures'%> class="active"<% end %>><a href="/infraestructures"><%= t('infraestructures') %></a></li>
+                    <li<% if controller_name == 'environments'%> class="active"<% end %>><a href="/environments"><%= t('environments') %></a></li>
+                    <li<% if controller_name == 'host_types'%> class="active"<% end %>><a href="/host_types"><%= t('host_types') %></a></li>
+                    <li role="separator" class="divider"></li>
+                    <li<% if controller_name == 'settings'%> class="active"<% end %>><a href="/settings"><%= t('settings') %></a></li>
+                  </ul>
+                </li>
+
+                <% end %>
+
+                <li<% if controller_name == 'etchosts'%> class="active"<% end %>><a href="/etc/hosts">/etc/hosts</a></li>
+
+                <li class="default">
+                <% if admin_signed_in? %>
+                  <%= link_to(t('destroy_session'), destroy_admin_session_path, method: :delete) %>
+                <% else %>
+                  <%= link_to(t('new_sesion'), new_admin_session_path)  %>
+                <% end %>
+                </li>
+
+              </ul>
+
+            </div><!--/.nav-collapse -->
+          </div>
+        </nav>
+
+
+      <%= yield %>
+      <p>&nbsp;</p>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted"><%= Setting.find_by_name('Footer').value.html_safe %></p>
+      </div>
+    </footer>
+
+  </body>
+</html>

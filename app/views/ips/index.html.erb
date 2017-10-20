@@ -1,0 +1,58 @@
+<%= render '/common/header' %>
+<h1><%= t('ips') %> (<%= t('ips_total') %>: <%= @ips.count.to_s %> / <%= t('ips_used') %>: <%= Ip.used_ips %>)</h1>
+<% if notice.present? %><div class="alert alert-info"><%= notice %></div><% end %>
+
+<% if @orphaned_ips.present? %>
+  <div class="alert alert-danger"><%= t('orphaned_ips_message').html_safe %></div>
+<% end %>
+
+<% if @vlans.present? %>
+  <% @vlans.each do |vlan| %>
+    <div class="well">
+      <table class="table table-condensed table-striped table-hover table-bordered">
+        <thead>
+          <tr class="table_tr_vlan">
+            <th width="5%" class="text-center"><%= t('vlan_id') %></th>
+            <th width="10%" class="text-center"><%= t('vlan_name') %></th>
+            <th width="5%" class="text-center"><%= t('vlan_descriptor') %></th>
+            <th width="10%" class="text-center"><%= t('network') %></th>
+            <th width="5%" class="text-center"><%= t('netmask') %></th>
+            <th width="10%" class="text-center"><%= t('gateway') %></th>
+            <th class="text-center"><%= t('notes') %></th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td class="text-center"><%= vlan.number %></td>
+              <td class="text-center"><%= vlan.name %></td>
+              <td class="text-center"><%= vlan.descriptor %></td>
+              <td class="text-center"><%= vlan.network %></td>
+              <td class="text-center"><%= vlan.netmask %></td>
+              <td class="text-center"><%= vlan.gateway %></td>
+              <td><pre><%= vlan.notes %></pre></td>
+            </tr>
+        </tbody>
+      </table>
+      <% if vlan.ips.count == 0 %>
+        <%= t('not_assigned_ips')%>
+      <% else %>
+        <%= render 'vlan', vlan: vlan %>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <div class="alert alert-info">
+    <%= t('not_found_vlans_ips') %>
+  </div>
+<% end %>
+
+<p>&nbsp;</p>
+
+<h3><%= t('legend') %></h3>
+<ul>
+  <li><%= image_tag 'edit-delete.png', title: t('legend_not_include_in_hosts_file') %>: <%= t('legend_not_include_in_hosts_file') %></li>
+  <li><%= image_tag 'network-error.png', title: t('legend_not_use_vlan_descriptor') %>: <%= t('legend_not_use_vlan_descriptor') %></li>
+  <li><%= image_tag 'task-due.png', title: t('legend_not_use_hostname_alias') %>: <%= t('legend_not_use_hostname_alias') %></li>
+  <li><%= image_tag 'geany-close-all.png', title: t('legend_ip_reserved') %>: <%= t('legend_ip_reserved') %></li>
+  <li><%= image_tag 'application-exit.png', title: t('legend_not_use_domain_name') %>: <%= t('legend_not_use_domain_name') %></li>
+</ul>

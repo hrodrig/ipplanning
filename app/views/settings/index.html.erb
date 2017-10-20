@@ -1,0 +1,28 @@
+<%= render '/common/header' %>
+<h1 class="h2"><%= t('platform_settings') %></h1>
+<% if notice.present? %><div class="alert alert-info"><%= notice %></div><% end %>
+
+<table class="table table-condensed table-striped table-hover table-bordered" id="tableofrows">
+  <thead>
+    <tr class="table_tr">
+      <th style="text-align: center;"><%= t('setting_parameter') %></th>
+      <th style="text-align: center;"><%= t('setting_value') %></th>
+      <th style="text-align: center;"><%= t('description') %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @settings.each do |setting| %>
+      <tr>
+        <td style="font-weight: bold;text-align: right;">
+          <%= setting.name %>
+          <div class="buttongroup">
+            <%= link_to t('edit'), edit_setting_path(setting), class: 'btn btn-link' %>
+          </div>
+        </td>
+        <td><%= setting.value %></td>
+        <td><%= setting.description %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
