@@ -69,7 +69,9 @@ class Ip < ApplicationRecord
 
   def short_hostname
     if self.is_reserved?
-      return I18n.t('reserved').downcase
+      ip_address = self.address
+      dotted_ip_address = ip_address.gsub('.','-')
+      return I18n.t('reserved').downcase + '-' + dotted_ip_address
     end
     if self.host.present?
       if self.vlan.descriptor.present? and self.use_vlan_descriptor?
@@ -96,7 +98,7 @@ class Ip < ApplicationRecord
       str_hostname =  ''
       ip_address = self.address
       dotted_ip_address = ip_address.gsub('.','-')
-      str_hostname = I18n.t('reserved').downcase+'-'+dotted_ip_address
+      str_hostname = I18n.t('reserved').downcase + '-' + dotted_ip_address
       if self.use_vlan_descriptor?
         if self.vlan.descriptor.present?
           str_hostname = str_hostname + "-#{self.vlan.descriptor}"
