@@ -11,3 +11,28 @@
   <% end %>
   <hr />
 <% end %>
+
+<% if @externalips.count > 0 %>
+  <h2><%= t('external_ips') %></h2>
+  <table class="table table-condensed table-striped table-hover table-bordered" id="tableofrows">
+    <thead>
+      <tr class="table_tr">
+        <th class="text-center" width="15%"><%= t('ip') %></th>
+        <th class="text-center"><%= t('hostname') %></th>
+        <th class="text-center"><%= t('short_hostname') %></th>
+        <th class="text-center"><%= t('notes') %></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @externalips.each do |externalip| %>
+        <tr>
+          <td class="text-center"><%= externalip.address %></td>
+          <td class="text-center"><%= externalip.hostname %></td>
+          <td class="text-center"><%= externalip.short_hostname %></td>
+          <td><%= externalip.notes %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

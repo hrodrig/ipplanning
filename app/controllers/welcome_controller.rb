@@ -32,5 +32,6 @@ class WelcomeController < ApplicationController
     @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('home_page')
     @vlans = Vlan.all.order(:number)
     @ips = Ip.all.order(:number)
+    @externalips = Externalip.all.order(:address)
   end
 end
