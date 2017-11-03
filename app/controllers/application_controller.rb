@@ -26,4 +26,7 @@
 # ----------------------------------------------------------------------------
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+
+  http_basic_authenticate_with name: Setting.find_by_name('BasicAuthUsername').value, password: Setting.find_by_name('BasicAuthPassword').value if Setting.find_by_name('BasicAuthRequired').value == '1'
+
 end

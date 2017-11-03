@@ -26,3 +26,5 @@
 mysetup.rake
 mydeploy.sh
 /vendor/*
+public/assets/*/*
+public/assets/*

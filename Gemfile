@@ -75,6 +75,14 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  # Better error page for Rack apps
+  # https://github.com/charliesome/better_errors
+  gem 'better_errors'
+  # Every Rails page has footnotes that gives information about your application and
+  # links back to your editor http://blog.plataformatec.com.br/
+  # https://github.com/josevalim/rails-footnotes
+  gem 'rails-footnotes', '~> 4.0'
+
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

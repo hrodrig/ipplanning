@@ -10,6 +10,9 @@ namespace :app do
     Setting.find_or_create_by(name: 'HeaderLeftImage').update_attributes(value: '')
     Setting.find_or_create_by(name: 'HeaderCentralTitle').update_attributes(value: '')
     Setting.find_or_create_by(name: 'HeaderRightImage').update_attributes(value: '')
+    Setting.find_or_create_by(name: 'BasicAuthRequired').update_attributes(value: false)
+    Setting.find_or_create_by(name: 'BasicAuthUsername').update_attributes(value: 'foo')
+    Setting.find_or_create_by(name: 'BasicAuthPassword').update_attributes(value: 'bar')
 
   end
 end
