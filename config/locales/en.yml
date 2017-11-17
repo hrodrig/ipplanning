@@ -238,6 +238,7 @@ en:
     pm: pm
   add_environment: Add Environment
   add_external_ip: Add External Ip
+  add_host_to_ip: Add host to ip
   add_host_type: Add host type
   add_host: Add host
   add_infraestructure: Add Infraestructure
@@ -265,6 +266,9 @@ en:
   description: Description
   destroy_session: Close session
   destroy: Destroy
+  diagnostic_agent_hostname_compliance: Diagnostic Agent Hostname Compliance
+  diagnostic_agent_hostname_compliance_no: This hostname is not Diagnostic Agent Compliance
+  diagnostic_agent_hostname_compliance_yes: This hostname is Diagnostic Agent Compliance
   download_file: Download file
   download_instructions: "You can download generated hosts file (as root) with: "
   download: Download
@@ -358,12 +362,21 @@ en:
   new_host: Add Host
   new_infraestructure: Add Infraestructure
   new_sesion: Iniciar sesión
+  not_assigned_ips: 'There are not assigned ips'
+  not_found_environments: 'There are not environments. Please add one.'
+  not_found_externalips: 'There are not external ips address. Please add one.'
+  not_found_host_types: 'There are not hosts types. Please add one.'
+  not_found_hosts: 'There are not hosts. Please add one.'
+  not_found_infraestructures: 'There are not infraestructures. Please add one.'
+  not_found_vlans_ips: 'There are not vlans or ips. Please add one vlan prior to add any ip address.'
+  not_found_vlans: 'There are not vlans. Please add one.'
   not_include_in_hosts_file: Not included in generated hosts file
   not_use_domain_name: Not use defined domain name
   not_use_this_ip: This IP address is reserved
   not_use_vlan_descriptor: Not use VLAN descriptor
   notes: Notes
   ok: Ok
+  orphaned_ips_message: 'Orphaned ips found. Please remove them with: <code>Ip.where(vlan_id: nil).delete_all</code>'
   placeholder_environment_description_help: 'Add here any restricted information environment related. (optional)'
   placeholder_environment_description: 'Notes about this environment. (optional)'
   placeholder_environment_name_help: 'Environment name. Must be unique. (required)'
@@ -446,13 +459,3 @@ en:
   vlan_was_successfully_updated: Vlan was successfully updated
   vlan: VLAN
   vlans: VLANs
-  add_host_to_ip: Add host to ip
-  not_assigned_ips: 'There are not assigned ips'
-  orphaned_ips_message: 'Orphaned ips found. Please remove them with: <code>Ip.where(vlan_id: nil).delete_all</code>'
-  not_found_vlans: 'There are not vlans. Please add one.'
-  not_found_vlans_ips: 'There are not vlans or ips. Please add one vlan prior to add any ip address.'
-  not_found_externalips: 'There are not external ips address. Please add one.'
-  not_found_hosts: 'There are not hosts. Please add one.'
-  not_found_infraestructures: 'There are not infraestructures. Please add one.'
-  not_found_environments: 'There are not environments. Please add one.'
-  not_found_host_types: 'There are not hosts types. Please add one.'
