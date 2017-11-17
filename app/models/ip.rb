@@ -197,11 +197,11 @@ class Ip < ApplicationRecord
       end
 
       vlan.ips.order(:address).each do |ip|
-        if ip.include_in_etc_hosts.nil? and !ip.is_reserved
+        if !ip.include_in_etc_hosts.present?
           puts "Skipping ip adddress: #{ip.address}"
           next
         else
-          if  ip.host.present? or ip.hostname_alias.present?
+          if (ip.host.present? or ip.hostname_alias.present?) and ip.include_in_etc_hosts.present?
             line = "#{ip.address}\t#{ip.long_hostname}\t#{ip.short_hostname}\n"
             etc_hosts << line
           else
