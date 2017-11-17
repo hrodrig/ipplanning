@@ -242,6 +242,7 @@ es:
     pm: pm
   add_environment: Agregar ambiente
   add_external_ip: Agregar ip externa
+  add_host_to_ip: Agregar host a la ip
   add_host_type: Agregar tipo de host
   add_host: Agregar host
   add_infraestructure: Agregar infraestructura
@@ -269,6 +270,9 @@ es:
   description: Descripción
   destroy_session: Salir
   destroy: Borrar
+  diagnostic_agent_hostname_compliance: Nombre de Host válido para el Diagnostic Agent
+  diagnostic_agent_hostname_compliance_no: Este nombre de host no es válido para el Diagnostic Agent
+  diagnostic_agent_hostname_compliance_yes: Este nombre de host es válido para el Diagnostic Agent
   download_file: Descargar archivo
   download_instructions: "Ud. puede descargar el contenido del archivo hosts generado (como root) con los siguientes comandos: "
   download: Descargar
@@ -362,12 +366,21 @@ es:
   new_host: Agregar Host
   new_infraestructure: Agregar Infraestructura
   new_sesion: Iniciar sesión
+  not_assigned_ips: 'No existen direcciones ips en asignadas !'
+  not_found_environments: 'No existen ambientes. Por favor, cree al menos uno.'
+  not_found_externalips: 'No existen direcciones ips externas. Por favor, cree al menos una vlan.'
+  not_found_host_types: 'No existen tipos de hosts. Por favor, cree al menos uno.'
+  not_found_hosts: 'No existen hosts. Por favor, cree al menos uno.'
+  not_found_infraestructures: 'No existen infraestructuras. Por favor, cree al menos una.'
+  not_found_vlans_ips: 'No existen vlans. Por favor, cree al menos una vlan para poder agregar las direcciones ips.'
+  not_found_vlans: 'No existen vlans. Por favor, cree al menos una vlan.'
   not_include_in_hosts_file: No incluido en el archivo hosts generado
   not_use_domain_name: No usar el nombre de dominio
   not_use_this_ip: Esta dirección ip está reservada
   not_use_vlan_descriptor: No usar el descriptor de la vlan
   notes: Notas
   ok: Aceptar
+  orphaned_ips_message: 'Existen direcciones ips no asignadas a vlan alguna. Por favor, elimínelas desde la consola: <code>Ip.where(vlan_id: nil).delete_all</code>'
   placeholder_environment_description_help: 'Añada aquí cualquier información relacionada con el ambiente. (opcional)'
   placeholder_environment_description: 'Notas acerca de este ambiente. (opcional)'
   placeholder_environment_name_help: 'Nombre del ambiente. Debe ser único. (requerido)'
@@ -450,13 +463,3 @@ es:
   vlan_was_successfully_updated: La vlan fue actualizada con éxito.
   vlan: VLAN
   vlans: VLANs
-  add_host_to_ip: Agregar host a la ip
-  not_assigned_ips: 'No existen direcciones ips en asignadas !'
-  orphaned_ips_message: 'Existen direcciones ips no asignadas a vlan alguna. Por favor, elimínelas desde la consola: <code>Ip.where(vlan_id: nil).delete_all</code>'
-  not_found_vlans: 'No existen vlans. Por favor, cree al menos una vlan.'
-  not_found_vlans_ips: 'No existen vlans. Por favor, cree al menos una vlan para poder agregar las direcciones ips.'
-  not_found_externalips: 'No existen direcciones ips externas. Por favor, cree al menos una vlan.'
-  not_found_hosts: 'No existen hosts. Por favor, cree al menos uno.'
-  not_found_infraestructures: 'No existen infraestructuras. Por favor, cree al menos una.'
-  not_found_environments: 'No existen ambientes. Por favor, cree al menos uno.'
-  not_found_host_types: 'No existen tipos de hosts. Por favor, cree al menos uno.'

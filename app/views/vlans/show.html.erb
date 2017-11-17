@@ -23,6 +23,7 @@
       <th width="5%" class="text-center"><%= t('ip') %></th>
       <th width="5%" class="text-center"><%= t('complete_hostname') %></th>
       <th width="5%" class="text-center"><%= t('short_hostname') %></th>
+      <th width="5%" class="text-center">&nbsp;</th>
       <th width="10%" class="text-center"><%= t('additional_information') %></th>
       <th width="50%" class="text-center"><%= t('notes') %></th>
     </tr>
@@ -53,12 +54,40 @@
       <td style="text-align: center;" nowrap="nowrap">
         <%= ip.short_hostname %>
       </td>
+      <td style="text-align: center;" nowrap="nowrap">
+        <% if ip.short_hostname.present? %>
+          <% if ip.diagnostic_agent_hostname_compliance? %>
+            <%= image_tag 'on.png', title: t('diagnostic_agent_hostname_compliance_yes') %>
+          <% else %>
+            <%= image_tag 'off.png', title: t('diagnostic_agent_hostname_compliance_no') %>
+          <% end %>
+        <% end %>
+      </td>
       <td>
         <% if ip.host.present? %>
           <% if ip.host.other_ips(ip.address).present? %>
             <table class="table table-condensed table-bordered">
             <% ip.host.other_ips(ip.address).each do |ip| %>
-              <tr><td width="100px"><%= link_to ip.address, ip_path(ip) %></td><td><%= ip.long_hostname %></td><td><%= ip.short_hostname %></td></tr>
+              <tr>
+                <td width="100px">
+                  <%= link_to ip.address, ip_path(ip) %>
+                </td>
+                <td>
+                  <%= ip.long_hostname %>
+                </td>
+                <td>
+                  <%= ip.short_hostname %>
+                </td>
+                <td>
+                  <% if ip.short_hostname.present? %>
+                    <% if ip.diagnostic_agent_hostname_compliance? %>
+                      <%= image_tag 'on.png', title: t('diagnostic_agent_hostname_compliance_yes') %>
+                    <% else %>
+                      <%= image_tag 'off.png', title: t('diagnostic_agent_hostname_compliance_no') %>
+                    <% end %>
+                  <% end %>
+                </td>
+              </tr>
             <% end %>
           </table>
           <% end %>
