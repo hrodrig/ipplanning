@@ -83,6 +83,8 @@ group :development do
   # https://github.com/josevalim/rails-footnotes
   gem 'rails-footnotes', '~> 4.0'
 
+  gem 'binding_of_caller'
+
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -91,3 +93,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'ipaddress'
 gem 'devise'
 gem 'jquery-rails'
+
+# The missing Ruby method to print out time difference (duration) in year,
+# month, week, day, hour, minute, and second.
+# https://github.com/tmlee/time_difference
+gem 'time_difference'
