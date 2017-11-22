@@ -234,12 +234,12 @@ class Ip < ApplicationRecord
     return etc_hosts
   end
 
-  # return true if long hostname is bigger than 13 characters
+  # return true if long hostname is lower or equal than 13 characters
   # in SAP, to install Diagnostic Agent, the hostname must be
-  # lower than 13 characters
+  # lower or equal than 13 characters
   def diagnostic_agent_hostname_compliance?
     if self.short_hostname.present?
-      if self.short_hostname.size < 13
+      if self.short_hostname.size <= 13
         return true
       end
       return false
