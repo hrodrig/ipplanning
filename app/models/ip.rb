@@ -50,7 +50,7 @@ class Ip < ApplicationRecord
       return self.long_hostname
     end
     if self.host.present?
-      '<a href="/hosts/'+self.host.id.to_s+'">'+ self.text_hostname_with_descriptor + '</a>'
+      '<a href="'+root_path+'hosts/'+self.host.id.to_s+'">'+ self.text_hostname_with_descriptor + '</a>'
     else
       ''
     end
