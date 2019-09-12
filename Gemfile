@@ -91,7 +91,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'ipaddress'
-gem 'devise'
+gem 'devise', '~> 4.7.1'
 gem 'jquery-rails'
 
 # The missing Ruby method to print out time difference (duration) in year,
