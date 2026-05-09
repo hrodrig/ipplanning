@@ -25,7 +25,7 @@
 #
 # ----------------------------------------------------------------------------
 class SettingsController < ApplicationController
-  before_action :set_setting, only: [:show, :edit, :update, :destroy]
+  before_action :set_setting, only: [:edit, :update]
   before_action :authenticate_admin!
 
   # GET /settings
