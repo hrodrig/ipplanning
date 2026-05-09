@@ -3,6 +3,7 @@ require 'test_helper'
 class HostsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @host = hosts(:one)
+    sign_in admins(:one)
   end
 
   test "should get index" do

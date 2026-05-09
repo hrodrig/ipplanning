@@ -31,25 +31,25 @@ class InfraestructuresController < ApplicationController
   # GET /infraestructures
   # GET /infraestructures.json
   def index
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('infraestructures')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('infraestructures')
     @infraestructures = Infraestructure.all
   end
 
   # GET /infraestructures/1
   # GET /infraestructures/1.json
   def show
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('infraestructures') + ' - ' + @infraestructure.name
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('infraestructures') + ' - ' + @infraestructure.name
   end
 
   # GET /infraestructures/new
   def new
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('infraestructures') + ' - ' + I18n.t('adding_infraestructure')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('infraestructures') + ' - ' + I18n.t('adding_infraestructure')
     @infraestructure = Infraestructure.new
   end
 
   # GET /infraestructures/1/edit
   def edit
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('infraestructures') + ' - ' + @infraestructure.name + ' - ' + I18n.t('editing_infraestructure')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('infraestructures') + ' - ' + @infraestructure.name + ' - ' + I18n.t('editing_infraestructure')
   end
 
   # POST /infraestructures

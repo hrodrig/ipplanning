@@ -3,6 +3,7 @@ require 'test_helper'
 class ExternalipsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @externalip = externalips(:one)
+    sign_in admins(:one)
   end
 
   test "should get index" do
@@ -17,7 +18,7 @@ class ExternalipsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create externalip" do
     assert_difference('Externalip.count') do
-      post externalips_url, params: { externalip: { address: @externalip.address, include_in_etc_hosts: @externalip.include_in_etc_hosts, name: @externalip.name, notes: @externalip.notes } }
+      post externalips_url, params: { externalip: { address: @externalip.address, include_in_etc_hosts: @externalip.include_in_etc_hosts, hostname: @externalip.hostname, notes: @externalip.notes } }
     end
 
     assert_redirected_to externalip_url(Externalip.last)
@@ -34,7 +35,7 @@ class ExternalipsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update externalip" do
-    patch externalip_url(@externalip), params: { externalip: { address: @externalip.address, include_in_etc_hosts: @externalip.include_in_etc_hosts, name: @externalip.name, notes: @externalip.notes } }
+    patch externalip_url(@externalip), params: { externalip: { address: @externalip.address, include_in_etc_hosts: @externalip.include_in_etc_hosts, hostname: @externalip.hostname, notes: @externalip.notes } }
     assert_redirected_to externalip_url(@externalip)
   end
 

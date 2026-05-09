@@ -1,44 +1,52 @@
 <%= render '/common/header' %>
-<h1 class="h2"><%= t('hosts') %> (<%= @hosts.count.to_s %>)</h1>
-<% if notice.present? %><div class="alert alert-info"><%= notice %></div><% end %>
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-3xl font-bold text-gray-800"><%= t('hosts') %> (<%= @hosts.count.to_s %>)</h1>
+  <%= link_to t('add_host'), new_host_path, class: 'bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow transition duration-150 ease-in-out' %>
+</div>
 
-<% if @hosts.present? %>
-  <table class="table table-condensed table-striped table-hover table-bordered" id="tableofrows">
-    <thead>
-      <tr class="table_tr">
-        <th class="text-center">#</th>
-        <th class="text-center"><%= t('name') %></th>
-        <th class="text-center"><%= t('ips') %></th>
-        <th class="text-center"><%= t('description') %></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% i = 1 %>
-      <% @hosts.each do |host| %>
-        <tr>
-          <td class="text-center"><%= i.to_s %></td>
-          <td>
-            <a name="<%= host.id %>"></a>
-            <%= link_to host.name, edit_host_path(host) %>
-            <div class="buttongroup">
-              <%= link_to t('edit'), edit_host_path(host), class: 'btn btn-link' %>
-              <%= link_to t('destroy'), host, method: :delete, data: { confirm: t('are_you_sure'), class: 'btn btn-link' } %>
-            </div>
-          </td>
-          <td><%= host.all_ips.html_safe %></td>
-          <td><%= host.description.html_safe %></td>
-        </tr>
-        <% i+= 1 %>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <div class="alert alert-info">
-    <%= t('not_found_hosts') %>
+<% if notice.present? %>
+  <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4 shadow-sm" role="alert">
+    <%= notice %>
   </div>
 <% end %>
 
-<br />
+<% if @hosts.present? %>
+  <div class="overflow-x-auto bg-white rounded-lg shadow overflow-hidden border border-gray-200">
+    <table class="min-w-full divide-y divide-gray-200" id="tableofrows">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b">#</th>
+          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('name') %></th>
+          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('ips') %></th>
+          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('description') %></th>
+        </tr>
+      </thead>
 
-<%= link_to t('add_host'), new_host_path, class: 'btn btn-primary' %>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <% i = 1 %>
+        <% @hosts.each do |host| %>
+          <tr class="hover:bg-gray-50 transition-colors duration-150">
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-500 border-b text-center"><%= i.to_s %></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm border-b">
+              <a name="<%= host.id %>"></a>
+              <div class="font-medium text-blue-600 hover:text-blue-800 underline mb-2 text-center">
+                <%= link_to host.name, edit_host_path(host) %>
+              </div>
+              <div class="flex justify-center space-x-2">
+                <%= link_to t('edit'), edit_host_path(host), class: 'text-blue-600 hover:text-blue-800 hover:underline text-xs' %>
+                <%= link_to t('destroy'), host, data: { turbo_method: :delete, turbo_confirm: t('are_you_sure') }, class: 'text-red-600 hover:text-red-800 hover:underline text-xs' %>
+              </div>
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-900 border-b"><%= host.all_ips.html_safe %></td>
+            <td class="px-6 py-4 text-sm text-gray-600 border-b"><%= host.description.html_safe %></td>
+          </tr>
+          <% i+= 1 %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 shadow-sm" role="alert">
+    <%= t('not_found_hosts') %>
+  </div>
+<% end %>

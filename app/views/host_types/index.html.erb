@@ -1,44 +1,74 @@
 <%= render '/common/header' %>
-<p id="notice"><%= notice %></p>
 
-<h1 class="h2"><%= t('host_types') %> (<%= @host_types.count.to_s %>)</h1>
+<div class="sm:flex sm:items-center">
+  <div class="sm:flex-auto">
+    <h1 class="text-base font-semibold leading-6 text-gray-900"><%= t('host_types') %> (<%= @host_types.count.to_s %>)</h1>
+  </div>
+  <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+    <%= link_to t('add_host_type'), new_host_type_path, class: 'inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' %>
+  </div>
+</div>
 
-<% if @host_types.present? %>
-  <table class="table table-condensed table-striped table-hover table-bordered" id="tableofrows">
-    <thead>
-      <tr class="table_tr">
-        <th class="text-center">#</th>
-        <th class="text-center"><%= t('name') %></th>
-        <th class="text-center"><%= t('description') %></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% i = 1 %>
-      <% @host_types.each do |host_type| %>
-        <tr>
-          <td class="text-center"><%= i.to_s %></td>
-          <td>
-            <%= link_to host_type.name, host_type %>
-            <div class="buttongroup">
-              <%= link_to t('edit'), edit_host_type_path(host_type), class: 'btn btn-link' %>
-              <%= link_to t('destroy'), host_type, method: :delete, data: { confirm: t('are_you_sure'), class: 'btn btn-link' } %>
-            </div>
-          </td>
-          <td>
-            <%= host_type.description %>
-          </td>
-        </tr>
-        <% i+= 1 %>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <div class="alert alert-info">
-    <%= t('not_found_host_types') %>
+<% if notice.present? %>
+  <div class="rounded-md bg-blue-50 p-4 my-4">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <div class="ml-3 flex-1 md:flex md:justify-between">
+        <p class="text-sm text-blue-700"><%= notice %></p>
+      </div>
+    </div>
   </div>
 <% end %>
 
-<br />
-
-<%= link_to t('add_host_type'), new_host_type_path, class: 'btn btn-primary' %>
+<div class="mt-8 flow-root">
+  <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+      <% if @host_types.present? %>
+        <table class="min-w-full divide-y divide-gray-300">
+          <thead>
+            <tr>
+              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">#</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= t('name') %></th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= t('description') %></th>
+              <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                <span class="sr-only">Actions</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <% @host_types.each_with_index do |host_type, index| %>
+              <tr>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-500 sm:pl-0"><%= index + 1 %></td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-900">
+                  <%= link_to host_type.name, host_type, class: "text-indigo-600 hover:text-indigo-900" %>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= host_type.description %></td>
+                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                  <%= link_to t('edit'), edit_host_type_path(host_type), class: "text-indigo-600 hover:text-indigo-900 mr-4" %>
+                  <%= link_to t('destroy'), host_type, data: { turbo_method: :delete, turbo_confirm: t('are_you_sure') }, class: "text-red-600 hover:text-red-900" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <div class="rounded-md bg-blue-50 p-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm text-blue-700"><%= t('not_found_host_types') %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

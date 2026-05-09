@@ -1,13 +1,13 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  address: MyString
-  name: MyString
-  notes: MyString
-  include_in_etc_hosts: false
+  address: 8.8.8.8
+  hostname: google-public-dns.example.com
+  notes: Google Public DNS
+  include_in_etc_hosts: true
+  short_hostname: google-dns
 
 two:
-  address: MyString
-  name: MyString
-  notes: MyString
-  include_in_etc_hosts: false
+  address: 1.1.1.1
+  hostname: cloudflare-public-dns.example.com
+  notes: Cloudflare Public DNS
+  include_in_etc_hosts: true
+  short_hostname: cloudflare-dns

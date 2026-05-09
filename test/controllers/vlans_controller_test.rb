@@ -3,6 +3,7 @@ require 'test_helper'
 class VlansControllerTest < ActionDispatch::IntegrationTest
   setup do
     @vlan = vlans(:one)
+    sign_in admins(:one)
   end
 
   test "should get index" do

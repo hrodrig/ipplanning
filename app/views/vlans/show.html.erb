@@ -1,104 +1,145 @@
 <%= render '/common/header' %>
-<h1><%= t('vlan') %><%= @vlan.number.to_s %> (<%= link_to t('show_all'), vlans_path %>)</h1>
-<% if notice.present? %><div class="alert alert-info"><%= notice %></div><% end %>
 
-<%= render 'menu_vlans' %>
+<div class="px-4 sm:px-6 lg:px-8 mt-8">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-2xl font-semibold leading-6 text-gray-900">
+        <%= t('vlan') %> <%= @vlan.number.to_s %> 
+        <span class="text-sm font-normal text-gray-500 ml-2">(<%= link_to t('show_all'), vlans_path, class: "text-indigo-600 hover:text-indigo-900" %>)</span>
+      </h1>
+    </div>
+    <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+      <%= link_to t('edit'), edit_vlan_path(@vlan), class: "block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+    </div>
+  </div>
 
-<ul>
-  <li><strong><%= t('vlan_id') %> / <%= t('vlan_name') %></strong>: <%= @vlan.number.to_s %> / <%= @vlan.name %></li>
-  <% if @vlan.descriptor.present? %><li><strong><%= t('vlan_descriptor') %></strong>: <%= @vlan.descriptor %></li><% end %>
-  <li><strong><%= t('network') %> / <%= t('netmask') %> / <%= t('gateway') %></strong>: <%= @vlan.network %> / <%= @vlan.netmask.to_s %> / <%= @vlan.gateway %></li>
-  <li><strong><%= t('ips_assigned') %> / <%= t('ips_used') %></strong>: <%= @vlan.ips.count.to_s %> / <%= @vlan.used_ips %></li>
-  <li><strong><%= t('include_in_etc_hosts') %></strong>: <%= get_icon @vlan.include_in_etc_hosts %></li>
-  <% if @vlan.notes.present? %><li><strong><%= t('notes') %></strong>: <%= @vlan.notes.html_safe %></li><% end %>
-</ul>
+  <% if notice.present? %>
+    <div class="mt-6 rounded-md bg-blue-50 p-4">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+        </div>
+        <div class="ml-3"><p class="text-sm text-blue-700"><%= notice %></p></div>
+      </div>
+    </div>
+  <% end %>
 
-<p>
-  <%= link_to t('edit'), edit_vlan_path(@vlan), class: 'btn btn-primary' %>
-</p>
+  <div class="mt-6"><%= render 'menu_vlans' %></div>
 
-<table class="table table-condensed table-striped table-hover table-bordered">
-  <thead>
-    <tr class="table_tr">
-      <th width="5%" class="text-center"><%= t('ip') %></th>
-      <th width="5%" class="text-center"><%= t('complete_hostname') %></th>
-      <th width="5%" class="text-center"><%= t('short_hostname') %></th>
-      <th width="5%" class="text-center">&nbsp;</th>
-      <th width="10%" class="text-center"><%= t('additional_information') %></th>
-      <th width="50%" class="text-center"><%= t('notes') %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @vlan.ips.each do |ip| %>
-    <% if ip.address == @vlan.gateway %>
-    <tr class="danger">
-    <% else %>
-    <tr>
-    <% end %>
-      <td style="text-align: center;">
-        <a name="<%= ip.address %>"><%= link_to ip.address, ip_path(ip), title: t('show') %>
-      </td>
-      <td nowrap="nowrap">
-        <%= ip.hostname_with_descriptor.html_safe %>
-        <% if ip.hostname_alias.present? and ip.host.present? %>
-          <br />
-          <p>
-            <kbd><%= t('hostname_alias_with_host') %>: <%= ip.host.name %></kbd>
-          </p>
+  <div class="mt-6 overflow-hidden bg-white shadow sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6 border-b border-gray-200 bg-gray-50">
+      <h3 class="text-base font-semibold leading-6 text-gray-900">Detalles de la VLAN</h3>
+    </div>
+    <div class="border-t border-gray-100">
+      <dl class="divide-y divide-gray-100">
+        <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-900"><%= t('vlan_id') %> / <%= t('vlan_name') %></dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @vlan.number.to_s %> / <%= @vlan.name %></dd>
+        </div>
+        <% if @vlan.descriptor.present? %>
+          <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-900"><%= t('vlan_descriptor') %></dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @vlan.descriptor %></dd>
+          </div>
         <% end %>
+        <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-900"><%= t('network') %> / <%= t('netmask') %> / <%= t('gateway') %></dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @vlan.network %> / <%= @vlan.netmask.to_s %> / <%= @vlan.gateway %></dd>
+        </div>
+        <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-900"><%= t('ips_assigned') %> / <%= t('ips_used') %></dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @vlan.ips.count.to_s %> / <%= @vlan.used_ips %></dd>
+        </div>
+        <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-900"><%= t('include_in_etc_hosts') %></dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= get_icon @vlan.include_in_etc_hosts %></dd>
+        </div>
+        <% if @vlan.notes.present? %>
+          <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-900"><%= t('notes') %></dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @vlan.notes.html_safe %></dd>
+          </div>
+        <% end %>
+      </dl>
+    </div>
+  </div>
 
-        <% if ip.host.nil? and ip.hostname_alias.nil? %>
-          <span class="text-center"><%= link_to '+', add_host_to_ip_path(ip), class: 'btn btn-primary btn-xs' %></span>
-        <% end %>
-      </td>
-      <td style="text-align: center;" nowrap="nowrap">
-        <%= ip.short_hostname %>
-      </td>
-      <td style="text-align: center;" nowrap="nowrap">
-        <% if ip.short_hostname.present? %>
-          <% if ip.diagnostic_agent_hostname_compliance? %>
-            <%= image_tag 'on.png', title: t('diagnostic_agent_hostname_compliance_yes') %>
-          <% else %>
-            <%= image_tag 'off.png', title: t('diagnostic_agent_hostname_compliance_no') %>
-          <% end %>
-        <% end %>
-      </td>
-      <td>
-        <% if ip.host.present? %>
-          <% if ip.host.other_ips(ip.address).present? %>
-            <table class="table table-condensed table-bordered">
-            <% ip.host.other_ips(ip.address).each do |ip| %>
+  <div class="mt-8 flow-root">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+          <table class="min-w-full divide-y divide-gray-300">
+            <thead class="bg-gray-50">
               <tr>
-                <td width="100px">
-                  <%= link_to ip.address, ip_path(ip) %>
-                </td>
-                <td>
-                  <%= ip.long_hostname %>
-                </td>
-                <td>
-                  <%= ip.short_hostname %>
-                </td>
-                <td>
-                  <% if ip.short_hostname.present? %>
-                    <% if ip.diagnostic_agent_hostname_compliance? %>
-                      <%= image_tag 'on.png', title: t('diagnostic_agent_hostname_compliance_yes') %>
-                    <% else %>
-                      <%= image_tag 'off.png', title: t('diagnostic_agent_hostname_compliance_no') %>
-                    <% end %>
-                  <% end %>
-                </td>
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"><%= t('ip') %></th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= t('complete_hostname') %></th>
+                <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"><%= t('short_hostname') %></th>
+                <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Status</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= t('additional_information') %></th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= t('notes') %></th>
               </tr>
-            <% end %>
+            </thead>
+            <tbody class="divide-y divide-gray-200 bg-white">
+              <% @vlan.ips.each do |ip| %>
+                <tr class="<%= 'bg-red-50' if ip.address == @vlan.gateway %> hover:bg-gray-50">
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                    <%= link_to ip.address, ip_path(ip), title: t('show'), class: "text-indigo-600 hover:text-indigo-900" %>
+                  </td>
+                  <td class="px-3 py-4 text-sm text-gray-500">
+                    <%= ip.hostname_with_descriptor.html_safe %>
+                    <% if ip.hostname_alias.present? and ip.host.present? %>
+                      <div class="mt-1">
+                        <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                          <%= t('hostname_alias_with_host') %>: <%= ip.host.name %>
+                        </span>
+                      </div>
+                    <% end %>
+                    <% if ip.host.nil? and ip.hostname_alias.nil? %>
+                      <div class="mt-2">
+                        <%= link_to '+', add_host_to_ip_path(ip), class: "inline-flex items-center rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500" %>
+                      </div>
+                    <% end %>
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-center text-sm text-gray-500"><%= ip.short_hostname %></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-center text-sm text-gray-500">
+                    <% if ip.short_hostname.present? %>
+                      <% if ip.diagnostic_agent_hostname_compliance? %>
+                        <span class="text-green-600" title="<%= t('diagnostic_agent_hostname_compliance_yes') %>">●</span>
+                      <% else %>
+                        <span class="text-red-600" title="<%= t('diagnostic_agent_hostname_compliance_no') %>">●</span>
+                      <% end %>
+                    <% end %>
+                  </td>
+                  <td class="px-3 py-4 text-sm text-gray-500">
+                    <% if ip.host.present? && ip.host.other_ips(ip.address).present? %>
+                      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-md">
+                        <table class="min-w-full divide-y divide-gray-200">
+                          <tbody class="divide-y divide-gray-100 bg-white">
+                            <% ip.host.other_ips(ip.address).each do |other_ip| %>
+                              <tr>
+                                <td class="px-2 py-1 text-xs font-medium text-indigo-600"><%= link_to other_ip.address, ip_path(other_ip) %></td>
+                                <td class="px-2 py-1 text-xs text-gray-500"><%= other_ip.short_hostname %></td>
+                                <td class="px-2 py-1 text-xs text-center">
+                                  <% if other_ip.short_hostname.present? %>
+                                    <span class="<%= other_ip.diagnostic_agent_hostname_compliance? ? 'text-green-500' : 'text-red-500' %>">●</span>
+                                  <% end %>
+                                </td>
+                              </tr>
+                            <% end %>
+                          </tbody>
+                        </table>
+                      </div>
+                    <% end %>
+                  </td>
+                  <td class="px-3 py-4 text-sm text-gray-500">
+                    <% if ip.host.present? %><%= ip.host.description.html_safe %><% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
           </table>
-          <% end %>
-        <% end %>
-      </td>
-      <td>
-        <% if ip.host.present? %>
-          <%= ip.host.description.html_safe %>
-        <% end %>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

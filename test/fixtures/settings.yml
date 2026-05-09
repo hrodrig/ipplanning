@@ -1,11 +1,16 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  name: MyString
-  value: MyString
-  description: MyText
-
-two:
-  name: MyString
-  value: MyString
-  description: MyText
+website_name:
+  name: WebsiteName
+  value: IP Planning Test
+  description: Name of the site
+brand:
+  name: Brand
+  value: IPPLANNING
+  description: Brand name
+footer:
+  name: Footer
+  value: © 2024 Test
+  description: Footer text
+basic_auth_required:
+  name: BasicAuthRequired
+  value: "0"
+  description: Required?

@@ -31,13 +31,13 @@ class SettingsController < ApplicationController
   # GET /settings
   # GET /settings.json
   def index
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('platform_settings')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('platform_settings')
     @settings = Setting.all.order(:name)
   end
 
   # GET /settings/1/edit
   def edit
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('platform_settings') + ' - ' + @setting.name + ' - ' + I18n.t('editing_setting')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('platform_settings') + ' - ' + @setting.name + ' - ' + I18n.t('editing_setting')
   end
 
   # PATCH/PUT /settings/1

@@ -31,25 +31,25 @@ class HostsController < ApplicationController
   # GET /hosts
   # GET /hosts.json
   def index
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('hosts')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('hosts')
     @hosts = Host.all.order(:name)
   end
 
   # GET /hosts/1
   # GET /hosts/1.json
   def show
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('hosts') + ' - ' + @host.name
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('hosts') + ' - ' + @host.name
   end
 
   # GET /hosts/new
   def new
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('hosts') + ' - ' + I18n.t('adding_host')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('hosts') + ' - ' + I18n.t('adding_host')
     @host = Host.new
   end
 
   # GET /hosts/1/edit
   def edit
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('hosts') + ' - ' + @host.name + ' - ' + I18n.t('editing_host')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('hosts') + ' - ' + @host.name + ' - ' + I18n.t('editing_host')
   end
 
   # POST /hosts

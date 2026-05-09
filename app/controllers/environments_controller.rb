@@ -31,25 +31,25 @@ class EnvironmentsController < ApplicationController
   # GET /environments
   # GET /environments.json
   def index
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('environments')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('environments')
     @environments = Environment.all
   end
 
   # GET /environments/1
   # GET /environments/1.json
   def show
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('environments') + ' - ' + @environment.name
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('environments') + ' - ' + @environment.name
   end
 
   # GET /environments/new
   def new
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('environments') + ' - ' + I18n.t('adding_environment')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('environments') + ' - ' + I18n.t('adding_environment')
     @environment = Environment.new
   end
 
   # GET /environments/1/edit
   def edit
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('environments') + ' - ' + @environment.name + ' - ' + I18n.t('editing_environment')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('environments') + ' - ' + @environment.name + ' - ' + I18n.t('editing_environment')
   end
 
   # POST /environments

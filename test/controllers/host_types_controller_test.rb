@@ -3,6 +3,7 @@ require 'test_helper'
 class HostTypesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @host_type = host_types(:one)
+    sign_in admins(:one)
   end
 
   test "should get index" do
@@ -39,8 +40,9 @@ class HostTypesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy host_type" do
+    @host_type_to_destroy = HostType.create(name: "Host Type to destroy")
     assert_difference('HostType.count', -1) do
-      delete host_type_url(@host_type)
+      delete host_type_url(@host_type_to_destroy)
     end
 
     assert_redirected_to host_types_url

@@ -1,17 +1,21 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
   vlan: one
-  number: 1
-  hostname: MyString
-  notes: MyText
-  background_color: MyString
-  text_color: MyString
+  address: 192.168.10.1
+  notes: Management Gateway
+  include_in_etc_hosts: true
+  use_vlan_descriptor: true
+  hostname_alias: mgmt-gw
+  use_domain_name: true
+  is_reserved: false
+  complete_hostname_alias: mgmt-gw.example.com
 
 two:
   vlan: two
-  number: 1
-  hostname: MyString
-  notes: MyText
-  background_color: MyString
-  text_color: MyString
+  address: 192.168.20.1
+  notes: Users Gateway
+  include_in_etc_hosts: true
+  use_vlan_descriptor: true
+  hostname_alias: users-gw
+  use_domain_name: true
+  is_reserved: false
+  complete_hostname_alias: users-gw.example.com

@@ -1,8 +1,8 @@
-<%= form_with(model: vlan, local: true, html: {class: "form-horizontal"}) do |form| %>
+<%= form_with(model: vlan, local: true, html: {class: "space-y-6 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 border border-gray-200"}) do |form| %>
   <% if vlan.errors.any? %>
-    <div class="alert alert-danger">
-      <h2><%= pluralize(vlan.errors.count, "error") %> <%= t('prohibited_this_information_from_being_saved') %>:</h2>
-      <ul>
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded shadow-sm" role="alert">
+      <h2 class="font-bold mb-2"><%= pluralize(vlan.errors.count, "error") %> <%= t('prohibited_this_information_from_being_saved') %>:</h2>
+      <ul class="list-disc list-inside text-sm">
       <% vlan.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
@@ -10,76 +10,74 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= form.label :number, t('id') + ' :', class: "col-sm-2 control-label upcase" %>
-    <div class="col-sm-10">
-      <%= form.number_field :number, id: :vlan_number, class: "form-control", placeholder: t('placeholder_vlan_id') %>
-      <p class="help-block"><%= t('placeholder_vlan_id_help') %></p>
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+    <%= form.label :number, t('id') + ' :', class: "md:col-span-2 block text-gray-700 text-sm font-bold pt-2 uppercase tracking-wide" %>
+    <div class="md:col-span-10">
+      <%= form.number_field :number, id: :vlan_number, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150", placeholder: t('placeholder_vlan_id') %>
+      <p class="text-gray-500 text-xs italic mt-1"><%= t('placeholder_vlan_id_help') %></p>
     </div>
   </div>
 
-  <div class="form-group">
-    <%= form.label :name, t('name') + ' :', class: "col-sm-2 control-label upcase" %>
-    <div class="col-sm-10">
-      <%= form.text_field :name, id: :vlan_name, class: "form-control", placeholder: t('placeholder_vlan_name') %>
-      <p class="help-block"><%= t('placeholder_vlan_name_help') %></p>
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+    <%= form.label :name, t('name') + ' :', class: "md:col-span-2 block text-gray-700 text-sm font-bold pt-2 uppercase tracking-wide" %>
+    <div class="md:col-span-10">
+      <%= form.text_field :name, id: :vlan_name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150", placeholder: t('placeholder_vlan_name') %>
+      <p class="text-gray-500 text-xs italic mt-1"><%= t('placeholder_vlan_name_help') %></p>
     </div>
   </div>
 
-  <div class="form-group">
-    <%= form.label :descriptor, t('descriptor') + ' :', class: "col-sm-2 control-label upcase" %>
-    <div class="col-sm-10">
-      <%= form.text_field :descriptor, id: :vlan_descriptor, class: "form-control", placeholder: t('placeholder_vlan_descriptor') %>
-      <p class="help-block"><%= t('placeholder_vlan_descriptor_help') %></p>
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+    <%= form.label :descriptor, t('descriptor') + ' :', class: "md:col-span-2 block text-gray-700 text-sm font-bold pt-2 uppercase tracking-wide" %>
+    <div class="md:col-span-10">
+      <%= form.text_field :descriptor, id: :vlan_descriptor, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150", placeholder: t('placeholder_vlan_descriptor') %>
+      <p class="text-gray-500 text-xs italic mt-1"><%= t('placeholder_vlan_descriptor_help') %></p>
     </div>
   </div>
 
-  <div class="form-group">
-    <%= form.label :network, t('network') + ' :', class: "col-sm-2 control-label upcase" %>
-    <div class="col-sm-10">
-      <%= form.text_field :network, id: :vlan_network, class: "form-control", placeholder: t('placeholder_vlan_network') %>
-      <p class="help-block"><%= t('placeholder_vlan_network_help') %></p>
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+    <%= form.label :network, t('network') + ' :', class: "md:col-span-2 block text-gray-700 text-sm font-bold pt-2 uppercase tracking-wide" %>
+    <div class="md:col-span-10">
+      <%= form.text_field :network, id: :vlan_network, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150", placeholder: t('placeholder_vlan_network') %>
+      <p class="text-gray-500 text-xs italic mt-1"><%= t('placeholder_vlan_network_help') %></p>
     </div>
   </div>
 
-  <div class="form-group">
-    <%= form.label :netmask, t('netmask') + ' :', class: "col-sm-2 control-label upcase" %>
-    <div class="col-sm-10">
-      <%= form.text_field :netmask, id: :vlan_netmask, class: "form-control", placeholder: t('placeholder_vlan_netmask') %>
-      <p class="help-block"><%= t('placeholder_vlan_netmask_help') %></p>
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+    <%= form.label :netmask, t('netmask') + ' :', class: "md:col-span-2 block text-gray-700 text-sm font-bold pt-2 uppercase tracking-wide" %>
+    <div class="md:col-span-10">
+      <%= form.text_field :netmask, id: :vlan_netmask, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150", placeholder: t('placeholder_vlan_netmask') %>
+      <p class="text-gray-500 text-xs italic mt-1"><%= t('placeholder_vlan_netmask_help') %></p>
     </div>
   </div>
 
-  <div class="form-group">
-    <%= form.label :gateway, t('gateway') + ' :', class: "col-sm-2 control-label upcase" %>
-    <div class="col-sm-10">
-      <%= form.text_field :gateway, id: :vlan_gateway, class: "form-control", placeholder: t('placeholder_vlan_default_gateway') %>
-      <p class="help-block"><%= t('placeholder_vlan_default_gateway_help') %></p>
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+    <%= form.label :gateway, t('gateway') + ' :', class: "md:col-span-2 block text-gray-700 text-sm font-bold pt-2 uppercase tracking-wide" %>
+    <div class="md:col-span-10">
+      <%= form.text_field :gateway, id: :vlan_gateway, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150", placeholder: t('placeholder_vlan_default_gateway') %>
+      <p class="text-gray-500 text-xs italic mt-1"><%= t('placeholder_vlan_default_gateway_help') %></p>
     </div>
   </div>
 
-  <div class="form-group">
-    <%= form.label :include_in_etc_hosts, t('include_in_etc_hosts') + ' ?', class: "col-sm-2 control-label upcase" %>
-    <div class="col-sm-10">
-      <%= form.check_box :include_in_etc_hosts, id: :vlan_include_in_etc_hosts %>
-      <p class="help-block"><%= t('placeholder_vlan_include_in_etc_hosts_help') %></p>
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+    <%= form.label :include_in_etc_hosts, t('include_in_etc_hosts') + ' ?', class: "md:col-span-2 block text-gray-700 text-sm font-bold uppercase tracking-wide" %>
+    <div class="md:col-span-10 flex items-center">
+      <%= form.check_box :include_in_etc_hosts, id: :vlan_include_in_etc_hosts, class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded transition duration-150" %>
+      <p class="ml-3 text-gray-500 text-xs italic"><%= t('placeholder_vlan_include_in_etc_hosts_help') %></p>
     </div>
   </div>
 
-  <div class="form-group">
-    <%= form.label :notes, t('notes') + ' :', class: "col-sm-2 control-label upcase" %>
-    <div class="col-sm-10">
-      <%= form.text_area :notes, id: :vlan_notes, class: "form-control", placeholder: t('placeholder_vlan_notes') %>
-      <p class="help-block"><%= t('placeholder_vlan_notes_help') %></p>
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+    <%= form.label :notes, t('notes') + ' :', class: "md:col-span-2 block text-gray-700 text-sm font-bold pt-2 uppercase tracking-wide" %>
+    <div class="md:col-span-10">
+      <%= form.text_area :notes, id: :vlan_notes, rows: 4, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150", placeholder: t('placeholder_vlan_notes') %>
+      <p class="text-gray-500 text-xs italic mt-1"><%= t('placeholder_vlan_notes_help') %></p>
     </div>
   </div>
 
-  <div class="form-group">
-    <div class="col-sm-2 control-label">&nbsp;</div>
-    <div class="col-sm-10">
-      <div class="actions">
-        <%= form.submit t('ok'), class: 'btn btn-primary' %>
-      </div>
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-4 pt-4">
+    <div class="md:col-span-2"></div>
+    <div class="md:col-span-10">
+      <%= form.submit t('ok'), class: 'w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded shadow-lg transition duration-150 ease-in-out cursor-pointer' %>
     </div>
   </div>
 

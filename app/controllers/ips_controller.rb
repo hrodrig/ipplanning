@@ -31,7 +31,7 @@ class IpsController < ApplicationController
   # GET /ips
   # GET /ips.json
   def index
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('ips')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('ips')
     @vlans = Vlan.all.order(:number)
     @ips = Ip.all.order(:number)
     @orphaned_ips = Ip.where(vlan_id: nil)
@@ -40,18 +40,18 @@ class IpsController < ApplicationController
   # GET /ips/1
   # GET /ips/1.json
   def show
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('ips') + ' - ' + @ip.address
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('ips') + ' - ' + @ip.address
   end
 
   # # GET /ips/new
   # def new
-  #   @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('ips') + ' - ' + I18n.t('adding_ip')
+  #   @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('ips') + ' - ' + I18n.t('adding_ip')
   #   @ip = Ip.new
   # end
 
   # GET /ips/1/edit
   def edit
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('ips') + ' - ' + @ip.address + ' - ' + I18n.t('editing_ip')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('ips') + ' - ' + @ip.address + ' - ' + I18n.t('editing_ip')
   end
 
   # POST /ips

@@ -1,86 +1,116 @@
-<%= form_with(model: host, local: true, html: {class: "form-horizontal"}) do |form| %>
-  <table class="table table-condensed table-striped table-hover table-bordered">
-    <tr>
-      <td colspan="2">
-        <% if host.errors.any? %>
-          <div class="alert alert-danger">
-            <h2><%= pluralize(host.errors.count, "error") %> <%= t('prohibited_this_information_from_being_saved') %>:</h2>
-
-            <ul>
-            <% host.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-            </ul>
-          </div>
-        <% end %>
-      </td>
-    </tr>
-    <tr>
-      <td width="60%">
-        <%= form.text_field :name, id: :host_name, class: "form-control", placeholder: t('placeholder_hosts_hostname') %>
-        <br />
-        <%= form.text_area :description, id: :host_description, class: "form-control", placeholder: t('placeholder_hosts_description') %>
-      </td>
-      <td>
-        <% if action_name == 'edit' %>
-          <% if host.ips.count > 0 %>
-            <ul>
-              <% host.ips.each do |ip| %>
-                <li><%= ip.address %> <%= link_to t('destroy'), destroy_ip_from_host_path(host, ip), method: :delete %></li>
+<%= form_with(model: host, local: true, class: "space-y-8") do |form| %>
+  <% if host.errors.any? %>
+    <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800">
+            <%= pluralize(host.errors.count, "error") %> <%= t('prohibited_this_information_from_being_saved') %>:
+          </h3>
+          <div class="mt-2 text-sm text-red-700">
+            <ul class="list-disc pl-5 space-y-1">
+              <% host.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
               <% end %>
             </ul>
-          <% end %>
-          <%= link_to t('add_ip'), add_ip_to_host_path(@host), class: 'btn btn-danger' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="space-y-6">
+      <div>
+        <%= form.label :name, t('name'), class: "block font-medium text-sm text-gray-700" %>
+        <div class="mt-1">
+          <%= form.text_field :name, id: :host_name, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full", placeholder: t('placeholder_hosts_hostname') %>
+        </div>
+      </div>
+
+      <div>
+        <%= form.label :description, t('description'), class: "block font-medium text-sm text-gray-700" %>
+        <div class="mt-1">
+          <%= form.text_area :description, id: :host_description, rows: 4, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full", placeholder: t('placeholder_hosts_description') %>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+      <h3 class="text-lg font-medium text-gray-900 mb-4"><%= t('ips') %></h3>
+      <% if action_name == 'edit' %>
+        <% if host.ips.count > 0 %>
+          <ul class="space-y-2 mb-4">
+            <% host.ips.each do |ip| %>
+              <li class="flex items-center justify-between bg-white p-2 rounded shadow-sm border border-gray-100">
+                <span class="text-sm font-mono text-gray-700"><%= ip.address %></span>
+                <%= link_to t('destroy'), destroy_ip_from_host_path(host, ip), data: { turbo_method: :delete }, class: "text-red-600 hover:text-red-800 text-xs font-semibold" %>
+              </li>
+            <% end %>
+          </ul>
         <% else %>
-          <div class="alert alert-info"><%= t('create_host_to_add_ip') %></div>
+          <p class="text-sm text-gray-500 mb-4"><%= t('not_found_ips') %></p>
         <% end %>
-      </td>
-    </tr>
-  </table>
+        <%= link_to t('add_ip'), add_ip_to_host_path(@host), class: 'inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150' %>
+      <% else %>
+        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 text-sm text-blue-700">
+          <%= t('create_host_to_add_ip') %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 
-  <table class="table table-condensed table-striped table-hover table-bordered">
-    <tr class="table_tr">
-      <th class="text-center" width="33%"><%= t('infraestructure') %></th>
-      <th class="text-center" width="33%"><%= t('environment') %></th>
-      <th class="text-center" width="33%"><%= t('host_type') %></th>
-    </tr>
-    <tr>
-      <td class="text-center">
-        <%= form.select :infraestructure_id, Infraestructure.order(:name).collect{|row| [row.name, row.id]} %>
-      </td>
-      <td class="text-center">
-        <%= form.select :environment_id, Environment.order(:name).collect{|row| [row.name, row.id]} %>
-      </td>
-      <td class="text-center">
-        <%= form.select :host_type_id, HostType.order(:name).collect{|row| [row.name, row.id]} %>
-      </td>
-    </tr>
-    <tr class="table_tr">
-      <th class="text-center"><%= t('memory_size') %></th>
-      <th class="text-center"><%= t('sockets') %></th>
-      <th class="text-center"><%= t('cores') %></th>
-    </tr>
-    <tr>
-      <td class="text-center">
-        <%= form.text_field :memory_size, id: :memory_size, class: "form-control", placeholder: t('placeholder_hosts_memory_size') %>
-      </td>
-      <td class="text-center">
-        <%= form.text_field :total_sockets, id: :total_sockets, class: "form-control", placeholder: t('placeholder_hosts_total_sockets') %>
-      </td>
-      <td class="text-center">
-        <%= form.text_field :total_vcpus, id: :total_vcpus, class: "form-control", placeholder: t('placeholder_hosts_total_vcpus') %>
-      </td>
-    </tr>
-  </table>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-gray-200">
+    <div>
+      <%= form.label :infraestructure_id, t('infraestructure'), class: "block font-medium text-sm text-gray-700" %>
+      <div class="mt-1">
+        <%= form.select :infraestructure_id, Infraestructure.order(:name).collect{|row| [row.name, row.id]}, {}, { class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full" } %>
+      </div>
+    </div>
 
+    <div>
+      <%= form.label :environment_id, t('environment'), class: "block font-medium text-sm text-gray-700" %>
+      <div class="mt-1">
+        <%= form.select :environment_id, Environment.order(:name).collect{|row| [row.name, row.id]}, {}, { class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full" } %>
+      </div>
+    </div>
 
-  <div class="form-group">
-    <div class="col-sm-2 control-label">&nbsp;</div>
-    <div class="col-sm-10">
-      <div class="actions">
-        <%= form.submit t('ok'), class: 'btn btn-primary' %>
+    <div>
+      <%= form.label :host_type_id, t('host_type'), class: "block font-medium text-sm text-gray-700" %>
+      <div class="mt-1">
+        <%= form.select :host_type_id, HostType.order(:name).collect{|row| [row.name, row.id]}, {}, { class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full" } %>
       </div>
     </div>
   </div>
 
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-gray-200">
+    <div>
+      <%= form.label :memory_size, t('memory_size'), class: "block font-medium text-sm text-gray-700" %>
+      <div class="mt-1">
+        <%= form.text_field :memory_size, id: :memory_size, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full", placeholder: t('placeholder_hosts_memory_size') %>
+      </div>
+    </div>
+
+    <div>
+      <%= form.label :total_sockets, t('sockets'), class: "block font-medium text-sm text-gray-700" %>
+      <div class="mt-1">
+        <%= form.text_field :total_sockets, id: :total_sockets, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full", placeholder: t('placeholder_hosts_total_sockets') %>
+      </div>
+    </div>
+
+    <div>
+      <%= form.label :total_vcpus, t('cores'), class: "block font-medium text-sm text-gray-700" %>
+      <div class="mt-1">
+        <%= form.text_field :total_vcpus, id: :total_vcpus, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full", placeholder: t('placeholder_hosts_total_vcpus') %>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-end mt-8 pt-6 border-t border-gray-200">
+    <%= form.submit t('ok'), class: 'inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150' %>
+  </div>
 <% end %>

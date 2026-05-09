@@ -2,17 +2,16 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171018031438) do
-
-  create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+ActiveRecord::Schema[8.0].define(version: 2026_05_09_112440) do
+  create_table "admins", charset: "utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -29,7 +28,7 @@ ActiveRecord::Schema.define(version: 20171018031438) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "environments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "environments", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -37,7 +36,7 @@ ActiveRecord::Schema.define(version: 20171018031438) do
     t.index ["name"], name: "index_environments_on_name", unique: true
   end
 
-  create_table "externalips", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "externalips", charset: "utf8", force: :cascade do |t|
     t.string "address", null: false
     t.string "hostname", null: false
     t.string "notes"
@@ -49,7 +48,7 @@ ActiveRecord::Schema.define(version: 20171018031438) do
     t.index ["hostname"], name: "index_externalips_on_hostname"
   end
 
-  create_table "host_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "host_types", charset: "utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -57,7 +56,7 @@ ActiveRecord::Schema.define(version: 20171018031438) do
     t.index ["name"], name: "index_host_types_on_name"
   end
 
-  create_table "hosts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "hosts", charset: "utf8", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
@@ -75,13 +74,13 @@ ActiveRecord::Schema.define(version: 20171018031438) do
     t.index ["name"], name: "index_hosts_on_name", unique: true
   end
 
-  create_table "hosts_ips", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "hosts_ips", id: false, charset: "utf8", force: :cascade do |t|
     t.integer "host_id"
     t.integer "ip_id"
     t.index ["host_id", "ip_id"], name: "index_hosts_ips_on_host_id_and_ip_id", unique: true
   end
 
-  create_table "infraestructures", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "infraestructures", charset: "utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -89,7 +88,7 @@ ActiveRecord::Schema.define(version: 20171018031438) do
     t.index ["name"], name: "index_infraestructures_on_name", unique: true
   end
 
-  create_table "ips", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "ips", charset: "utf8", force: :cascade do |t|
     t.integer "vlan_id"
     t.string "address"
     t.text "notes"
@@ -108,7 +107,7 @@ ActiveRecord::Schema.define(version: 20171018031438) do
     t.index ["vlan_id"], name: "index_ips_on_vlan_id"
   end
 
-  create_table "settings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "settings", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "value"
     t.text "description"
@@ -117,7 +116,7 @@ ActiveRecord::Schema.define(version: 20171018031438) do
     t.index ["name"], name: "index_settings_on_name", unique: true
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", charset: "utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -134,7 +133,7 @@ ActiveRecord::Schema.define(version: 20171018031438) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "vlans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "vlans", charset: "utf8", force: :cascade do |t|
     t.integer "number"
     t.text "name"
     t.string "network"

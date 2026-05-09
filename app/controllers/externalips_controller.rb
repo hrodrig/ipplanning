@@ -31,25 +31,25 @@ class ExternalipsController < ApplicationController
   # GET /externalips
   # GET /externalips.json
   def index
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('external_ips')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('external_ips')
     @externalips = Externalip.all
   end
 
   # GET /externalips/1
   # GET /externalips/1.json
   def show
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('external_ips') + ' - ' + @externalip.address
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('external_ips') + ' - ' + @externalip.address
   end
 
   # GET /externalips/new
   def new
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('external_ips') + ' - ' + I18n.t('adding_external_ip')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('external_ips') + ' - ' + I18n.t('adding_external_ip')
     @externalip = Externalip.new
   end
 
   # GET /externalips/1/edit
   def edit
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('external_ips') + ' - ' + @externalip.address
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('external_ips') + ' - ' + @externalip.address
   end
 
   # POST /externalips

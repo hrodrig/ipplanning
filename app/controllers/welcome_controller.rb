@@ -29,7 +29,7 @@ class WelcomeController < ApplicationController
   #before_action :authenticate_user!
 
   def index
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('home_page')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('home_page')
     @vlans = Vlan.all.order(:number)
     @ips = Ip.all.order(:number)
     @externalips = Externalip.all.order(:address)

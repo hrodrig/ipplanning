@@ -1,49 +1,74 @@
 <%= render '/common/header' %>
-<h1 class="h2"><%= t('infraestructure') %></h1>
-<% if notice.present? %><div class="alert alert-info"><%= notice %></div><% end %>
 
-<table class="table table-condensed table-striped table-hover table-bordered">
-  <tbody>
-    <tr>
-      <th style="text-align: right;" width="200px"><%= t('infraestructure_name') %> :</th>
-      <td><%= @infraestructure.name %></td>
-    </tr>
-    <tr>
-      <th style="text-align: right;" width="200px"><%= t('infraestructure_description') %> :</th>
-      <td><%= @infraestructure.description %></td>
-    </tr>
-    <tr>
-      <th style="text-align: right;" width="200px"><%= t('infraestructure_hosts') %> :</th>
-      <td>
-        <% if @infraestructure.hosts.present? %>
-          <table class="table table-condensed table-hover">
-            <tr>
-              <th style="text-align: center;">#</th>
-              <th style="text-align: center;"><%= t('hostname') %></th>
-              <th style="text-align: center;"><%= t('host_type') %></th>
-              <th style="text-align: center;"><%= t('environment') %></th>
-              <th style="text-align: center;"><%= t('description') %></th>
-            </tr>
-            <% counter = 1 %>
-            <% @infraestructure.hosts.each do |host| %>
-              <tr>
-                <td><%= counter %></td>
-                <td><%= link_to host.name, host %></td>
-                <td><%= host.host_type.name %></td>
-                <td><%= host.environment.name %></td>
-                <td><%= host.description.html_safe %></td>
-              </tr>
-              <% counter += 1%>
-            <% end %>
-          </table>
-        <% else %>
-          ---
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-3xl font-bold text-gray-800"><%= t('infraestructure') %>: <%= @infraestructure.name %></h1>
+  <div class="flex space-x-2">
+    <%= link_to t('edit'), edit_infraestructure_path(@infraestructure), class: 'bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded shadow transition duration-150 ease-in-out' %>
+    <%= link_to t('back'), infraestructures_path, class: 'bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded shadow transition duration-150 ease-in-out' %>
+  </div>
+</div>
+
+<% if notice.present? %>
+  <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6 shadow-sm" role="alert">
+    <%= notice %>
+  </div>
+<% end %>
+
+<div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6 border border-gray-200">
+  <div class="px-4 py-5 sm:px-6 bg-gray-50">
+    <h3 class="text-lg leading-6 font-medium text-gray-900"><%= t('details') %></h3>
+  </div>
+  <div class="border-t border-gray-200">
+    <dl>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500"><%= t('infraestructure_name') %></dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @infraestructure.name %></dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-t border-gray-200">
+        <dt class="text-sm font-medium text-gray-500"><%= t('infraestructure_description') %></dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @infraestructure.description %></dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="flex items-center justify-between mb-4">
+  <h2 class="text-2xl font-bold text-gray-800"><%= t('infraestructure_hosts') %></h2>
+</div>
+
+<% if @infraestructure.hosts.present? %>
+  <div class="overflow-x-auto bg-white rounded-lg shadow overflow-hidden border border-gray-200 mb-6">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b">#</th>
+          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('hostname') %></th>
+          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('host_type') %></th>
+          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('environment') %></th>
+          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('description') %></th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <% @infraestructure.hosts.each_with_index do |host, index| %>
+          <tr class="hover:bg-gray-50 transition-colors duration-150">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center border-b"><%= index + 1 %></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600 hover:text-blue-800 text-center border-b">
+              <%= link_to host.name, host, class: "underline" %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center border-b"><%= host.host_type.name %></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center border-b"><%= host.environment.name %></td>
+            <td class="px-6 py-4 text-sm text-gray-900 text-center border-b"><%= host.description.html_safe %></td>
+          </tr>
         <% end %>
-      </td>
-    </tr>
-  </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 text-center text-gray-500 mb-6">
+    <%= t('not_found_hosts') %>
+  </div>
+<% end %>
 
-<%= link_to t('back'), :back, class: 'btn btn-default' %>
-<%= link_to t('edit'), edit_infraestructure_path(@infraestructure), class: 'btn btn-primary' %>
-<%= link_to t('add'), new_infraestructure_path, class: 'btn btn-default' %>
+<div class="mt-6 flex space-x-2">
+  <%= link_to t('add'), new_infraestructure_path, class: 'bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow transition duration-150 ease-in-out' %>
+</div>

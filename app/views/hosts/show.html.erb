@@ -1,52 +1,109 @@
 <%= render '/common/header' %>
-<% if notice.present? %><div class="alert alert-info"><%= notice %></div><% end %>
 
-<p>
-  <strong><%= t('name') %>:</strong>
-  <%= @host.name %>
-</p>
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-3xl font-bold text-gray-800"><%= t('host') %>: <%= @host.name %></h1>
+  <div class="flex space-x-2">
+    <%= link_to t('edit'), edit_host_path(@host), class: 'bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded shadow transition duration-150 ease-in-out' %>
+    <%= link_to t('back'), :back, class: 'bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded shadow transition duration-150 ease-in-out' %>
+  </div>
+</div>
 
-<p>
-  <strong><%= t('notes') %>:</strong>
-  <%= @host.description.html_safe %>
-</p>
-
-<% if @host.ips.count > 0 %>
-  <ul class="well">
-    <% @host.ips.each do |ip| %>
-      <li><%= ip.address %> <%= link_to t('destroy'), destroy_ip_from_host_path(@host, ip), method: :delete, data: { confirm: t('are_you_sure') } %></li>
-    <% end %>
-  </ul>
+<% if notice.present? %>
+  <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6 shadow-sm" role="alert">
+    <%= notice %>
+  </div>
 <% end %>
 
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+  <div class="md:col-span-2 space-y-6">
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200">
+      <div class="px-4 py-5 sm:px-6 bg-gray-50 flex justify-between items-center">
+        <h3 class="text-lg leading-6 font-medium text-gray-900"><%= t('details') %></h3>
+      </div>
+      <div class="border-t border-gray-200">
+        <dl>
+          <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500"><%= t('name') %></dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @host.name %></dd>
+          </div>
+          <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-t border-gray-200">
+            <dt class="text-sm font-medium text-gray-500"><%= t('notes') %></dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @host.description.html_safe %></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
 
-<table class="table table-condensed">
-  <tr>
-    <th class="text-center" width="33%"><%= t('infraestructure') %></th>
-    <th class="text-center" width="33%"><%= t('environment') %></th>
-    <th class="text-center" width="33%"><%= t('host_type') %></th>
-  </tr>
-  <tr>
-    <td class="text-center"><%= @host.infraestructure.name if @host.infraestructure.present? %></td>
-    <td class="text-center"><%= @host.environment.name if @host.environment.present? %></td>
-    <td class="text-center"><%= @host.host_type.name if @host.host_type.present? %></td>
-  </tr>
-  <tr>
-    <th class="text-center"><%= t('memory_size') %></th>
-    <th class="text-center"><%= t('sockets') %></th>
-    <th class="text-center"><%= t('cores') %></th>
-  </tr>
-  <tr>
-    <td class="text-center"><%= @host.memory_size %></td>
-    <td class="text-center"><%= @host.total_sockets %></td>
-    <td class="text-center"><%= @host.total_vcpus %></td>
-  </tr>
-</table>
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200">
+      <div class="px-4 py-5 sm:px-6 bg-gray-50">
+        <h3 class="text-lg leading-6 font-medium text-gray-900"><%= t('specifications') %></h3>
+      </div>
+      <div class="border-t border-gray-200">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('infraestructure') %></th>
+              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('environment') %></th>
+              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('host_type') %></th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200 text-center">
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= @host.infraestructure.name if @host.infraestructure.present? %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= @host.environment.name if @host.environment.present? %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= @host.host_type.name if @host.host_type.present? %></td>
+            </tr>
+          </tbody>
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('memory_size') %></th>
+              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('sockets') %></th>
+              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('cores') %></th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200 text-center">
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= @host.memory_size %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= @host.total_sockets %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= @host.total_vcpus %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-<%= link_to t('back'), :back, class: 'btn btn-default' %>
-<%= link_to t('hosts'), hosts_path, class: 'btn btn-link' %>
-<%= link_to t('ips'), ips_path, class: 'btn btn-link' %>
-<%= link_to t('vlans'), vlans_path, class: 'btn btn-link' %>
-<%= link_to t('add_ip'), add_ip_to_host_path(@host), class: 'btn btn-danger' %>
-<%= link_to t('edit'), edit_host_path(@host), class: 'btn btn-primary' %>
-<%= link_to t('add'), new_host_path, class: 'btn btn-default' %>
+  <div class="space-y-6">
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200">
+      <div class="px-4 py-5 sm:px-6 bg-gray-50 flex justify-between items-center">
+        <h3 class="text-lg leading-6 font-medium text-gray-900"><%= t('ips') %></h3>
+        <%= link_to t('add_ip'), add_ip_to_host_path(@host), class: "text-xs bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-2 rounded shadow transition duration-150 ease-in-out" %>
+      </div>
+      <div class="border-t border-gray-200 p-4">
+        <% if @host.ips.count > 0 %>
+          <ul class="space-y-2">
+            <% @host.ips.each do |ip| %>
+              <li class="flex items-center justify-between bg-gray-50 p-2 rounded border border-gray-100">
+                <span class="text-sm font-mono text-gray-700"><%= ip.address %></span>
+                <%= link_to t('destroy'), destroy_ip_from_host_path(@host, ip), data: { turbo_method: :delete, turbo_confirm: t('are_you_sure') }, class: "text-red-600 hover:text-red-800 text-xs" %>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="text-sm text-gray-500 text-center py-4"><%= t('not_found_ips') %></p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200 p-4 space-y-2">
+      <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-2"><%= t('links') %></h3>
+      <%= link_to t('hosts'), hosts_path, class: 'block text-sm text-indigo-600 hover:text-indigo-900' %>
+      <%= link_to t('ips'), ips_path, class: 'block text-sm text-indigo-600 hover:text-indigo-900' %>
+      <%= link_to t('vlans'), vlans_path, class: 'block text-sm text-indigo-600 hover:text-indigo-900' %>
+    </div>
+  </div>
+</div>
+
+<div class="flex space-x-2">
+  <%= link_to t('add'), new_host_path, class: 'bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow transition duration-150 ease-in-out' %>
+</div>

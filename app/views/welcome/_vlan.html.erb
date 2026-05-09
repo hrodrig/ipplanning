@@ -1,64 +1,71 @@
-<table class="table table-condensed table-striped table-hover table-bordered">
-  <thead>
-    <tr class="table_tr">
-      <th width="10%" class="text-center"><%= t('ip') %></th>
-      <th width="10%" class="text-center"><%= t('diagnostic_agent_hostname_compliance') %></th>
-      <th width="25%" class="text-center" nowrap="true"><%= t('complete_hostname') %></th>
-      <th width="10%" class="text-center" nowrap="true"><%= t('short_hostname') %></th>
-      <th width="20%" class="text-center" nowrap="true"><%= t('additional_information') %></th>
-      <th class="text-center"><%= t('notes') %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% vlan.ips.each do |ip| %>
-    <% if ip.address == vlan.gateway %>
-    <tr class="danger">
-    <% else %>
-    <tr>
-    <% end %>
-      <td style="text-align: center;" width="5%">
-        <a name="<%= ip.address %>">
-        <%= ip.address %>
-        </a>
-        <%= ip.notes %>
-      </td>
-      <td style="text-align: center;" width="5%">
-        <% if ip.short_hostname.present? %>
-          <% if ip.diagnostic_agent_hostname_compliance? %>
-            <%= image_tag 'on.png', title: t('diagnostic_agent_hostname_compliance_yes') %>
-          <% else %>
-            <%= image_tag 'off.png', title: t('diagnostic_agent_hostname_compliance_no') %>
+<div class="overflow-x-auto bg-white rounded-lg shadow overflow-hidden border border-gray-200">
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-50">
+      <tr>
+        <th width="10%" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('ip') %></th>
+        <th width="10%" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('diagnostic_agent_hostname_compliance') %></th>
+        <th width="25%" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b" nowrap="true"><%= t('complete_hostname') %></th>
+        <th width="10%" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b" nowrap="true"><%= t('short_hostname') %></th>
+        <th width="20%" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b" nowrap="true"><%= t('additional_information') %></th>
+        <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('notes') %></th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <% vlan.ips.each do |ip| %>
+      <% 
+        row_class = "hover:bg-blue-50 transition-colors duration-150"
+        if ip.address == vlan.gateway
+          row_class = "bg-red-50 hover:bg-red-100"
+        end
+      %>
+      <tr class="<%= row_class %>">
+        <td class="px-4 py-3 text-sm text-gray-900 border-b text-center" width="5%">
+          <a name="<%= ip.address %>" class="font-mono font-medium">
+          <%= ip.address %>
+          </a>
+          <div class="text-xs text-gray-500 mt-1"><%= ip.notes %></div>
+        </td>
+        <td class="px-4 py-3 text-sm text-gray-900 border-b text-center" width="5%">
+          <% if ip.short_hostname.present? %>
+            <% if ip.diagnostic_agent_hostname_compliance? %>
+              <%= image_tag 'on.png', title: t('diagnostic_agent_hostname_compliance_yes'), class: "inline-block" %>
+            <% else %>
+              <%= image_tag 'off.png', title: t('diagnostic_agent_hostname_compliance_no'), class: "inline-block" %>
+            <% end %>
           <% end %>
-        <% end %>
-      </td>
-      <td width="10%">
-        <% if ip.is_reserved? %>
-          <%= ip.long_hostname %>
-        <% else %>
-          <%= ip.text_hostname_with_descriptor %>
-        <% end %>
+        </td>
+        <td class="px-4 py-3 text-sm text-gray-900 border-b" width="10%">
+          <% if ip.is_reserved? %>
+            <span class="italic text-gray-600"><%= ip.long_hostname %></span>
+          <% else %>
+            <%= ip.text_hostname_with_descriptor %>
+          <% end %>
 
-        <% if ip.hostname_alias.present? and ip.host.present? %>
-          <br />
-          <p>
-            <kbd><%= t('hostname_alias_with_host') %>: <%= ip.host.name %></kbd>
-          </p>
-        <% end %>
-      </td>
-      <td style="text-align: center;" width="10%">
-        <%= ip.short_hostname %>
-      </td>
-      <td width="20%">
-        <% if ip.host.present? %>
-          <%= ip.host.all_ips_except_this(ip.address).html_safe %>
-        <% end %>
-      </td>
-      <td>
-        <% if ip.host.present? %>
-          <%= ip.host.description.html_safe %>
-        <% end %>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+          <% if ip.hostname_alias.present? and ip.host.present? %>
+            <div class="mt-1">
+              <span class="px-2 py-0.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-300 rounded">
+                <%= t('hostname_alias_with_host') %>: <%= ip.host.name %>
+              </span>
+            </div>
+          <% end %>
+        </td>
+        <td class="px-4 py-3 text-sm text-gray-900 border-b text-center" width="10%">
+          <%= ip.short_hostname %>
+        </td>
+        <td class="px-4 py-3 text-sm text-gray-900 border-b" width="20%">
+          <% if ip.host.present? %>
+            <div class="text-xs text-gray-600">
+              <%= ip.host.all_ips_except_this(ip.address).html_safe %>
+            </div>
+          <% end %>
+        </td>
+        <td class="px-4 py-3 text-sm text-gray-600 border-b">
+          <% if ip.host.present? %>
+            <%= ip.host.description.html_safe %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

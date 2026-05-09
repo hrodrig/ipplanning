@@ -31,25 +31,25 @@ class HostTypesController < ApplicationController
   # GET /host_types
   # GET /host_types.json
   def index
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('host_types')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('host_types')
     @host_types = HostType.all.order(:name)
   end
 
   # GET /host_types/1
   # GET /host_types/1.json
   def show
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('host_types') + ' - ' + @host_type.name
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('host_types') + ' - ' + @host_type.name
   end
 
   # GET /host_types/new
   def new
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('host_types') + ' - ' + I18n.t('adding_host_type')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('host_types') + ' - ' + I18n.t('adding_host_type')
     @host_type = HostType.new
   end
 
   # GET /host_types/1/edit
   def edit
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('host_types') + ' - ' + @host_type.name + ' - ' + I18n.t('editing_host_type')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('host_types') + ' - ' + @host_type.name + ' - ' + I18n.t('editing_host_type')
   end
 
   # POST /host_types

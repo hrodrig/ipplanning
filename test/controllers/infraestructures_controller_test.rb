@@ -3,6 +3,7 @@ require 'test_helper'
 class InfraestructuresControllerTest < ActionDispatch::IntegrationTest
   setup do
     @infraestructure = infraestructures(:one)
+    sign_in admins(:one)
   end
 
   test "should get index" do
@@ -39,8 +40,9 @@ class InfraestructuresControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy infraestructure" do
+    @infraestructure_to_destroy = Infraestructure.create(name: "Infraestructure to destroy")
     assert_difference('Infraestructure.count', -1) do
-      delete infraestructure_url(@infraestructure)
+      delete infraestructure_url(@infraestructure_to_destroy)
     end
 
     assert_redirected_to infraestructures_url

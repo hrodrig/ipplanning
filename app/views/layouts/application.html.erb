@@ -1,82 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html class="h-full bg-gray-100">
   <head>
     <title>
       <% if @page_title.present? %>
         <%= @page_title %>
       <% else %>
-        <%= Setting.find_by_name('WebsiteName').value %>
+        <%= Setting.find_by_name('WebsiteName')&.value || "IP Planning" %>
       <% end %>
     </title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <div class="container">
-        <!-- Fixed navbar -->
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only"><%= t('toggle_navigation') %></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="<%= root_path %>"><%= Setting.find_by_name('Brand').value %></a>
+  <body class="h-full">
+    <div class="flex flex-col min-h-full" data-controller="navbar">
+      <nav class="bg-gray-800">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="flex h-16 items-center justify-between">
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <a href="<%= root_path %>" class="text-white font-bold text-xl">
+                  <%= Setting.find_by_name('Brand')&.value || "IPPLANNING" %>
+                </a>
+              </div>
+              <div class="hidden md:block">
+                <div class="ml-10 flex items-baseline space-x-4">
+                  <a href="/" class="<%= controller_name == 'welcome' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' %> px-3 py-2 rounded-md text-sm font-medium"><%= t('home') %></a>
+                  
+                  <% if admin_signed_in? %>
+                    <a href="/vlans" class="<%= controller_name == 'vlans' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' %> px-3 py-2 rounded-md text-sm font-medium"><%= t('vlans') %></a>
+                    <a href="/ips" class="<%= controller_name == 'ips' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' %> px-3 py-2 rounded-md text-sm font-medium"><%= t('ips') %></a>
+                    <a href="/externalips" class="<%= controller_name == 'externalips' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' %> px-3 py-2 rounded-md text-sm font-medium"><%= t('external_ips') %></a>
+                    <a href="/hosts" class="<%= controller_name == 'hosts' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' %> px-3 py-2 rounded-md text-sm font-medium"><%= t('hosts') %></a>
+                    
+                    <div class="relative">
+                      <button data-action="click->navbar#toggleDropdown" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex items-center">
+                        <%= t('platform_settings') %>
+                        <svg class="ml-1 h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+                      </button>
+                      <div data-navbar-target="dropdown" class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <a href="/infraestructures" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><%= t('infraestructures') %></a>
+                        <a href="/environments" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><%= t('environments') %></a>
+                        <a href="/host_types" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><%= t('host_types') %></a>
+                        <div class="border-t border-gray-100"></div>
+                        <a href="/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><%= t('settings') %></a>
+                      </div>
+                    </div>
+                  <% end %>
+                  
+                  <a href="/etc/hosts" class="<%= controller_name == 'etchosts' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' %> px-3 py-2 rounded-md text-sm font-medium">/etc/hosts</a>
+                </div>
+              </div>
             </div>
-            <div id="navbar" class="collapse navbar-collapse">
-              <ul class="nav navbar-nav">
-                <li><a href="/"><%= t('home') %></a></li>
-
+            <div class="hidden md:block">
+              <div class="ml-4 flex items-center md:ml-6">
                 <% if admin_signed_in? %>
-                <li<% if controller_name == 'vlans'%> class="active"<% end %>><a href="/vlans"><%= t('vlans') %></a></li>
-                <li<% if controller_name == 'ips'%> class="active"<% end %>><a href="/ips"><%= t('ips') %></a></li>
-                <li<% if controller_name == 'externalips'%> class="active"<% end %>><a href="/externalips"><%= t('external_ips') %></a></li>
-                <li<% if controller_name == 'hosts'%> class="active"<% end %>><a href="/hosts"><%= t('hosts') %></a></li>
-
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= t('platform_settings') %> <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li<% if controller_name == 'infraestructures'%> class="active"<% end %>><a href="/infraestructures"><%= t('infraestructures') %></a></li>
-                    <li<% if controller_name == 'environments'%> class="active"<% end %>><a href="/environments"><%= t('environments') %></a></li>
-                    <li<% if controller_name == 'host_types'%> class="active"<% end %>><a href="/host_types"><%= t('host_types') %></a></li>
-                    <li role="separator" class="divider"></li>
-                    <li<% if controller_name == 'settings'%> class="active"<% end %>><a href="/settings"><%= t('settings') %></a></li>
-                  </ul>
-                </li>
-
-                <% end %>
-
-                <li<% if controller_name == 'etchosts'%> class="active"<% end %>><a href="/etc/hosts">/etc/hosts</a></li>
-
-                <li class="default">
-                <% if admin_signed_in? %>
-                  <%= link_to(t('destroy_session'), destroy_admin_session_path, method: :delete) %>
+                  <%= link_to t('destroy_session'), destroy_admin_session_path, data: { turbo_method: :delete }, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
                 <% else %>
-                  <%= link_to(t('new_sesion'), new_admin_session_path)  %>
+                  <%= link_to t('new_sesion'), new_admin_session_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
                 <% end %>
-                </li>
-
-              </ul>
-
-            </div><!--/.nav-collapse -->
+              </div>
+            </div>
+            <div class="-mr-2 flex md:hidden">
+              <button data-action="click->navbar#toggleMenu" type="button" class="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                <span class="sr-only">Open main menu</span>
+                <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+              </button>
+            </div>
           </div>
-        </nav>
+        </div>
 
+        <!-- Mobile menu -->
+        <div data-navbar-target="menu" class="hidden md:hidden">
+          <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+            <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"><%= t('home') %></a>
+            <% if admin_signed_in? %>
+              <a href="/vlans" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"><%= t('vlans') %></a>
+              <a href="/ips" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"><%= t('ips') %></a>
+              <a href="/externalips" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"><%= t('external_ips') %></a>
+              <a href="/hosts" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"><%= t('hosts') %></a>
+            <% end %>
+            <a href="/etc/hosts" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">/etc/hosts</a>
+          </div>
+          <div class="border-t border-gray-700 pb-3 pt-4">
+            <div class="px-2">
+              <% if admin_signed_in? %>
+                <%= link_to t('destroy_session'), destroy_admin_session_path, data: { turbo_method: :delete }, class: "text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" %>
+              <% else %>
+                <%= link_to t('new_sesion'), new_admin_session_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </nav>
 
-      <%= yield %>
-      <p>&nbsp;</p>
+      <main>
+        <div class="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
+          <%= yield %>
+        </div>
+      </main>
+
+      <footer class="bg-white border-t border-gray-200 mt-auto py-4">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
+          <%= Setting.find_by_name('Footer')&.value&.html_safe || "&copy; 2024 IPPLANNING".html_safe %>
+        </div>
+      </footer>
     </div>
-
-    <footer class="footer">
-      <div class="container">
-        <p class="text-muted"><%= Setting.find_by_name('Footer').value.html_safe %></p>
-      </div>
-    </footer>
-
   </body>
 </html>

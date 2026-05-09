@@ -1,17 +1,19 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  number: 1
-  name: MyText
-  network: MyString
-  netmask: 1
-  gateway: MyString
-  notes: MyText
+  number: 10
+  name: Management
+  network: 192.168.10.0
+  netmask: 24
+  gateway: 192.168.10.254
+  notes: Management Network
+  descriptor: mgmt
+  include_in_etc_hosts: true
 
 two:
-  number: 1
-  name: MyText
-  network: MyString
-  netmask: 1
-  gateway: MyString
-  notes: MyText
+  number: 20
+  name: Users
+  network: 192.168.20.0
+  netmask: 24
+  gateway: 192.168.20.254
+  notes: Users Network
+  descriptor: users
+  include_in_etc_hosts: true

@@ -31,26 +31,26 @@ class VlansController < ApplicationController
   # GET /vlans
   # GET /vlans.json
   def index
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('vlans')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('vlans')
     @vlans = Vlan.all.order(:number)
   end
 
   # GET /vlans/1
   # GET /vlans/1.json
   def show
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('vlans') + ' - ' + @vlan.name
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('vlans') + ' - ' + @vlan.name
     @vlans = Vlan.all.order(:number)
   end
 
   # GET /vlans/new
   def new
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('vlans') + ' - ' + I18n.t('add_vlan')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('vlans') + ' - ' + I18n.t('add_vlan')
     @vlan = Vlan.new
   end
 
   # GET /vlans/1/edit
   def edit
-    @page_title = Setting.find_by_name('WebsiteName').value + ' - ' + I18n.t('vlans') + ' - ' + @vlan.name + ' - ' + I18n.t('editing_vlan')
+    @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('vlans') + ' - ' + @vlan.name + ' - ' + I18n.t('editing_vlan')
   end
 
   # POST /vlans
