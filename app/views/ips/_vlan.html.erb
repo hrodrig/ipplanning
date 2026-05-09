@@ -1,25 +1,28 @@
-<ul class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6 space-y-1 shadow-sm">
-  <li><strong class="text-gray-700"><%= t('vlan_id') %> / <%= t('vlan_name') %></strong>: <span class="text-gray-900"><%= vlan.number.to_s %> / <%= vlan.name %></span></li>
-  <% if vlan.descriptor.present? %><li><strong class="text-gray-700"><%= t('vlan_descriptor') %></strong>: <span class="text-gray-900"><%= vlan.descriptor %></span></li><% end %>
-  <li><strong class="text-gray-700"><%= t('network') %> / <%= t('netmask') %> / <%= t('gateway') %></strong>: <span class="text-gray-900"><%= vlan.network %> / <%= vlan.netmask.to_s %> / <%= vlan.gateway %></span></li>
-  <li><strong class="text-gray-700"><%= t('ips_assigned') %> / <%= t('ips_used') %></strong>: <span class="text-gray-900"><%= vlan.ips.count.to_s %> / <%= vlan.used_ips %></span></li>
-  <li><strong class="text-gray-700"><%= t('include_in_etc_hosts') %></strong>: <%= get_icon vlan.include_in_etc_hosts %></li>
-  <% if vlan.notes.present? %><li><strong class="text-gray-700"><%= t('notes') %></strong>: <span class="text-gray-900"><%= vlan.notes.html_safe %></span></li><% end %>
-</ul>
+<% if local_assigns.fetch(:show_meta, true) %>
+  <ul class="mb-6 space-y-2 rounded-xl border border-gray-200 bg-white p-4 text-sm shadow-sm">
+    <li><span class="font-semibold text-gray-700"><%= t("vlan_id") %> / <%= t("vlan_name") %>:</span> <span class="text-gray-900"><%= vlan.number.to_s %> / <%= vlan.name %></span></li>
+    <% if vlan.descriptor.present? %><li><span class="font-semibold text-gray-700"><%= t("vlan_descriptor") %>:</span> <span class="text-gray-900"><%= vlan.descriptor %></span></li><% end %>
+    <li><span class="font-semibold text-gray-700"><%= t("network") %> / <%= t("netmask") %> / <%= t("gateway") %>:</span> <span class="font-mono text-gray-900"><%= vlan.network %> / <%= vlan.netmask.to_s %> / <%= vlan.gateway %></span></li>
+    <li><span class="font-semibold text-gray-700"><%= t("ips_assigned") %> / <%= t("ips_used") %>:</span> <span class="text-gray-900"><%= vlan.ips.count.to_s %> / <%= vlan.used_ips %></span></li>
+    <li><span class="font-semibold text-gray-700"><%= t("include_in_etc_hosts") %>:</span> <%= get_icon vlan.include_in_etc_hosts %></li>
+    <% if vlan.notes.present? %><li><span class="font-semibold text-gray-700"><%= t("notes") %>:</span> <span class="text-gray-900"><%= vlan.notes.html_safe %></span></li><% end %>
+  </ul>
+<% end %>
 
-<div class="overflow-x-auto bg-white rounded-lg shadow overflow-hidden border border-gray-200">
-  <table class="min-w-full divide-y divide-gray-200" id="tableofrows">
-    <thead class="bg-gray-50">
+<div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+  <div class="overflow-x-auto">
+  <table class="min-w-full divide-y divide-gray-200" id="<%= dom_id(vlan, :ip_table) %>">
+    <thead class="bg-gradient-to-b from-gray-50 to-gray-100/80">
       <tr>
-        <th width="30%" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('address') %></th>
-        <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('complete_hostname') %></th>
-        <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('hostname') %></th>
-        <th width="10%" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('extras_ips') %></th>
-        <th width="10%" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('notes') %></th>
-        <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b">&nbsp;</th>
+        <th scope="col" class="w-[28%] px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("address") %></th>
+        <th scope="col" class="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("complete_hostname") %></th>
+        <th scope="col" class="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("hostname") %></th>
+        <th scope="col" class="w-[10%] px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("extras_ips") %></th>
+        <th scope="col" class="w-[10%] px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("notes") %></th>
+        <th scope="col" class="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600">&nbsp;</th>
       </tr>
     </thead>
-    <tbody class="bg-white divide-y divide-gray-200">
+    <tbody class="divide-y divide-gray-100 bg-white">
       <% vlan.ips.each do |ip| %>
       <% 
         row_class = "hover:bg-blue-50 transition-colors duration-150"
@@ -30,16 +33,16 @@
         end
       %>
       <tr class="<%= row_class %>">
-        <td class="px-4 py-3 text-sm text-gray-900 border-b" style="text-align: center;">
+        <td class="px-4 py-3 text-center text-sm text-gray-900">
           <a name="<%= ip.address %>" class="font-mono font-medium">
             <%= ip.address %>
-            <div class="mt-2 flex justify-center space-x-2">
-              <%= link_to t('edit'), edit_ip_path(ip), class: 'text-blue-600 hover:text-blue-800 hover:underline text-xs' %>
-              <%= link_to t('destroy'), ip, data: { turbo_method: :delete, turbo_confirm: t('are_you_sure_to_delete_this_ip') }, class: 'text-red-600 hover:text-red-800 hover:underline text-xs' %>
+            <div class="mt-2 flex justify-center gap-2">
+              <%= link_to t("edit"), edit_ip_path(ip), class: "text-xs font-medium text-indigo-600 hover:text-indigo-500" %>
+              <%= link_to t("destroy"), ip, data: { turbo_method: :delete, turbo_confirm: t("are_you_sure_to_delete_this_ip") }, class: "text-xs font-medium text-red-600 hover:text-red-500" %>
             </div>
           </a>
         </td>
-        <td class="px-4 py-3 text-sm text-gray-900 border-b">
+        <td class="px-4 py-3 text-sm text-gray-900">
           <% if ip.host.nil? and ip.hostname_alias.nil? and ip.is_reserved.nil? %>
             <div class="text-center">
               <%= link_to '+', add_host_to_ip_path(ip), title: t('assign_this_ip_to_host'), class: 'inline-flex items-center justify-center w-6 h-6 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full text-xs transition duration-150 ease-in-out' %>
@@ -61,22 +64,22 @@
             <% end %>
           <% end %>
         </td>
-        <td class="px-4 py-3 text-sm text-gray-900 border-b text-center">
+        <td class="px-4 py-3 text-center text-sm text-gray-900">
           <%= ip.short_hostname %>
         </td>
-        <td class="px-4 py-3 text-sm text-gray-900 border-b">
+        <td class="px-4 py-3 text-sm text-gray-900">
           <% if ip.host.present? %>
             <div class="text-xs text-gray-600">
               <%= host_linked_ip_addresses_markup(ip.host, except_address: ip.address) %>
             </div>
           <% end %>
         </td>
-        <td class="px-4 py-3 text-sm text-gray-600 border-b">
+        <td class="px-4 py-3 text-sm text-gray-600">
           <% if ip.notes? %>
             <%= ip.notes %>
           <% end %>
         </td>
-        <td class="px-4 py-3 text-sm text-gray-900 border-b text-center">
+        <td class="px-4 py-3 text-center text-sm text-gray-900">
           <div class="flex items-center justify-center space-x-1">
             <% if ip.include_in_etc_hosts == false %>
               <%= image_tag 'edit-delete.png', title: t('not_include_in_hosts_file'), class: "w-5 h-5" %>
@@ -113,4 +116,5 @@
       <% end %>
     </tbody>
   </table>
+  </div>
 </div>

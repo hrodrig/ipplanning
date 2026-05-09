@@ -24,32 +24,32 @@
   <% end %>
 
   <div>
-    <%= form.label :address, t('externalip_address'), class: "block text-sm font-medium leading-6 text-gray-900" %>
+    <%= form.label :address, t('externalip_address'), class: form_label_class %>
     <div class="mt-2">
-      <%= form.text_field :address, id: :externalip_address, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6", placeholder: t('placeholder_externalip_address') %>
+      <%= form.text_field :address, id: :externalip_address, class: form_control_class, placeholder: t('placeholder_externalip_address') %>
     </div>
     <p class="mt-2 text-sm text-gray-500"><%= t('placeholder_externalip_address_help') %></p>
   </div>
 
   <div>
-    <%= form.label :hostname, t('externalip_hostname'), class: "block text-sm font-medium leading-6 text-gray-900" %>
+    <%= form.label :hostname, t('externalip_hostname'), class: form_label_class %>
     <div class="mt-2">
-      <%= form.text_field :hostname, id: :externalip_hostname, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6", placeholder: t('placeholder_externalip_hostname') %>
+      <%= form.text_field :hostname, id: :externalip_hostname, class: form_control_class, placeholder: t('placeholder_externalip_hostname') %>
     </div>
     <p class="mt-2 text-sm text-gray-500"><%= t('placeholder_externalip_hostname_help') %></p>
   </div>
 
   <div>
-    <%= form.label :short_hostname, t('externalip_short_hostname'), class: "block text-sm font-medium leading-6 text-gray-900" %>
+    <%= form.label :short_hostname, t('externalip_short_hostname'), class: form_label_class %>
     <div class="mt-2">
-      <%= form.text_field :short_hostname, id: :externalip_short_hostname, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6", placeholder: t('placeholder_externalip_short_hostname') %>
+      <%= form.text_field :short_hostname, id: :externalip_short_hostname, class: form_control_class, placeholder: t('placeholder_externalip_short_hostname') %>
     </div>
     <p class="mt-2 text-sm text-gray-500"><%= t('placeholder_externalip_short_hostname_help') %></p>
   </div>
 
   <div class="relative flex items-start">
     <div class="flex h-6 items-center">
-      <%= form.check_box :include_in_etc_hosts, id: :externalip_include_in_etc_hosts, class: "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" %>
+      <%= form.check_box :include_in_etc_hosts, id: :externalip_include_in_etc_hosts, class: form_checkbox_class %>
     </div>
     <div class="ml-3 text-sm leading-6">
       <%= form.label :include_in_etc_hosts, t('include_in_etc_hosts') + ' ?', class: "font-medium text-gray-900" %>
@@ -58,9 +58,9 @@
   </div>
 
   <div>
-    <%= form.label :notes, t('externalip_notes'), class: "block text-sm font-medium leading-6 text-gray-900" %>
+    <%= form.label :notes, t('externalip_notes'), class: form_label_class %>
     <div class="mt-2">
-      <%= form.text_area :notes, id: :externalip_notes, rows: 3, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6", placeholder: t('placeholder_externalip_notes') %>
+      <%= form.text_area :notes, id: :externalip_notes, rows: 3, class: form_control_class, placeholder: t('placeholder_externalip_notes') %>
     </div>
     <p class="mt-2 text-sm text-gray-500"><%= t('placeholder_externalip_notes_help') %></p>
   </div>

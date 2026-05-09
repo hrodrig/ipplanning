@@ -1,52 +1,56 @@
-<%= render '/common/header' %>
-<div class="flex items-center justify-between mb-6">
-  <h1 class="text-3xl font-bold text-gray-800"><%= t('hosts') %> (<%= @hosts.count.to_s %>)</h1>
-  <%= link_to t('add_host'), new_host_path, class: 'bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow transition duration-150 ease-in-out' %>
+<%= render "/common/header" %>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 pb-10">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900"><%= t("hosts") %></h1>
+      <p class="mt-1 text-sm text-gray-500"><%= t("admin_crud_list_subtitle", count: @hosts.count) %></p>
+    </div>
+    <%= link_to t("add_host"), new_host_path, class: "inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+  </div>
+
+  <%= render "common/admin_flash" %>
+
+  <% if @hosts.present? %>
+    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200" id="tableofrows">
+          <thead class="bg-gradient-to-b from-gray-50 to-gray-100/80">
+            <tr>
+              <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600">#</th>
+              <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("name") %></th>
+              <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("ips") %></th>
+              <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("description") %></th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100 bg-white">
+            <% i = 1 %>
+            <% @hosts.each do |host| %>
+              <tr class="transition-colors hover:bg-gray-50/90">
+                <td class="px-5 py-4 text-center text-sm font-mono text-gray-500"><%= i.to_s %></td>
+                <td class="px-5 py-4 text-center text-sm">
+                  <a name="<%= host.id %>"></a>
+                  <div class="font-semibold text-indigo-600 hover:text-indigo-500">
+                    <%= link_to host.name, edit_host_path(host), class: "hover:underline" %>
+                  </div>
+                  <div class="mt-2 flex flex-wrap justify-center gap-2">
+                    <%= link_to t("edit"), edit_host_path(host), class: "text-xs font-medium text-indigo-600 hover:text-indigo-500" %>
+                    <span class="text-gray-300" aria-hidden="true">|</span>
+                    <%= link_to t("destroy"), host, data: { turbo_method: :delete, turbo_confirm: t("are_you_sure") }, class: "text-xs font-medium text-red-600 hover:text-red-500" %>
+                  </div>
+                </td>
+                <td class="px-5 py-4 text-sm text-gray-900"><%= host_linked_ip_addresses_markup(host) %></td>
+                <td class="px-5 py-4 text-sm text-gray-600"><%= host.description.html_safe %></td>
+              </tr>
+              <% i += 1 %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <div class="rounded-lg border border-amber-100 bg-amber-50 px-4 py-3 text-sm text-amber-900 shadow-sm" role="status">
+      <%= t("not_found_hosts") %>
+    </div>
+  <% end %>
 </div>
-
-<% if notice.present? %>
-  <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4 shadow-sm" role="alert">
-    <%= notice %>
-  </div>
-<% end %>
-
-<% if @hosts.present? %>
-  <div class="overflow-x-auto bg-white rounded-lg shadow overflow-hidden border border-gray-200">
-    <table class="min-w-full divide-y divide-gray-200" id="tableofrows">
-      <thead class="bg-gray-50">
-        <tr>
-          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b">#</th>
-          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('name') %></th>
-          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('ips') %></th>
-          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('description') %></th>
-        </tr>
-      </thead>
-
-      <tbody class="bg-white divide-y divide-gray-200">
-        <% i = 1 %>
-        <% @hosts.each do |host| %>
-          <tr class="hover:bg-gray-50 transition-colors duration-150">
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-500 border-b text-center"><%= i.to_s %></td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm border-b">
-              <a name="<%= host.id %>"></a>
-              <div class="font-medium text-blue-600 hover:text-blue-800 underline mb-2 text-center">
-                <%= link_to host.name, edit_host_path(host) %>
-              </div>
-              <div class="flex justify-center space-x-2">
-                <%= link_to t('edit'), edit_host_path(host), class: 'text-blue-600 hover:text-blue-800 hover:underline text-xs' %>
-                <%= link_to t('destroy'), host, data: { turbo_method: :delete, turbo_confirm: t('are_you_sure') }, class: 'text-red-600 hover:text-red-800 hover:underline text-xs' %>
-              </div>
-            </td>
-            <td class="px-6 py-4 text-sm text-gray-900 border-b"><%= host_linked_ip_addresses_markup(host) %></td>
-            <td class="px-6 py-4 text-sm text-gray-600 border-b"><%= host.description.html_safe %></td>
-          </tr>
-          <% i+= 1 %>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-<% else %>
-  <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 shadow-sm" role="alert">
-    <%= t('not_found_hosts') %>
-  </div>
-<% end %>

@@ -445,6 +445,12 @@ es:
   reserved: reservado
   setting_parameter: Parámetro
   setting_value: Valor
+  settings_index_subtitle: Apariencia, dominio, integraciones y autenticación HTTP básica opcional.
+  settings_parameters_footer: "%{count} parámetros"
+  settings_no_description: Sin descripción todavía.
+  settings_no_value: Sin valor
+  settings_badge_security: Auth
+  settings_value_masked: Oculto en el listado — use Editar para ver o cambiar.
   setting_was_successfully_updated: El parámetro de configuración fue actualizado con éxito.
   short_hostname: Nombre corto
   show_all: Ver todo
@@ -456,6 +462,10 @@ es:
   use_hostname_alias: 'Usar alias para nombre de host: '
   use_vlan_descriptor: Utilizar descriptor de VLAN
   used: usado
+  admin_crud_list_subtitle:
+    zero: "Sin registros"
+    one: "1 registro"
+    other: "%{count} registros"
   vlan_descriptor_ip: 'VLAN / Descriptor / IP'
   vlan_descriptor: Descriptor
   vlan_id: VLAN ID

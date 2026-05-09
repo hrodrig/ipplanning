@@ -1,78 +1,56 @@
-<%= render '/common/header' %>
+<%= render "/common/header" %>
 
-<div class="sm:flex sm:items-center">
-  <div class="sm:flex-auto">
-    <h1 class="text-base font-semibold leading-6 text-gray-900"><%= t('external_ips') %> (<%= @externalips.count.to_s %>)</h1>
-  </div>
-  <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-    <%= link_to t('add_external_ip'), new_externalip_path, class: 'inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' %>
-  </div>
-</div>
-
-<% if notice.present? %>
-  <div class="rounded-md bg-blue-50 p-4 my-4">
-    <div class="flex">
-      <div class="flex-shrink-0">
-        <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-        </svg>
-      </div>
-      <div class="ml-3 flex-1 md:flex md:justify-between">
-        <p class="text-sm text-blue-700"><%= notice %></p>
-      </div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 pb-10">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900"><%= t("external_ips") %></h1>
+      <p class="mt-1 text-sm text-gray-500"><%= t("admin_crud_list_subtitle", count: @externalips.count) %></p>
     </div>
+    <%= link_to t("add_external_ip"), new_externalip_path, class: "inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
   </div>
-<% end %>
 
-<div class="mt-8 flow-root">
-  <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-      <% if @externalips.present? %>
-        <table class="min-w-full divide-y divide-gray-300">
-          <thead>
+  <%= render "common/admin_flash" %>
+
+  <% if @externalips.present? %>
+    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gradient-to-b from-gray-50 to-gray-100/80">
             <tr>
-              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"><%= t('ip') %></th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= t('hostname') %></th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= t('short_hostname') %></th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= t('notes') %></th>
-              <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"><%= t('include_in_etc_hosts') %></th>
-              <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                <span class="sr-only">Actions</span>
+              <th scope="col" class="w-14 px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600">#</th>
+              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("ip") %></th>
+              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("hostname") %></th>
+              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("short_hostname") %></th>
+              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("notes") %></th>
+              <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("include_in_etc_hosts") %></th>
+              <th scope="col" class="relative px-5 py-3.5 text-right text-xs font-semibold uppercase tracking-wider text-gray-600">
+                <span class="sr-only"><%= t("edit") %></span>
               </th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-200">
-            <% @externalips.each do |externalip| %>
-              <tr>
-                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                  <%= externalip.address %>
-                </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= externalip.hostname %></td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= externalip.short_hostname %></td>
-                <td class="px-3 py-4 text-sm text-gray-500 max-w-xs truncate"><%= externalip.notes %></td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center"><%= get_icon(externalip.include_in_etc_hosts) %></td>
-                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                  <%= link_to t('edit'), edit_externalip_path(externalip), class: "text-indigo-600 hover:text-indigo-900 mr-4" %>
-                  <%= link_to t('destroy'), externalip, data: { turbo_method: :delete, turbo_confirm: t('are_you_sure') }, class: "text-red-600 hover:text-red-900" %>
+          <tbody class="divide-y divide-gray-100 bg-white">
+            <% @externalips.each_with_index do |externalip, idx| %>
+              <tr class="transition-colors hover:bg-gray-50/90">
+                <td class="whitespace-nowrap px-5 py-4 text-center text-sm font-mono text-gray-500"><%= idx + 1 %></td>
+                <td class="whitespace-nowrap px-5 py-4 text-sm font-mono font-medium text-gray-900"><%= externalip.address %></td>
+                <td class="whitespace-nowrap px-5 py-4 text-sm text-gray-600"><%= externalip.hostname %></td>
+                <td class="whitespace-nowrap px-5 py-4 text-sm text-gray-600"><%= externalip.short_hostname %></td>
+                <td class="max-w-xs px-5 py-4 text-sm text-gray-600 truncate" title="<%= externalip.notes %>"><%= externalip.notes %></td>
+                <td class="whitespace-nowrap px-5 py-4 text-center text-sm text-gray-600"><%= get_icon(externalip.include_in_etc_hosts) %></td>
+                <td class="whitespace-nowrap px-5 py-4 text-right text-sm">
+                  <%= link_to t("edit"), edit_externalip_path(externalip), class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+                  <span class="mx-2 text-gray-300" aria-hidden="true">|</span>
+                  <%= link_to t("destroy"), externalip, data: { turbo_method: :delete, turbo_confirm: t("are_you_sure") }, class: "font-medium text-red-600 hover:text-red-500" %>
                 </td>
               </tr>
             <% end %>
           </tbody>
         </table>
-      <% else %>
-        <div class="rounded-md bg-blue-50 p-4">
-          <div class="flex">
-            <div class="flex-shrink-0">
-              <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-              </svg>
-            </div>
-            <div class="ml-3">
-              <p class="text-sm text-blue-700"><%= t('not_found_externalips') %></p>
-            </div>
-          </div>
-        </div>
-      <% end %>
+      </div>
     </div>
-  </div>
+  <% else %>
+    <div class="rounded-lg border border-amber-100 bg-amber-50 px-4 py-3 text-sm text-amber-900 shadow-sm" role="status">
+      <%= t("not_found_externalips") %>
+    </div>
+  <% end %>
 </div>

@@ -1,46 +1,50 @@
-<%= render '/common/header' %>
-<% if notice.present? %>
-  <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4 shadow-sm" role="alert">
-    <%= notice %>
+<%= render "/common/header" %>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 pb-10">
+  <%= render "common/admin_flash" %>
+
+  <div class="mb-10">
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+      <%= Setting.find_by_name("WebsiteName")&.value || "IP Planning" %>
+    </h1>
   </div>
-<% end %>
 
-<h1 class="text-3xl font-bold mb-6 text-gray-800"><%= Setting.find_by_name('WebsiteName').value %></h1>
+  <% @vlans.each do |vlan| %>
+    <% if vlan.ips.count == 0 %>
+      <p class="py-6 text-center text-sm italic text-gray-500"><%= t("not_assigned_ips") %></p>
+    <% else %>
+      <div class="mb-12 last:mb-0">
+        <%= render "ips/vlan", vlan: vlan %>
+      </div>
+    <% end %>
+    <hr class="my-10 border-gray-200" />
+  <% end %>
 
-<% @vlans.each do |vlan| %>
-  <% if vlan.ips.count == 0 %>
-    <p class="text-gray-600 italic py-4"><%= t('not_assigned_ips') %></p>
-  <% else %>
-    <div class="mb-8">
-      <%= render 'vlan', vlan: vlan %>
+  <% if @externalips.count > 0 %>
+    <h2 class="mb-4 text-xl font-bold tracking-tight text-gray-900"><%= t("external_ips") %></h2>
+    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200" id="welcome-external-ips">
+          <thead class="bg-gradient-to-b from-gray-50 to-gray-100/80">
+            <tr>
+              <th scope="col" class="w-[15%] px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("ip") %></th>
+              <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("hostname") %></th>
+              <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("short_hostname") %></th>
+              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("notes") %></th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100 bg-white">
+            <% @externalips.each do |externalip| %>
+              <tr class="transition-colors hover:bg-gray-50/90">
+                <td class="px-5 py-4 text-center text-sm font-mono font-medium text-gray-900"><%= externalip.address %></td>
+                <td class="px-5 py-4 text-center text-sm text-gray-700"><%= externalip.hostname %></td>
+                <td class="px-5 py-4 text-center text-sm text-gray-700"><%= externalip.short_hostname %></td>
+                <td class="px-5 py-4 text-sm text-gray-600"><%= externalip.notes %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   <% end %>
-  <hr class="my-8 border-gray-200" />
-<% end %>
-
-<% if @externalips.count > 0 %>
-  <h2 class="text-2xl font-semibold mb-4 text-gray-700 mt-8"><%= t('external_ips') %></h2>
-  <div class="overflow-x-auto bg-white rounded-lg shadow overflow-hidden border border-gray-200">
-    <table class="min-w-full divide-y divide-gray-200" id="tableofrows">
-      <thead class="bg-gray-50">
-        <tr>
-          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b" width="15%"><%= t('ip') %></th>
-          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('hostname') %></th>
-          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('short_hostname') %></th>
-          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('notes') %></th>
-        </tr>
-      </thead>
-
-      <tbody class="bg-white divide-y divide-gray-200">
-        <% @externalips.each do |externalip| %>
-          <tr class="hover:bg-gray-50 transition-colors duration-200">
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 border-b text-center"><%= externalip.address %></td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 border-b text-center"><%= externalip.hostname %></td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 border-b text-center"><%= externalip.short_hostname %></td>
-            <td class="px-6 py-4 text-sm text-gray-900 border-b"><%= externalip.notes %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-<% end %>
+</div>

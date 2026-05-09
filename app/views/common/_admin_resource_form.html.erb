@@ -1,0 +1,51 @@
+<%# locals: heading (required), subheading (optional), index_path + index_label (optional breadcrumb), current_label (optional), back_path (optional, defaults to index_path), width_class (optional), form_card (optional, default true), primary_action_path + primary_action_text (optional toolbar) %>
+<% width_class = local_assigns.fetch(:width_class, "max-w-3xl") %>
+<% form_card = local_assigns.fetch(:form_card, true) %>
+<% back = local_assigns.fetch(:back_path, nil) %>
+<% back ||= local_assigns[:index_path] if local_assigns[:index_path].present? %>
+
+<%= render "/common/header" %>
+
+<div class="<%= width_class %> mx-auto px-4 sm:px-6 lg:px-0 pb-10">
+  <% if local_assigns[:index_path].present? && local_assigns[:index_label].present? %>
+    <nav class="mb-4 text-sm text-gray-500" aria-label="Breadcrumb">
+      <%= link_to local_assigns[:index_label], local_assigns[:index_path], class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+      <% if local_assigns[:current_label].present? %>
+        <span class="mx-2 text-gray-300" aria-hidden="true">/</span>
+        <span class="text-gray-700"><%= local_assigns[:current_label] %></span>
+      <% end %>
+    </nav>
+  <% end %>
+
+  <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900"><%= local_assigns[:heading] %></h1>
+      <% if local_assigns[:subheading].present? %>
+        <p class="mt-1 text-sm text-gray-500"><%= local_assigns[:subheading] %></p>
+      <% end %>
+    </div>
+    <% if local_assigns[:primary_action_path].present? %>
+      <div class="flex shrink-0 flex-wrap items-center gap-2">
+        <%= link_to local_assigns.fetch(:primary_action_text, t("edit")), local_assigns[:primary_action_path], class: "inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= render "common/admin_flash" %>
+
+  <% if form_card %>
+    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div class="p-6 sm:p-8">
+        <%= yield %>
+      </div>
+    </div>
+  <% else %>
+    <%= yield %>
+  <% end %>
+
+  <% if back.present? %>
+    <div class="mt-8 border-t border-gray-200 pt-6">
+      <%= link_to t("back"), back, class: "inline-flex items-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-200 hover:bg-gray-50" %>
+    </div>
+  <% end %>
+</div>

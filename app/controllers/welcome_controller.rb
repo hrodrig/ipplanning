@@ -25,8 +25,7 @@
 #
 # ----------------------------------------------------------------------------
 class WelcomeController < ApplicationController
-
-  #before_action :authenticate_user!
+  before_action :authenticate_admin!
 
   def index
     @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('home_page')

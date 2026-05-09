@@ -1,4 +1,38 @@
 module ApplicationHelper
+  # Unified admin form controls (Tailwind) — use on text_field, text_area, select, number_field.
+  FORM_CONTROL_CLASS = [
+    "block w-full rounded-lg border border-gray-300 bg-white px-3 py-2",
+    "text-sm text-gray-900 shadow-sm",
+    "placeholder:text-gray-400",
+    "transition-colors",
+    "focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/25",
+    "disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+  ].join(" ").freeze
+
+  FORM_LABEL_CLASS = "block text-sm font-medium text-gray-700".freeze
+
+  FORM_CHECKBOX_CLASS = [
+    "h-4 w-4 shrink-0 rounded border-gray-300 text-indigo-600",
+    "focus:ring-2 focus:ring-indigo-500/30"
+  ].join(" ").freeze
+
+  def form_control_class
+    FORM_CONTROL_CLASS
+  end
+
+  def form_label_class
+    FORM_LABEL_CLASS
+  end
+
+  def form_checkbox_class
+    FORM_CHECKBOX_CLASS
+  end
+
+  # Native <select> needs extra right padding for the browser chevron.
+  def form_select_class
+    "#{FORM_CONTROL_CLASS} pr-10"
+  end
+
   def get_icon(status)
     if status == true
       image_tag 'on.png'

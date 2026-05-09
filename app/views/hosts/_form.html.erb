@@ -26,16 +26,16 @@
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
     <div class="space-y-6">
       <div>
-        <%= form.label :name, t('name'), class: "block font-medium text-sm text-gray-700" %>
+        <%= form.label :name, t('name'), class: form_label_class %>
         <div class="mt-1">
-          <%= form.text_field :name, id: :host_name, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full", placeholder: t('placeholder_hosts_hostname') %>
+          <%= form.text_field :name, id: :host_name, class: form_control_class, placeholder: t('placeholder_hosts_hostname') %>
         </div>
       </div>
 
       <div>
-        <%= form.label :description, t('description'), class: "block font-medium text-sm text-gray-700" %>
+        <%= form.label :description, t('description'), class: form_label_class %>
         <div class="mt-1">
-          <%= form.text_area :description, id: :host_description, rows: 4, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full", placeholder: t('placeholder_hosts_description') %>
+          <%= form.text_area :description, id: :host_description, rows: 4, class: form_control_class, placeholder: t('placeholder_hosts_description') %>
         </div>
       </div>
     </div>
@@ -66,51 +66,51 @@
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-gray-200">
     <div>
-      <%= form.label :infrastructure_id, t('infrastructure'), class: "block font-medium text-sm text-gray-700" %>
+      <%= form.label :infrastructure_id, t('infrastructure'), class: form_label_class %>
       <div class="mt-1">
-        <%= form.select :infrastructure_id, Infrastructure.order(:name).collect{|row| [row.name, row.id]}, {}, { class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full" } %>
+        <%= form.select :infrastructure_id, Infrastructure.order(:name).collect{|row| [row.name, row.id]}, {}, { class: form_select_class } %>
       </div>
     </div>
 
     <div>
-      <%= form.label :environment_id, t('environment'), class: "block font-medium text-sm text-gray-700" %>
+      <%= form.label :environment_id, t('environment'), class: form_label_class %>
       <div class="mt-1">
-        <%= form.select :environment_id, Environment.order(:name).collect{|row| [row.name, row.id]}, {}, { class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full" } %>
+        <%= form.select :environment_id, Environment.order(:name).collect{|row| [row.name, row.id]}, {}, { class: form_select_class } %>
       </div>
     </div>
 
     <div>
-      <%= form.label :host_type_id, t('host_type'), class: "block font-medium text-sm text-gray-700" %>
+      <%= form.label :host_type_id, t('host_type'), class: form_label_class %>
       <div class="mt-1">
-        <%= form.select :host_type_id, HostType.order(:name).collect{|row| [row.name, row.id]}, {}, { class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full" } %>
+        <%= form.select :host_type_id, HostType.order(:name).collect{|row| [row.name, row.id]}, {}, { class: form_select_class } %>
       </div>
     </div>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-gray-200">
     <div>
-      <%= form.label :memory_size, t('memory_size'), class: "block font-medium text-sm text-gray-700" %>
+      <%= form.label :memory_size, t('memory_size'), class: form_label_class %>
       <div class="mt-1">
-        <%= form.text_field :memory_size, id: :memory_size, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full", placeholder: t('placeholder_hosts_memory_size') %>
+        <%= form.text_field :memory_size, id: :memory_size, class: form_control_class, placeholder: t('placeholder_hosts_memory_size') %>
       </div>
     </div>
 
     <div>
-      <%= form.label :total_sockets, t('sockets'), class: "block font-medium text-sm text-gray-700" %>
+      <%= form.label :total_sockets, t('sockets'), class: form_label_class %>
       <div class="mt-1">
-        <%= form.text_field :total_sockets, id: :total_sockets, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full", placeholder: t('placeholder_hosts_total_sockets') %>
+        <%= form.text_field :total_sockets, id: :total_sockets, class: form_control_class, placeholder: t('placeholder_hosts_total_sockets') %>
       </div>
     </div>
 
     <div>
-      <%= form.label :total_vcpus, t('cores'), class: "block font-medium text-sm text-gray-700" %>
+      <%= form.label :total_vcpus, t('cores'), class: form_label_class %>
       <div class="mt-1">
-        <%= form.text_field :total_vcpus, id: :total_vcpus, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full", placeholder: t('placeholder_hosts_total_vcpus') %>
+        <%= form.text_field :total_vcpus, id: :total_vcpus, class: form_control_class, placeholder: t('placeholder_hosts_total_vcpus') %>
       </div>
     </div>
   </div>
 
   <div class="flex items-center justify-end mt-8 pt-6 border-t border-gray-200">
-    <%= form.submit t('ok'), class: 'inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150' %>
+    <%= form.submit t("ok"), class: "inline-flex items-center rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
   </div>
 <% end %>

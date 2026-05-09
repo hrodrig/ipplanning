@@ -1,74 +1,67 @@
-<%= render '/common/header' %>
-
-<div class="flex items-center justify-between mb-6">
-  <h1 class="text-3xl font-bold text-gray-800"><%= t('environment') %>: <%= @environment.name %></h1>
-  <div class="flex space-x-2">
-    <%= link_to t('edit'), edit_environment_path(@environment), class: 'bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded shadow transition duration-150 ease-in-out' %>
-    <%= link_to t('back'), environments_path, class: 'bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded shadow transition duration-150 ease-in-out' %>
-  </div>
-</div>
-
-<% if notice.present? %>
-  <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6 shadow-sm" role="alert">
-    <%= notice %>
-  </div>
-<% end %>
-
-<div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6 border border-gray-200">
-  <div class="px-4 py-5 sm:px-6 bg-gray-50">
-    <h3 class="text-lg leading-6 font-medium text-gray-900"><%= t('details') %></h3>
-  </div>
-  <div class="border-t border-gray-200">
-    <dl>
-      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-        <dt class="text-sm font-medium text-gray-500"><%= t('environment_name') %></dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @environment.name %></dd>
+<%= render layout: "common/admin_resource_form", locals: {
+  heading: "#{t('environment')}: #{@environment.name}",
+  index_path: environments_path,
+  index_label: t("environments"),
+  current_label: @environment.name,
+  back_path: environments_path,
+  primary_action_path: edit_environment_path(@environment),
+  width_class: "max-w-6xl",
+  form_card: false
+} do %>
+  <div class="mb-10 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div class="border-b border-gray-100 bg-gradient-to-b from-gray-50 to-gray-100/80 px-5 py-4">
+      <h2 class="text-base font-semibold text-gray-900"><%= t("details") %></h2>
+    </div>
+    <dl class="divide-y divide-gray-100">
+      <div class="px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+        <dt class="text-sm font-medium text-gray-700"><%= t("environment_name") %></dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @environment.name %></dd>
       </div>
-      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-t border-gray-200">
-        <dt class="text-sm font-medium text-gray-500"><%= t('environment_description') %></dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @environment.description %></dd>
+      <div class="px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+        <dt class="text-sm font-medium text-gray-700"><%= t("environment_description") %></dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @environment.description %></dd>
       </div>
     </dl>
   </div>
-</div>
 
-<div class="flex items-center justify-between mb-4">
-  <h2 class="text-2xl font-bold text-gray-800"><%= t('environment_hosts') %></h2>
-</div>
+  <h2 class="mb-4 text-lg font-bold tracking-tight text-gray-900"><%= t("environment_hosts") %></h2>
 
-<% if @environment.hosts.present? %>
-  <div class="overflow-x-auto bg-white rounded-lg shadow overflow-hidden border border-gray-200 mb-6">
-    <table class="min-w-full divide-y divide-gray-200">
-      <thead class="bg-gray-50">
-        <tr>
-          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b">#</th>
-          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('hostname') %></th>
-          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('host_type') %></th>
-          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('infrastructure') %></th>
-          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('description') %></th>
-        </tr>
-      </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
-        <% @environment.hosts.each_with_index do |host, index| %>
-          <tr class="hover:bg-gray-50 transition-colors duration-150">
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center border-b"><%= index + 1 %></td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600 hover:text-blue-800 text-center border-b">
-              <%= link_to host.name, host, class: "underline" %>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center border-b"><%= host.host_type.name %></td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center border-b"><%= host.infrastructure.name %></td>
-            <td class="px-6 py-4 text-sm text-gray-900 text-center border-b"><%= host.description.html_safe %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-<% else %>
-  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 text-center text-gray-500 mb-6">
-    <%= t('not_found_hosts') %>
+  <% if @environment.hosts.present? %>
+    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gradient-to-b from-gray-50 to-gray-100/80">
+            <tr>
+              <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600">#</th>
+              <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("hostname") %></th>
+              <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("host_type") %></th>
+              <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("infrastructure") %></th>
+              <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("description") %></th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100 bg-white">
+            <% @environment.hosts.each_with_index do |host, index| %>
+              <tr class="transition-colors hover:bg-gray-50/90">
+                <td class="whitespace-nowrap px-5 py-4 text-center text-sm text-gray-500"><%= index + 1 %></td>
+                <td class="whitespace-nowrap px-5 py-4 text-center text-sm font-medium">
+                  <%= link_to host.name, host, class: "text-indigo-600 hover:text-indigo-500" %>
+                </td>
+                <td class="whitespace-nowrap px-5 py-4 text-center text-sm text-gray-800"><%= host.host_type&.name %></td>
+                <td class="whitespace-nowrap px-5 py-4 text-center text-sm text-gray-800"><%= host.infrastructure&.name %></td>
+                <td class="px-5 py-4 text-center text-sm text-gray-700"><%= host.description.html_safe %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <div class="rounded-lg border border-amber-100 bg-amber-50 px-4 py-3 text-sm text-amber-900 shadow-sm" role="status">
+      <%= t("not_found_hosts") %>
+    </div>
+  <% end %>
+
+  <div class="mt-10">
+    <%= link_to t("add_environment"), new_environment_path, class: "inline-flex items-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-indigo-700 shadow-sm ring-1 ring-inset ring-indigo-200 hover:bg-indigo-50" %>
   </div>
 <% end %>
-
-<div class="mt-6 flex space-x-2">
-  <%= link_to t('add'), new_environment_path, class: 'bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow transition duration-150 ease-in-out' %>
-</div>

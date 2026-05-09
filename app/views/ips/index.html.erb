@@ -1,85 +1,95 @@
-<%= render '/common/header' %>
-<h1 class="text-3xl font-bold mb-6 text-gray-800"><%= t('ips') %> (<%= t('ips_total') %>: <span class="text-blue-600"><%= @ips.count.to_s %></span> / <%= t('ips_used') %>: <span class="text-green-600"><%= Ip.used_ips %></span>)</h1>
+<%= render "/common/header" %>
 
-<% if notice.present? %>
-  <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4 shadow-sm" role="alert">
-    <%= notice %>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 pb-10">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900"><%= t("ips") %></h1>
+    <p class="mt-2 text-sm text-gray-600">
+      <%= t("ips_total") %>:
+      <span class="font-semibold text-indigo-600"><%= @ips.count.to_s %></span>
+      <span class="mx-2 text-gray-300" aria-hidden="true">·</span>
+      <%= t("ips_used") %>:
+      <span class="font-semibold text-emerald-600"><%= Ip.used_ips %></span>
+    </p>
   </div>
-<% end %>
 
-<% if @orphaned_ips.present? %>
-  <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 shadow-sm" role="alert">
-    <%= t('orphaned_ips_message').html_safe %>
-  </div>
-<% end %>
+  <%= render "common/admin_flash" %>
 
-<% if @vlans.present? %>
-  <% @vlans.each do |vlan| %>
-    <div class="bg-gray-50 p-6 rounded-xl mb-12 border border-gray-200 shadow-sm">
-      <div class="overflow-x-auto bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200 mb-6">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-100">
-            <tr>
-              <th width="5%" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider border-b"><%= t('vlan_id') %></th>
-              <th width="10%" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider border-b"><%= t('vlan_name') %></th>
-              <th width="5%" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider border-b"><%= t('vlan_descriptor') %></th>
-              <th width="10%" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider border-b"><%= t('network') %></th>
-              <th width="5%" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider border-b"><%= t('netmask') %></th>
-              <th width="10%" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider border-b"><%= t('gateway') %></th>
-              <th class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider border-b"><%= t('notes') %></th>
-            </tr>
-          </thead>
-          <tbody class="bg-white">
-              <tr>
-                <td class="px-4 py-3 text-sm font-mono text-gray-900 border-b text-center"><%= vlan.number %></td>
-                <td class="px-4 py-3 text-sm font-medium text-gray-900 border-b text-center"><%= vlan.name %></td>
-                <td class="px-4 py-3 text-sm text-gray-900 border-b text-center"><%= vlan.descriptor %></td>
-                <td class="px-4 py-3 text-sm text-gray-900 border-b text-center"><%= vlan.network %></td>
-                <td class="px-4 py-3 text-sm text-gray-900 border-b text-center"><%= vlan.netmask %></td>
-                <td class="px-4 py-3 text-sm text-gray-900 border-b text-center"><%= vlan.gateway %></td>
-                <td class="px-4 py-3 text-sm text-gray-600 border-b">
-                  <pre class="font-sans whitespace-pre-wrap"><%= vlan.notes %></pre>
-                </td>
-              </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <% if vlan.ips.count == 0 %>
-        <p class="text-gray-500 italic py-4 text-center"><%= t('not_assigned_ips')%></p>
-      <% else %>
-        <%= render 'vlan', vlan: vlan %>
-      <% end %>
+  <% if @orphaned_ips.present? %>
+    <div class="mb-8 rounded-lg border border-red-100 bg-red-50 px-4 py-3 shadow-sm text-sm text-red-900" role="alert">
+      <%= t("orphaned_ips_message").html_safe %>
     </div>
   <% end %>
-<% else %>
-  <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 shadow-sm" role="alert">
-    <%= t('not_found_vlans_ips') %>
-  </div>
-<% end %>
 
-<div class="mt-12 p-6 bg-white rounded-lg border border-gray-200 shadow-sm">
-  <h3 class="text-xl font-bold mb-4 text-gray-800 border-b pb-2"><%= t('legend') %></h3>
-  <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <li class="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded transition-colors duration-150">
-      <%= image_tag 'edit-delete.png', title: t('legend_not_include_in_hosts_file'), class: "w-6 h-6" %>
-      <span class="text-sm text-gray-700"><%= t('legend_not_include_in_hosts_file') %></span>
-    </li>
-    <li class="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded transition-colors duration-150">
-      <%= image_tag 'network-error.png', title: t('legend_not_use_vlan_descriptor'), class: "w-6 h-6" %>
-      <span class="text-sm text-gray-700"><%= t('legend_not_use_vlan_descriptor') %></span>
-    </li>
-    <li class="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded transition-colors duration-150">
-      <%= image_tag 'task-due.png', title: t('legend_not_use_hostname_alias'), class: "w-6 h-6" %>
-      <span class="text-sm text-gray-700"><%= t('legend_not_use_hostname_alias') %></span>
-    </li>
-    <li class="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded transition-colors duration-150">
-      <%= image_tag 'geany-close-all.png', title: t('legend_ip_reserved'), class: "w-6 h-6" %>
-      <span class="text-sm text-gray-700"><%= t('legend_ip_reserved') %></span>
-    </li>
-    <li class="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded transition-colors duration-150">
-      <%= image_tag 'application-exit.png', title: t('legend_not_use_domain_name'), class: "w-6 h-6" %>
-      <span class="text-sm text-gray-700"><%= t('legend_not_use_domain_name') %></span>
-    </li>
-  </ul>
+  <% if @vlans.present? %>
+    <% @vlans.each do |vlan| %>
+      <section class="mb-12 rounded-xl border border-gray-200 bg-gray-50/60 p-6 shadow-sm last:mb-0">
+        <div class="mb-6 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gradient-to-b from-gray-50 to-gray-100/80">
+                <tr>
+                  <th scope="col" class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("vlan_id") %></th>
+                  <th scope="col" class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("vlan_name") %></th>
+                  <th scope="col" class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("vlan_descriptor") %></th>
+                  <th scope="col" class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("network") %></th>
+                  <th scope="col" class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("netmask") %></th>
+                  <th scope="col" class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("gateway") %></th>
+                  <th scope="col" class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("notes") %></th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 bg-white">
+                <tr>
+                  <td class="px-4 py-3 text-center text-sm font-mono text-gray-900"><%= vlan.number %></td>
+                  <td class="px-4 py-3 text-center text-sm font-semibold text-gray-900"><%= vlan.name %></td>
+                  <td class="px-4 py-3 text-center text-sm text-gray-700"><%= vlan.descriptor %></td>
+                  <td class="px-4 py-3 text-center text-sm font-mono text-gray-700"><%= vlan.network %></td>
+                  <td class="px-4 py-3 text-center text-sm font-mono text-gray-700"><%= vlan.netmask %></td>
+                  <td class="px-4 py-3 text-center text-sm font-mono text-gray-700"><%= vlan.gateway %></td>
+                  <td class="px-4 py-3 text-sm text-gray-600">
+                    <pre class="whitespace-pre-wrap font-sans text-sm leading-relaxed"><%= vlan.notes %></pre>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <% if vlan.ips.count == 0 %>
+          <p class="py-6 text-center text-sm italic text-gray-500"><%= t("not_assigned_ips") %></p>
+        <% else %>
+          <%= render "vlan", vlan: vlan, show_meta: false %>
+        <% end %>
+      </section>
+    <% end %>
+  <% else %>
+    <div class="rounded-lg border border-amber-100 bg-amber-50 px-4 py-3 text-sm text-amber-900 shadow-sm" role="status">
+      <%= t("not_found_vlans_ips") %>
+    </div>
+  <% end %>
+
+  <div class="mt-12 overflow-hidden rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+    <h2 class="border-b border-gray-100 pb-3 text-lg font-bold tracking-tight text-gray-900"><%= t("legend") %></h2>
+    <ul class="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+      <li class="flex items-center gap-3 rounded-lg border border-transparent p-3 transition hover:border-gray-100 hover:bg-gray-50">
+        <%= image_tag "edit-delete.png", title: t("legend_not_include_in_hosts_file"), class: "h-6 w-6 shrink-0" %>
+        <span class="text-sm text-gray-700"><%= t("legend_not_include_in_hosts_file") %></span>
+      </li>
+      <li class="flex items-center gap-3 rounded-lg border border-transparent p-3 transition hover:border-gray-100 hover:bg-gray-50">
+        <%= image_tag "network-error.png", title: t("legend_not_use_vlan_descriptor"), class: "h-6 w-6 shrink-0" %>
+        <span class="text-sm text-gray-700"><%= t("legend_not_use_vlan_descriptor") %></span>
+      </li>
+      <li class="flex items-center gap-3 rounded-lg border border-transparent p-3 transition hover:border-gray-100 hover:bg-gray-50">
+        <%= image_tag "task-due.png", title: t("legend_not_use_hostname_alias"), class: "h-6 w-6 shrink-0" %>
+        <span class="text-sm text-gray-700"><%= t("legend_not_use_hostname_alias") %></span>
+      </li>
+      <li class="flex items-center gap-3 rounded-lg border border-transparent p-3 transition hover:border-gray-100 hover:bg-gray-50">
+        <%= image_tag "geany-close-all.png", title: t("legend_ip_reserved"), class: "h-6 w-6 shrink-0" %>
+        <span class="text-sm text-gray-700"><%= t("legend_ip_reserved") %></span>
+      </li>
+      <li class="flex items-center gap-3 rounded-lg border border-transparent p-3 transition hover:border-gray-100 hover:bg-gray-50">
+        <%= image_tag "application-exit.png", title: t("legend_not_use_domain_name"), class: "h-6 w-6 shrink-0" %>
+        <span class="text-sm text-gray-700"><%= t("legend_not_use_domain_name") %></span>
+      </li>
+    </ul>
+  </div>
 </div>

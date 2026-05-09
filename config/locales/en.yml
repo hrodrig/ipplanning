@@ -434,13 +434,19 @@ en:
   placeholder_vlan_network: 'Network. Ex: 10.0.0.0'
   placeholder_vlan_notes_help: 'Add here any restricted information vlan related. (optional)'
   placeholder_vlan_notes: 'Optional information.'
-  platform_settings: Plattform settings
+  platform_settings: Platform settings
   private_information: Private information
   prohibited_this_information_from_being_saved: prohibited this information from being saved
   public_information: Public information
   reserved: Reserved
   setting_parameter: Parameter
   setting_value: Value
+  settings_index_subtitle: Appearance, domain, integrations, and optional HTTP basic auth.
+  settings_parameters_footer: "%{count} parameters"
+  settings_no_description: No description yet.
+  settings_no_value: Not set
+  settings_badge_security: Auth
+  settings_value_masked: Hidden in list — use Edit to view or change.
   setting_was_successfully_updated: Setting was successfully updated.
   short_hostname: Short hostname
   show_all: Show all
@@ -452,6 +458,10 @@ en:
   use_hostname_alias: 'Use hostname alias: '
   use_vlan_descriptor: Use VLAN descriptor
   used: used
+  admin_crud_list_subtitle:
+    zero: "No records"
+    one: "1 record"
+    other: "%{count} records"
   vlan_descriptor_ip: 'VLAN / Descriptor / IP'
   vlan_descriptor: VLAN descriptor
   vlan_id: VLAN ID

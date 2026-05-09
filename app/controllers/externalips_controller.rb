@@ -32,7 +32,7 @@ class ExternalipsController < ApplicationController
   # GET /externalips.json
   def index
     @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('external_ips')
-    @externalips = Externalip.all
+    @externalips = Externalip.order(:address)
   end
 
   # GET /externalips/1

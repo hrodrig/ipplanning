@@ -1,44 +1,32 @@
-<%= render '/common/header' %>
+<%= render "/common/header" %>
 
-<div class="px-4 sm:px-6 lg:px-8 mt-8">
-  <div class="sm:flex sm:items-center">
-    <div class="sm:flex-auto">
-      <h1 class="text-2xl font-semibold leading-6 text-gray-900"><%= t('etc_hosts') %></h1>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-0 pb-10">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900"><%= t("etc_hosts") %></h1>
+      <p class="mt-1 text-sm text-gray-500"><%= t("etc_hosts_generation") %></p>
     </div>
-    <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-      <%= link_to t('download'), download_etc_hosts_path, class: "block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", title: t('download_file') %>
+    <%= link_to t("download"), download_etc_hosts_path, class: "inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", title: t("download_file") %>
+  </div>
+
+  <%= render "common/admin_flash" %>
+
+  <div class="overflow-hidden rounded-xl border border-gray-800 bg-gray-900 shadow-sm">
+    <div class="max-h-[32rem] overflow-x-auto overflow-y-auto p-6">
+      <pre class="whitespace-pre font-mono text-sm leading-relaxed text-gray-200"><%= Ip.generate_etc_hosts %></pre>
     </div>
   </div>
 
-  <% if notice.present? %>
-    <div class="mt-6 rounded-md bg-blue-50 p-4">
-      <div class="flex">
-        <div class="flex-shrink-0">
-          <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
-        </div>
-        <div class="ml-3"><p class="text-sm text-blue-700"><%= notice %></p></div>
-      </div>
-    </div>
-  <% end %>
-
-  <div class="mt-6">
-    <div class="overflow-hidden rounded-lg bg-gray-900 shadow-sm border border-gray-800">
-      <div class="p-6 font-mono text-sm text-gray-300 overflow-x-auto whitespace-pre">
-        <%= Ip.generate_etc_hosts %>
-      </div>
-    </div>
-  </div>
-
-  <div class="mt-8 rounded-lg bg-gray-50 border border-gray-200 p-6 shadow-sm">
-    <h3 class="text-sm font-semibold leading-6 text-gray-900"><%= t('download_instructions') %></h3>
-    <div class="mt-4 relative">
-      <div class="overflow-x-auto rounded bg-gray-800 p-4 font-mono text-xs text-indigo-300">
-        <% if Setting.find_by_name('BasicAuthRequired')&.value == '1' %>
-          <code>wget -O /tmp/hosts <%= request.base_url %>/etc/hosts/download --user=<%= Setting.find_by_name('BasicAuthUsername')&.value %> --password=<%= Setting.find_by_name('BasicAuthPassword')&.value %> && cp /etc/hosts /etc/hosts.bck-`date '+%Y%m%d%H%M'` && mv -f /tmp/hosts /etc/hosts;</code>
+  <div class="mt-10 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 p-6 shadow-sm">
+    <h2 class="text-sm font-semibold text-gray-900"><%= t("download_instructions") %></h2>
+    <div class="mt-4 overflow-x-auto rounded-lg border border-gray-700 bg-gray-900 p-4">
+      <code class="block font-mono text-xs leading-relaxed text-indigo-200">
+        <% if Setting.find_by_name("BasicAuthRequired")&.value == "1" %>
+          wget -O /tmp/hosts <%= request.base_url %>/etc/hosts/download --user=<%= Setting.find_by_name("BasicAuthUsername")&.value %> --password=<%= Setting.find_by_name("BasicAuthPassword")&.value %> && cp /etc/hosts /etc/hosts.bck-`date '+%Y%m%d%H%M'` && mv -f /tmp/hosts /etc/hosts;
         <% else %>
-          <code>wget -O /tmp/hosts <%= request.base_url %>/etc/hosts/download && cp /etc/hosts /etc/hosts.bck-`date '+%Y%m%d%H%M'` && mv -f /tmp/hosts /etc/hosts;</code>
+          wget -O /tmp/hosts <%= request.base_url %>/etc/hosts/download && cp /etc/hosts /etc/hosts.bck-`date '+%Y%m%d%H%M'` && mv -f /tmp/hosts /etc/hosts;
         <% end %>
-      </div>
+      </code>
     </div>
   </div>
 </div>

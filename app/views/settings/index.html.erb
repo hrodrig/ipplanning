@@ -1,53 +1,63 @@
-<%= render '/common/header' %>
+<%= render "/common/header" %>
 
-<div class="px-4 sm:px-6 lg:px-8 mt-8">
-  <div class="sm:flex sm:items-center">
-    <div class="sm:flex-auto">
-      <h1 class="text-2xl font-semibold leading-6 text-gray-900"><%= t('platform_settings') %></h1>
-    </div>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-0">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900"><%= t("platform_settings") %></h1>
+    <p class="mt-2 text-sm text-gray-500 max-w-2xl leading-relaxed"><%= t("settings_index_subtitle") %></p>
+    <p class="mt-3 text-xs text-gray-400"><%= t("settings_parameters_footer", count: @settings.size) %></p>
   </div>
 
-  <% if notice.present? %>
-    <div class="mt-6 rounded-md bg-blue-50 p-4">
-      <div class="flex">
-        <div class="flex-shrink-0">
-          <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
-        </div>
-        <div class="ml-3"><p class="text-sm text-blue-700"><%= notice %></p></div>
-      </div>
-    </div>
-  <% end %>
+  <%= render "common/admin_flash" %>
 
-  <div class="mt-8 flow-root">
-    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-          <table class="min-w-full divide-y divide-gray-300">
-            <thead class="bg-gray-50">
-              <tr>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"><%= t('setting_parameter') %></th>
-                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= t('setting_value') %></th>
-                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= t('description') %></th>
-                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6"><span class="sr-only">Actions</span></th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200 bg-white">
-              <% @settings.each do |setting| %>
-                <tr class="hover:bg-gray-50">
-                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-bold text-gray-900 sm:pl-6">
-                    <%= setting.name %>
-                  </td>
-                  <td class="px-3 py-4 text-sm text-gray-500 max-w-xs truncate"><%= setting.value %></td>
-                  <td class="px-3 py-4 text-sm text-gray-500"><%= setting.description %></td>
-                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                    <%= link_to t('edit'), edit_setting_path(setting), class: "text-indigo-600 hover:text-indigo-900" %>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
+  <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gradient-to-b from-gray-50 to-gray-100/80">
+          <tr>
+            <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+              <%= t("setting_parameter") %>
+            </th>
+            <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+              <%= t("setting_value") %>
+            </th>
+            <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600 hidden lg:table-cell">
+              <%= t("description") %>
+            </th>
+            <th scope="col" class="relative px-5 py-3.5 w-32">
+              <span class="sr-only"><%= t("edit") %></span>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 bg-white">
+          <% @settings.each do |setting| %>
+            <% kind = setting_row_kind(setting) %>
+            <tr class="group transition-colors hover:bg-gray-50/90 <%= "border-l-4 border-l-amber-400" if kind == :security %>">
+              <td class="px-5 py-4 align-top">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="font-mono text-sm font-medium text-gray-900"><%= setting.name %></span>
+                  <% if kind == :security %>
+                    <span class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-800 ring-1 ring-inset ring-amber-200/60">
+                      <%= t("settings_badge_security") %>
+                    </span>
+                  <% end %>
+                </div>
+                <div class="mt-2 text-sm text-gray-600 leading-snug lg:hidden">
+                  <%= setting_description_display(setting) %>
+                </div>
+              </td>
+              <td class="px-5 py-4 align-top max-w-md">
+                <%= setting_value_display(setting) %>
+              </td>
+              <td class="px-5 py-4 align-top hidden lg:table-cell max-w-md">
+                <%= setting_description_display(setting) %>
+              </td>
+              <td class="px-5 py-4 align-top text-right whitespace-nowrap">
+                <%= link_to t("edit"), edit_setting_path(setting), class: "inline-flex items-center justify-center rounded-lg bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

@@ -24,17 +24,17 @@
   <% end %>
 
   <div>
-    <%= form.label :name, t('name'), class: "block text-sm font-medium leading-6 text-gray-900" %>
+    <%= form.label :name, t('name'), class: form_label_class %>
     <div class="mt-2">
-      <%= form.text_field :name, id: :environment_name, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6", placeholder: t('placeholder_environment_name') %>
+      <%= form.text_field :name, id: :environment_name, class: form_control_class, placeholder: t('placeholder_environment_name') %>
     </div>
     <p class="mt-2 text-sm text-gray-500"><%= t('placeholder_environment_name_help') %></p>
   </div>
 
   <div>
-    <%= form.label :description, t('description'), class: "block text-sm font-medium leading-6 text-gray-900" %>
+    <%= form.label :description, t('description'), class: form_label_class %>
     <div class="mt-2">
-      <%= form.text_area :description, id: :environment_description, rows: 3, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6", placeholder: t('placeholder_environment_description') %>
+      <%= form.text_area :description, id: :environment_description, rows: 3, class: form_control_class, placeholder: t('placeholder_environment_description') %>
     </div>
     <p class="mt-2 text-sm text-gray-500"><%= t('placeholder_environment_description_help') %></p>
   </div>

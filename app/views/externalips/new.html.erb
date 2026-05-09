@@ -1,39 +1,9 @@
-<%= render '/common/header' %>
-
-<div class="md:flex md:items-center md:justify-between mb-6">
-  <div class="min-w-0 flex-1">
-    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight"><%= t('add_external_ip') %></h2>
-  </div>
-</div>
-
-<% if notice.present? %>
-  <div class="rounded-md bg-blue-50 p-4 mb-6">
-    <div class="flex">
-      <div class="flex-shrink-0">
-        <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-        </svg>
-      </div>
-      <div class="ml-3">
-        <p class="text-sm text-blue-700"><%= notice %></p>
-      </div>
-    </div>
-  </div>
+<%= render layout: "common/admin_resource_form", locals: {
+  heading: t("add_external_ip"),
+  index_path: externalips_path,
+  index_label: t("external_ips"),
+  current_label: t("add_external_ip"),
+  back_path: externalips_path
+} do %>
+  <%= render "form", externalip: @externalip %>
 <% end %>
-
-<div class="bg-white shadow sm:rounded-lg">
-  <div class="px-4 py-5 sm:p-6">
-    <%= render 'form', externalip: @externalip %>
-  </div>
-</div>
-
-<div class="mt-8 flex flex-wrap gap-4">
-  <%= link_to t('back'), :back, class: 'inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50' %>
-  <%= link_to t('vlans'), :vlans, class: 'text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500' %>
-  <%= link_to t('ips'), :ips, class: 'text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500' %>
-  <%= link_to t('external_ips'), :externalips, class: 'text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500' %>
-  <%= link_to t('hosts'), :hosts, class: 'text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500' %>
-  <%= link_to t('infrastructures'), :infrastructures, class: 'text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500' %>
-  <%= link_to t('environments'), :environments, class: 'text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500' %>
-  <%= link_to t('host_types'), :host_types, class: 'text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500' %>
-</div>

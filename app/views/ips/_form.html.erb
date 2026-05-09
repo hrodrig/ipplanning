@@ -39,25 +39,25 @@
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="space-y-6">
       <div>
-        <%= form.label :hostname_alias, t('short_hostname_alias'), class: "block font-medium text-sm text-gray-700" %>
+        <%= form.label :hostname_alias, t('short_hostname_alias'), class: form_label_class %>
         <div class="mt-1">
-          <%= form.text_field :hostname_alias, id: :hostname_alias, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full", placeholder: t('placeholder_ip_hostname_alias') %>
+          <%= form.text_field :hostname_alias, id: :hostname_alias, class: form_control_class, placeholder: t('placeholder_ip_hostname_alias') %>
         </div>
         <p class="mt-2 text-sm text-gray-500"><%= t('placeholder_ip_hostname_alias_help') %></p>
       </div>
 
       <div>
-        <%= form.label :complete_hostname_alias, t('complete_hostname'), class: "block font-medium text-sm text-gray-700" %>
+        <%= form.label :complete_hostname_alias, t('complete_hostname'), class: form_label_class %>
         <div class="mt-1">
-          <%= form.text_field :complete_hostname_alias, id: :complete_hostname_alias, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full", placeholder: "(Opcional)" %>
+          <%= form.text_field :complete_hostname_alias, id: :complete_hostname_alias, class: form_control_class, placeholder: "(Opcional)" %>
         </div>
         <p class="mt-2 text-sm text-gray-500"><%= t('placeholder_ip_complete_hostname_alias_help') %></p>
       </div>
 
       <div>
-        <%= form.label :notes, t('notes'), class: "block font-medium text-sm text-gray-700" %>
+        <%= form.label :notes, t('notes'), class: form_label_class %>
         <div class="mt-1">
-          <%= form.text_area :notes, id: :ip_notes, rows: 3, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full" %>
+          <%= form.text_area :notes, id: :ip_notes, rows: 3, class: form_control_class %>
         </div>
         <p class="mt-2 text-sm text-gray-500"><%= t('placeholder_ip_notes_help') %></p>
       </div>
@@ -66,7 +66,7 @@
     <div class="space-y-4 bg-white p-4 rounded-lg border border-gray-100">
       <div class="flex items-start">
         <div class="flex items-center h-5">
-          <%= form.check_box :use_domain_name, id: :ip_use_domain_name, class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" %>
+          <%= form.check_box :use_domain_name, id: :ip_use_domain_name, class: form_checkbox_class %>
         </div>
         <div class="ml-3 text-sm">
           <%= form.label :use_domain_name, t('use_domain_name') + '?', class: "font-medium text-gray-700" %>
@@ -76,7 +76,7 @@
 
       <div class="flex items-start">
         <div class="flex items-center h-5">
-          <%= form.check_box :include_in_etc_hosts, id: :ip_include_in_etc_hosts, class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" %>
+          <%= form.check_box :include_in_etc_hosts, id: :ip_include_in_etc_hosts, class: form_checkbox_class %>
         </div>
         <div class="ml-3 text-sm">
           <%= form.label :include_in_etc_hosts, t('include_in_etc_hosts') + '?', class: "font-medium text-gray-700" %>
@@ -86,7 +86,7 @@
 
       <div class="flex items-start">
         <div class="flex items-center h-5">
-          <%= form.check_box :use_vlan_descriptor, id: :ip_use_vlan_descriptor, class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" %>
+          <%= form.check_box :use_vlan_descriptor, id: :ip_use_vlan_descriptor, class: form_checkbox_class %>
         </div>
         <div class="ml-3 text-sm">
           <%= form.label :use_vlan_descriptor, t('use_vlan_descriptor') + '?', class: "font-medium text-gray-700" %>
@@ -96,7 +96,7 @@
 
       <div class="flex items-start">
         <div class="flex items-center h-5">
-          <%= form.check_box :is_reserved, id: :ip_is_reserved, class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" %>
+          <%= form.check_box :is_reserved, id: :ip_is_reserved, class: form_checkbox_class %>
         </div>
         <div class="ml-3 text-sm">
           <%= form.label :is_reserved, t('is_reserved') + '?', class: "font-medium text-gray-700" %>
@@ -107,6 +107,6 @@
   </div>
 
   <div class="flex items-center justify-end mt-6 pt-6 border-t border-gray-200">
-    <%= form.submit t('ok'), class: 'inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150' %>
+    <%= form.submit t("ok"), class: "inline-flex items-center rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
   </div>
 <% end %>
