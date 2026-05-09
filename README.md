@@ -4,8 +4,11 @@
   <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80" alt="IPPLANNING Hero Image" width="100%" style="border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
 </p>
 
+[![Version](https://img.shields.io/badge/version-0.8.0-blue.svg)](https://github.com/hrodrig/ipplanning/releases)
+[![Release](https://img.shields.io/github/v/release/hrodrig/ipplanning?sort=semver)](https://github.com/hrodrig/ipplanning/releases)
+[![License](https://img.shields.io/github/license/hrodrig/ipplanning)](https://github.com/hrodrig/ipplanning/blob/main/LICENSE)
 ![Rails Version](https://img.shields.io/badge/Rails-8.0-red)
-![Ruby Version](https://img.shields.io/badge/Ruby-3.3-red)
+![Ruby Version](https://img.shields.io/badge/Ruby-3.3.0-red)
 ![Frontend](https://img.shields.io/badge/Frontend-Hotwire%20%2B%20Tailwind-blue)
 
 IPPLANNING is a powerful, lightweight, and modern IP Address Management (IPAM) system built with Ruby on Rails 8. It is designed to help system administrators and DevOps engineers manage network segments, VLANs, and host assignments with ease, focusing on high-performance environments like SAP and Oracle.
@@ -14,13 +17,15 @@ IPPLANNING is a powerful, lightweight, and modern IP Address Management (IPAM) s
 
 ## ⚡ Quickstart (The 60-Second Setup)
 
-1. **Clone & Install:**
+Use **Ruby 3.3.0** (see [`.ruby-version`](.ruby-version)) and MySQL. For RVM gemset and Bundler, follow [Installation & Setup](#-installation--setup) first; then:
+
+1. **Clone & install:**
    ```bash
-   git clone https://github.com/your-username/ipplanning.git && cd ipplanning
+   git clone https://github.com/hrodrig/ipplanning.git && cd ipplanning
    bundle install
    ```
 
-2. **Configure Database:**
+2. **Configure database:**
    Update `config/database.yml` with your MySQL credentials. If you want to use the defaults, run this in your MySQL console:
    ```sql
    CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';
@@ -31,12 +36,15 @@ IPPLANNING is a powerful, lightweight, and modern IP Address Management (IPAM) s
    FLUSH PRIVILEGES;
    ```
 
-3. **Initialize & Run:**
+3. **Initialize and run:**
    ```bash
-   bin/rails db:prepare app:setup
+   bin/rails db:prepare
+   bin/rails app:setup
    bin/dev
    ```
-*Login at `http://localhost:3000` after creating your admin in the console (see [User Management](#-user-management)).*
+   Log in at `http://localhost:3000` after creating an admin in the console (see [User Management](#-user-management)).
+
+The **version badge** above tracks the [`VERSION`](VERSION) file; keep them in sync when you cut a release.
 
 ---
 
@@ -48,7 +56,7 @@ IPPLANNING is a powerful, lightweight, and modern IP Address Management (IPAM) s
 4. [Installation & Setup](#-installation--setup)
 5. [User Management](#-user-management)
 6. [Basic Configuration](#-basic-configuration)
-7. [Contributing](#-contributing)
+7. [Contributing](#-contributing) · [CONTRIBUTING.md](CONTRIBUTING.md)
 8. [License](#-license)
 
 ---
@@ -79,7 +87,7 @@ IPPLANNING simplifies this by providing a single source of truth for your networ
 ## 🛠 Tech Stack
 
 - **Backend:** [Ruby on Rails 8.0](https://rubyonrails.org/)
-- **Runtime:** [Ruby 3.3+](https://www.ruby-lang.org/)
+- **Runtime:** [Ruby 3.3.0](https://www.ruby-lang.org/) (pinned in [`.ruby-version`](.ruby-version); newer 3.3.x patch releases usually work locally)
 - **Database:** MySQL / MariaDB
 - **Frontend:** [Tailwind CSS v4](https://tailwindcss.com/), [Hotwire](https://hotwired.dev/) (Turbo & Stimulus)
 - **Assets:** [Propshaft](https://github.com/rails/propshaft) & [Importmaps](https://github.com/rails/importmap-rails) (No Node.js required)
@@ -93,22 +101,26 @@ IPPLANNING simplifies this by providing a single source of truth for your networ
 
 ### Prerequisites
 
-- Ruby 3.3.0 or higher (Managed via RVM recommended)
+- **Ruby 3.3.0** (see [`.ruby-version`](.ruby-version); RVM recommended with gemset from [`.ruby-gemset`](.ruby-gemset))
 - MySQL 5.7+ or MariaDB
-- Bundler 2.5+
+- **Bundler** matching `Gemfile.lock` (see `BUNDLED WITH`, currently **4.0.x**)
 
 ### Step-by-Step Installation
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/ipplanning.git
+   git clone https://github.com/hrodrig/ipplanning.git
    cd ipplanning
    ```
 
-2. **Configure RVM (Optional but recommended):**
-   ```bash
-   rvm use ruby-3.3.0@ipplanning --create
-   ```
+2. **RVM and gemset (recommended):**  
+   This repo pins Ruby and gemset via [`.ruby-version`](.ruby-version) (`3.3.0`) and [`.ruby-gemset`](.ruby-gemset) (`ipplanning`) — together that is **`3.3.0@ipplanning`** in RVM terms.  
+   - **First time only:** create and select the gemset (requires Ruby 3.3.0 installed in RVM, e.g. `rvm install 3.3.0`):
+     ```bash
+     rvm use 3.3.0@ipplanning --create
+     ```
+   - **After that:** with RVM shell integration (`rvm get stable` / default macOS/Linux setup), `cd` into the project directory usually auto-selects `3.3.0@ipplanning`. If not, run `rvm use` once in the project root.
+   - **Check:** `rvm current` should show `ruby-3.3.0@ipplanning` (or `ruby-3.3.0-p...@ipplanning` depending on patch level).
 
 3. **Install dependencies:**
    ```bash
@@ -166,12 +178,14 @@ Once logged in, navigate to the **Settings** section to configure:
 
 ## 🤝 Contributing
 
-We welcome contributions! Please feel free to submit a Pull Request.
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+We welcome contributions. Read **[CONTRIBUTING.md](CONTRIBUTING.md)** for branch flow (`develop` → `main`), tests, and how the whitelist `.gitignore` works.
+
+Quick flow:
+
+1. Fork the project (if you are not a direct collaborator).
+2. Create a focused branch (for example `git checkout -b feat/short-topic`).
+3. Run **`bin/rails test`** before opening a PR.
+4. Open a pull request **against `develop`**.
 
 [↑ Back to Top](#-table-of-contents)
 
@@ -179,7 +193,7 @@ We welcome contributions! Please feel free to submit a Pull Request.
 
 ## 📜 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See `LICENSE` for full text.
 
 ---
 *Developed by Hermes Rodríguez - Updated for Rails 8 & Modern Standards.*
