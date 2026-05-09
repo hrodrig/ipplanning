@@ -17,8 +17,19 @@ class VlansControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create vlan" do
+    n = Time.now.to_i
+    oct = 50 + (n % 180)
     assert_difference('Vlan.count') do
-      post vlans_url, params: { vlan: { gateway: @vlan.gateway, name: @vlan.name, netmask: @vlan.netmask, network: @vlan.network, notes: @vlan.notes, number: @vlan.number } }
+      post vlans_url, params: { vlan: {
+        gateway: "10.#{oct}.0.254",
+        name: "Test VLAN #{n}",
+        netmask: @vlan.netmask,
+        network: "10.#{oct}.0.0",
+        notes: @vlan.notes,
+        number: 3000 + (n % 60000),
+        descriptor: "t#{n % 9999}",
+        include_in_etc_hosts: true
+      } }
     end
 
     assert_redirected_to vlan_url(Vlan.last)

@@ -1,0 +1,68 @@
+# frozen_string_literal: true
+
+class ServerRacksController < ApplicationController
+  before_action :set_server_rack, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_admin!
+
+  def index
+    @page_title = (Setting.find_by(name: "WebsiteName")&.value || "IP Planning") + " - " + I18n.t("server_racks")
+    @server_racks = ServerRack.joins(:location).includes(:location).order("locations.name ASC", "server_racks.name ASC")
+  end
+
+  def show
+    @page_title = (Setting.find_by(name: "WebsiteName")&.value || "IP Planning") + " - " + I18n.t("server_racks") + " - " + @server_rack.name
+  end
+
+  def new
+    @page_title = (Setting.find_by(name: "WebsiteName")&.value || "IP Planning") + " - " + I18n.t("server_racks") + " - " + I18n.t("adding_server_rack")
+    @server_rack = ServerRack.new(location_id: params[:location_id])
+  end
+
+  def edit
+    @page_title = (Setting.find_by(name: "WebsiteName")&.value || "IP Planning") + " - " + I18n.t("server_racks") + " - " + @server_rack.name + " - " + I18n.t("editing_server_rack")
+  end
+
+  def create
+    @server_rack = ServerRack.new(server_rack_params)
+
+    respond_to do |format|
+      if @server_rack.save
+        format.html { redirect_to @server_rack, notice: t("server_rack_was_successfully_created") }
+        format.json { render :show, status: :created }
+      else
+        format.html { render :new }
+        format.json { render json: @server_rack.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update
+    respond_to do |format|
+      if @server_rack.update(server_rack_params)
+        format.html { redirect_to @server_rack, notice: t("server_rack_was_successfully_updated") }
+        format.json { render :show, status: :ok }
+      else
+        format.html { render :edit }
+        format.json { render json: @server_rack.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy
+    @server_rack.destroy
+    respond_to do |format|
+      format.html { redirect_to server_racks_url, notice: t("server_rack_was_successfully_destroyed") }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+
+  def set_server_rack
+    @server_rack = ServerRack.find(params[:id])
+  end
+
+  def server_rack_params
+    params.require(:server_rack).permit(:location_id, :name, :u_height, :notes, photos: [])
+  end
+end

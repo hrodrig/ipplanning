@@ -18,7 +18,7 @@ class EnvironmentsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create environment" do
     assert_difference('Environment.count') do
-      post environments_url, params: { environment: { name: @environment.name } }
+      post environments_url, params: { environment: { name: "Environment #{Time.now.to_i}" } }
     end
 
     assert_redirected_to environment_url(Environment.last)

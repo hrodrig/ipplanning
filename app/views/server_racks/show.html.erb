@@ -1,0 +1,59 @@
+<%= render layout: "common/admin_resource_form", locals: {
+  heading: "#{t('server_rack')}: #{@server_rack.name}",
+  index_path: server_racks_path,
+  index_label: t("server_racks"),
+  current_label: @server_rack.name,
+  back_path: server_racks_path,
+  primary_action_path: edit_server_rack_path(@server_rack),
+  width_class: "max-w-6xl",
+  form_card: false
+} do %>
+  <div class="mb-10 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div class="border-b border-gray-100 bg-gradient-to-b from-gray-50 to-gray-100/80 px-5 py-4">
+      <h2 class="text-base font-semibold text-gray-900"><%= t("details") %></h2>
+    </div>
+    <dl class="divide-y divide-gray-100">
+      <div class="px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+        <dt class="text-sm font-medium text-gray-700"><%= t("server_rack_location") %></dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+          <%= link_to @server_rack.location.name, @server_rack.location, class: "text-indigo-600 hover:text-indigo-500" %>
+        </dd>
+      </div>
+      <div class="px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+        <dt class="text-sm font-medium text-gray-700"><%= t("server_rack_name") %></dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @server_rack.name %></dd>
+      </div>
+      <div class="px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+        <dt class="text-sm font-medium text-gray-700"><%= t("server_rack_u_height") %></dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @server_rack.u_height.presence || "—" %></dd>
+      </div>
+      <div class="px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+        <dt class="text-sm font-medium text-gray-700"><%= t("server_rack_notes") %></dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 whitespace-pre-wrap"><%= @server_rack.notes %></dd>
+      </div>
+    </dl>
+  </div>
+
+  <h2 class="mb-4 text-lg font-bold tracking-tight text-gray-900"><%= t("server_rack_photos") %></h2>
+  <% if @server_rack.photos.attached? %>
+    <div class="flex flex-wrap gap-4">
+      <% @server_rack.photos.each do |file| %>
+        <div class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+          <% if file.representable? %>
+            <%= image_tag file, class: "max-h-64 max-w-full object-contain" %>
+          <% else %>
+            <%= link_to file.filename.to_s, url_for(file), class: "block p-4 text-sm text-indigo-600 hover:text-indigo-500" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-600 shadow-sm" role="status">
+      <%= t("not_found_server_rack_photos") %>
+    </div>
+  <% end %>
+
+  <div class="mt-10 flex flex-wrap gap-3">
+    <%= link_to t("add_server_rack"), new_server_rack_path, class: "inline-flex items-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-indigo-700 shadow-sm ring-1 ring-inset ring-indigo-200 hover:bg-indigo-50" %>
+  </div>
+<% end %>

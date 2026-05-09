@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  location: one
+  name: RACK-A01
+  u_height: 42
+  notes: Front row
+
+two:
+  location: two
+  name: RACK-B01
+  u_height:
+  notes:

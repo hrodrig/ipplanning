@@ -49,4 +49,13 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to locations_url
   end
+
+  test "should not destroy location with server racks" do
+    assert_no_difference("Location.count") do
+      delete location_url(@location)
+    end
+
+    assert_redirected_to location_url(@location)
+    assert flash[:alert].present?
+  end
 end

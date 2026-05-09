@@ -10,7 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_10_120001) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_10_120003) do
+  create_table "active_storage_attachments", charset: "utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", charset: "utf8", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
   create_table "admins", charset: "utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -115,6 +137,17 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_10_120001) do
     t.index ["name"], name: "index_locations_on_name", unique: true
   end
 
+  create_table "server_racks", charset: "utf8", force: :cascade do |t|
+    t.bigint "location_id", null: false
+    t.string "name", null: false
+    t.integer "u_height"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id", "name"], name: "index_server_racks_on_location_id_and_name", unique: true
+    t.index ["location_id"], name: "index_server_racks_on_location_id"
+  end
+
   create_table "settings", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "value"
@@ -155,7 +188,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_10_120001) do
     t.index ["number"], name: "index_vlans_on_number", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "hosts", "environments"
   add_foreign_key "hosts", "host_types"
   add_foreign_key "hosts", "infrastructures"
+  add_foreign_key "server_racks", "locations"
 end

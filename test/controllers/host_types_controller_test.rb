@@ -18,7 +18,7 @@ class HostTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create host_type" do
     assert_difference('HostType.count') do
-      post host_types_url, params: { host_type: { name: @host_type.name } }
+      post host_types_url, params: { host_type: { name: "Host type #{Time.now.to_i}" } }
     end
 
     assert_redirected_to host_type_url(HostType.last)

@@ -1,0 +1,9 @@
+<%= render layout: "common/admin_resource_form", locals: {
+  heading: t("editing_server_rack"),
+  index_path: server_racks_path,
+  index_label: t("server_racks"),
+  current_label: @server_rack.name,
+  back_path: server_racks_path
+} do %>
+  <%= render "form", server_rack: @server_rack %>
+<% end %>

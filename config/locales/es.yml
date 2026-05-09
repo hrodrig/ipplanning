@@ -247,6 +247,7 @@ es:
   add_host: Agregar host
   add_infrastructure: Agregar infraestructura
   add_location: Agregar locación
+  add_server_rack: Agregar rack
   add_ip_to: Agregar ip a
   add_ip: agregar ip
   add_vlan: Agregar vlan
@@ -255,6 +256,7 @@ es:
   adding_host_type: Agregando tipo de host
   adding_infrastructure: Agregando infraestructura
   adding_location: Agregando locación
+  adding_server_rack: Agregando rack
   adding_ip: Agregando ip
   additional_information: Información adicional
   are_you_sure_to_delete_this_ip: '¿Seguro que desea eliminar esta dirección ip? Tenga presente que la información de las direcciones ips debe ser consistente. Si Ud. elimina esta dirección ip, deberá de agregarla luego desde la cónsola.'
@@ -286,6 +288,7 @@ es:
   edit_host: Editar host
   edit_infrastructure: Editar infraestructura
   edit_location: Editar locación
+  edit_server_rack: Editar rack
   edit_ip: Editar ip
   edit_vlan: Editar vlan
   edit: Editar
@@ -299,6 +302,7 @@ es:
   editing_infrastructure: Editando infraestructura
   editing_infrastructure: Editing Infrastructure
   editing_location: Editando locación
+  editing_server_rack: Editando rack
   editing_ip: Editando ip
   editing_setting: Editando configuraciones
   editing_vlan: Editando vlan
@@ -357,8 +361,20 @@ es:
   location_was_successfully_created: La locación fue creada con éxito.
   location_was_successfully_destroyed: La locación fue eliminada con éxito.
   location_was_successfully_updated: La locación fue actualizada con éxito.
+  location_cannot_be_destroyed: No se puede eliminar la locación mientras tenga racks asociados.
   location: Locación
   locations: Locaciones
+  server_rack_location: Locación
+  server_rack_name: Nombre
+  server_rack_notes: Notas
+  server_rack_photos: Fotos
+  server_rack_select_location: Elija locación…
+  server_rack_u_height: Altura del rack (U)
+  server_rack_was_successfully_created: El rack fue creado con éxito.
+  server_rack_was_successfully_destroyed: El rack fue eliminado con éxito.
+  server_rack_was_successfully_updated: El rack fue actualizado con éxito.
+  server_rack: Rack
+  server_racks: Racks
   ip_address_added_to_host: La dirección ip fue añadida al host con éxito.
   ip_address_created: La dirección ip fue creada con éxito.
   ip_address_destroyed: La dirección ip fue eliminada con éxito.
@@ -383,6 +399,7 @@ es:
   new_host: Agregar Host
   new_infrastructure: Agregar Infraestructura
   new_location: Agregar locación
+  new_server_rack: Agregar rack
   new_sesion: Iniciar sesión
   not_assigned_ips: 'No existen direcciones ips en asignadas !'
   not_found_environments: 'No existen ambientes. Por favor, cree al menos uno.'
@@ -392,6 +409,8 @@ es:
   not_found_infrastructures: 'No existen infraestructuras. Por favor, cree al menos una.'
   not_found_location_racks: Aún no hay racks. Aparecerán aquí cuando existan racks asociados a esta locación.
   not_found_locations: 'No hay locaciones. Por favor, cree al menos una.'
+  not_found_server_rack_photos: Aún no hay fotos. Puede añadir imágenes al editar este rack.
+  not_found_server_racks: 'No hay racks. Por favor, cree al menos uno.'
   not_found_vlans_ips: 'No existen vlans. Por favor, cree al menos una vlan para poder agregar las direcciones ips.'
   not_found_vlans: 'No existen vlans. Por favor, cree al menos una vlan.'
   not_include_in_hosts_file: No incluido en el archivo hosts generado
@@ -431,6 +450,14 @@ es:
   placeholder_location_description: 'Notas sobre esta sede o sala. (opcional)'
   placeholder_location_name_help: 'Nombre de la locación. Debe ser único. (requerido)'
   placeholder_location_name: 'Nombre de la locación. Debe ser único. (requerido)'
+  placeholder_server_rack_location_help: 'Sede física donde está instalado este rack. (requerido)'
+  placeholder_server_rack_name_help: 'Código o etiqueta del rack. Debe ser único dentro de la locación. (requerido)'
+  placeholder_server_rack_name: 'p. ej. RACK-A12'
+  placeholder_server_rack_notes_help: 'Cableado, PDU u otras notas. (opcional)'
+  placeholder_server_rack_notes: 'Notas sobre este rack. (opcional)'
+  placeholder_server_rack_photos_help: "Suba una o más imágenes (etiquetas, frontal/trasero, etc.). Los archivos nuevos se añaden a las fotos existentes."
+  placeholder_server_rack_u_height_help: 'Unidades U totales del rack (p. ej. 42). (opcional)'
+  placeholder_server_rack_u_height: 'p. ej. 42'
   placeholder_ip_complete_hostname_alias_help: 'Agregue aquí el alias para el hostname completo.Solamente requerido si no se utiliza el nombre de dominio.'
   placeholder_ip_descriptor_help: 'Agregar descriptor de VLAN al hostname de la dirección ip'
   placeholder_ip_hostname_alias_help: 'Hostname alias. Debe ser único si es indicado.'

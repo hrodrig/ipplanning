@@ -18,7 +18,7 @@ class InfrastructuresControllerTest < ActionDispatch::IntegrationTest
 
   test "should create infrastructure" do
     assert_difference('Infrastructure.count') do
-      post infrastructures_url, params: { infrastructure: { name: @infrastructure.name } }
+      post infrastructures_url, params: { infrastructure: { name: "Infrastructure #{Time.now.to_i}" } }
     end
 
     assert_redirected_to infrastructure_url(Infrastructure.last)

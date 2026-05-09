@@ -1,0 +1,69 @@
+<%= form_with(model: server_rack, local: true, class: "space-y-6", html: { multipart: true }) do |form| %>
+  <% if server_rack.errors.any? %>
+    <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800">
+            <%= pluralize(server_rack.errors.count, "error") %> <%= t("prohibited_this_information_from_being_saved") %>:
+          </h3>
+          <div class="mt-2 text-sm text-red-700">
+            <ul class="list-disc pl-5 space-y-1">
+              <% server_rack.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :location_id, t("server_rack_location"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.collection_select :location_id, Location.order(:name), :id, :name, { prompt: t("server_rack_select_location") }, { class: form_select_class } %>
+    </div>
+    <p class="mt-2 text-sm text-gray-500"><%= t("placeholder_server_rack_location_help") %></p>
+  </div>
+
+  <div>
+    <%= form.label :name, t("server_rack_name"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_field :name, id: :server_rack_name, class: form_control_class, placeholder: t("placeholder_server_rack_name") %>
+    </div>
+    <p class="mt-2 text-sm text-gray-500"><%= t("placeholder_server_rack_name_help") %></p>
+  </div>
+
+  <div>
+    <%= form.label :u_height, t("server_rack_u_height"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.number_field :u_height, id: :server_rack_u_height, class: form_control_class, min: 1, step: 1, placeholder: t("placeholder_server_rack_u_height") %>
+    </div>
+    <p class="mt-2 text-sm text-gray-500"><%= t("placeholder_server_rack_u_height_help") %></p>
+  </div>
+
+  <div>
+    <%= form.label :notes, t("server_rack_notes"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_area :notes, id: :server_rack_notes, rows: 3, class: form_control_class, placeholder: t("placeholder_server_rack_notes") %>
+    </div>
+    <p class="mt-2 text-sm text-gray-500"><%= t("placeholder_server_rack_notes_help") %></p>
+  </div>
+
+  <div>
+    <%= form.label :photos, t("server_rack_photos"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.file_field :photos, multiple: true, accept: "image/*", class: "#{form_control_class} file:mr-4 file:rounded-md file:border-0 file:bg-indigo-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-indigo-700 hover:file:bg-indigo-100" %>
+    </div>
+    <p class="mt-2 text-sm text-gray-500"><%= t("placeholder_server_rack_photos_help") %></p>
+  </div>
+
+  <div class="flex items-center justify-end mt-4">
+    <%= form.submit t("ok"), class: "inline-flex items-center rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+  </div>
+<% end %>

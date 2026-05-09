@@ -243,6 +243,7 @@ en:
   add_host: Add host
   add_infrastructure: Add Infrastructure
   add_location: Add location
+  add_server_rack: Add server rack
   add_ip_to: Add ip to
   add_ip: add ip
   add_vlan: Add VLAN
@@ -251,6 +252,7 @@ en:
   adding_host_type: Adding Host Type
   adding_infrastructure: Adding Infrastructure
   adding_location: Adding location
+  adding_server_rack: Adding server rack
   adding_ip: Adding Ip
   additional_information: Additional information
   are_you_sure_to_delete_this_ip: 'Are you sure to delete this IP address? Take care that IP address information must be consistent. If you remove this IP address, rails console must be required to add again.'
@@ -282,6 +284,7 @@ en:
   edit_host: Edit Host
   edit_infrastructure: Edit Infrastructure
   edit_location: Edit location
+  edit_server_rack: Edit server rack
   edit_ip: Edit IP
   edit_vlan: Edit VLAN
   edit: Edit
@@ -295,6 +298,7 @@ en:
   editing_infrastructure: Editing Infrastructure
   editing_infrastructure: Editing Infrastructure
   editing_location: Editing location
+  editing_server_rack: Editing server rack
   editing_ip: Editing IP
   editing_setting: Editing setting
   editing_vlan: Editing VLAN
@@ -353,8 +357,20 @@ en:
   location_was_successfully_created: Location was successfully created.
   location_was_successfully_destroyed: Location was successfully destroyed.
   location_was_successfully_updated: Location was successfully updated.
+  location_cannot_be_destroyed: This location cannot be deleted while it still has server racks.
   location: Location
   locations: Locations
+  server_rack_location: Location
+  server_rack_name: Name
+  server_rack_notes: Notes
+  server_rack_photos: Photos
+  server_rack_select_location: Select location…
+  server_rack_u_height: Rack height (U)
+  server_rack_was_successfully_created: Server rack was successfully created.
+  server_rack_was_successfully_destroyed: Server rack was successfully destroyed.
+  server_rack_was_successfully_updated: Server rack was successfully updated.
+  server_rack: Server rack
+  server_racks: Server racks
   ip_address_added_to_host: IP address was successfully added to Host
   ip_address_created: IP address was successfully created.
   ip_address_destroyed: IP address was successfully destroyed.
@@ -379,6 +395,7 @@ en:
   new_host: Add Host
   new_infrastructure: Add Infrastructure
   new_location: Add location
+  new_server_rack: Add server rack
   new_sesion: Sign in
   not_assigned_ips: 'There are not assigned ips'
   not_found_environments: 'There are not environments. Please add one.'
@@ -388,6 +405,8 @@ en:
   not_found_infrastructures: 'There are not infrastructures. Please add one.'
   not_found_location_racks: No racks yet. They will appear here once rack records are linked to this location.
   not_found_locations: 'There are no locations. Please add one.'
+  not_found_server_rack_photos: No photos attached yet. Add images when editing this rack.
+  not_found_server_racks: 'There are no server racks. Please add one.'
   not_found_vlans_ips: 'There are not vlans or ips. Please add one vlan prior to add any ip address.'
   not_found_vlans: 'There are not vlans. Please add one.'
   not_include_in_hosts_file: Not included in generated hosts file
@@ -427,6 +446,14 @@ en:
   placeholder_location_description: 'Notes about this physical site or room. (optional)'
   placeholder_location_name_help: 'Location name. Must be unique. (required)'
   placeholder_location_name: 'Location name. Must be unique. (required)'
+  placeholder_server_rack_location_help: 'Physical site where this rack is installed. (required)'
+  placeholder_server_rack_name_help: 'Rack code or label. Must be unique within the location. (required)'
+  placeholder_server_rack_name: 'e.g. RACK-A12'
+  placeholder_server_rack_notes_help: 'Cable routing, PDU, or other notes. (optional)'
+  placeholder_server_rack_notes: 'Notes about this rack. (optional)'
+  placeholder_server_rack_photos_help: "Upload one or more images (labels, front/rear, etc.). New files are added to existing photos."
+  placeholder_server_rack_u_height_help: 'Total rack units (e.g. 42). (optional)'
+  placeholder_server_rack_u_height: 'e.g. 42'
   placeholder_ip_complete_hostname_alias_help: 'Entry complete FQDN hostname alias. Only required if not use domain name.'
   placeholder_ip_descriptor_help: 'Add VLAN descriptor to ip address hostname'
   placeholder_ip_hostname_alias_help: 'Hostname alias. Must be unique if added.'

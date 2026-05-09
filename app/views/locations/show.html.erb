@@ -24,10 +24,46 @@
     </dl>
   </div>
 
-  <h2 class="mb-4 text-lg font-bold tracking-tight text-gray-900"><%= t("location_racks") %></h2>
-  <div class="rounded-lg border border-amber-100 bg-amber-50 px-4 py-3 text-sm text-amber-900 shadow-sm" role="status">
-    <%= t("not_found_location_racks") %>
+  <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <h2 class="text-lg font-bold tracking-tight text-gray-900"><%= t("location_racks") %></h2>
+    <%= link_to t("add_server_rack"), new_server_rack_path(location_id: @location.id), class: "inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500" %>
   </div>
+
+  <% racks = @location.server_racks.order(:name) %>
+  <% if racks.present? %>
+    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gradient-to-b from-gray-50 to-gray-100/80">
+            <tr>
+              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">#</th>
+              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("name") %></th>
+              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("server_rack_u_height") %></th>
+              <th scope="col" class="relative px-5 py-3.5 text-right text-xs font-semibold uppercase tracking-wider text-gray-600"><span class="sr-only"><%= t("edit") %></span></th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100 bg-white">
+            <% racks.each_with_index do |rack, i| %>
+              <tr class="transition-colors hover:bg-gray-50/90">
+                <td class="whitespace-nowrap px-5 py-4 text-sm font-mono text-gray-500"><%= i + 1 %></td>
+                <td class="whitespace-nowrap px-5 py-4 text-sm font-medium text-gray-900">
+                  <%= link_to rack.name, rack, class: "text-indigo-600 hover:text-indigo-500" %>
+                </td>
+                <td class="whitespace-nowrap px-5 py-4 text-sm text-gray-600"><%= rack.u_height.presence || "—" %></td>
+                <td class="whitespace-nowrap px-5 py-4 text-right text-sm">
+                  <%= link_to t("edit"), edit_server_rack_path(rack), class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <div class="rounded-lg border border-amber-100 bg-amber-50 px-4 py-3 text-sm text-amber-900 shadow-sm" role="status">
+      <%= t("not_found_location_racks") %>
+    </div>
+  <% end %>
 
   <div class="mt-10">
     <%= link_to t("add_location"), new_location_path, class: "inline-flex items-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-indigo-700 shadow-sm ring-1 ring-inset ring-indigo-200 hover:bg-indigo-50" %>

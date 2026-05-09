@@ -49,10 +49,17 @@ class LocationsController < ApplicationController
   end
 
   def destroy
-    @location.destroy
-    respond_to do |format|
-      format.html { redirect_to locations_url, notice: t("location_was_successfully_destroyed") }
-      format.json { head :no_content }
+    if @location.destroy
+      respond_to do |format|
+        format.html { redirect_to locations_url, notice: t("location_was_successfully_destroyed") }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        msg = @location.errors.full_messages.to_sentence.presence || t("location_cannot_be_destroyed")
+        format.html { redirect_to @location, alert: msg }
+        format.json { render json: @location.errors, status: :unprocessable_entity }
+      end
     end
   end
 

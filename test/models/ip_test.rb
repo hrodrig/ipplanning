@@ -103,8 +103,8 @@ class IpTest < ActiveSupport::TestCase
     assert short.diagnostic_agent_hostname_compliance?
 
     long = Ip.create!(
-      vlan: vlans(:one),
-      address: "10.0.0.51",
+      vlan: vlans(:two),
+      address: "192.168.20.51",
       hostname_alias: nil,
       complete_hostname_alias: nil,
       include_in_etc_hosts: true,

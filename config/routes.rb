@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   resources :host_types
   resources :infrastructures
   resources :locations
+  resources :server_racks
   resources :environments
   resources :externalips
   get "etc/hosts", :controller => "etchosts", :action => "index"
