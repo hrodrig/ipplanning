@@ -1,0 +1,39 @@
+<%# locals: section (Symbol or String) — must match keys under section_intro.* in locales %>
+<% section_key = local_assigns.fetch(:section).to_s %>
+<% base = "section_intro.#{section_key}" %>
+<% intro_id = "admin-section-intro-#{section_key.parameterize}" %>
+<% if I18n.exists?("#{base}.title", I18n.locale) %>
+  <details class="admin-section-intro mb-6 overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-sm ring-1 ring-slate-100/80 open:shadow-md">
+    <summary class="flex cursor-pointer list-none items-center justify-between gap-3 bg-gradient-to-b from-slate-50 to-slate-50/80 px-5 py-3 text-left text-sm text-gray-900 hover:from-slate-100/90 hover:to-slate-50 [&::-webkit-details-marker]:hidden [&::marker]:hidden">
+      <span>
+        <span class="font-semibold text-indigo-700"><%= t("section_intro_toggle_label") %></span>
+        <span class="text-gray-600"> — <%= t("#{base}.title") %></span>
+      </span>
+      <svg class="admin-section-intro-chevron h-5 w-5 shrink-0 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+      </svg>
+    </summary>
+    <div id="<%= intro_id %>" class="border-t border-slate-200/90 bg-gradient-to-b from-slate-50/50 to-white px-5 py-4">
+      <h2 class="text-base font-semibold text-gray-900">
+        <%= t("#{base}.title") %>
+      </h2>
+      <% if I18n.exists?("#{base}.body", I18n.locale) %>
+        <div class="mt-2 text-sm leading-relaxed text-gray-600 [&_p+_p]:mt-2">
+          <%= simple_format(t("#{base}.body")) %>
+        </div>
+      <% end %>
+      <% tips = I18n.t("#{base}.tips", default: []) %>
+      <% tips = Array.wrap(tips).flatten.map(&:presence).compact %>
+      <% if tips.any? %>
+        <div class="mt-4 rounded-lg border border-amber-200/90 bg-amber-50/90 px-4 py-3">
+          <p class="text-xs font-bold uppercase tracking-wide text-amber-950/80"><%= t("section_intro_tips_label") %></p>
+          <ul class="mt-2 list-disc space-y-1.5 pl-5 text-sm text-amber-950/90">
+            <% tips.each do |tip| %>
+              <li><%= tip %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  </details>
+<% end %>

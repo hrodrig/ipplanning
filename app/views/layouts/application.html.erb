@@ -17,13 +17,20 @@
 
   <body class="h-full">
     <div class="flex flex-col min-h-full" data-controller="navbar">
-      <nav class="bg-gray-800">
+      <nav class="sticky top-0 z-50 border-b border-gray-700 bg-gray-800 shadow-sm">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
               <div class="flex-shrink-0">
-                <a href="<%= root_path %>" class="text-white font-bold text-xl">
-                  <%= Setting.find_by_name('Brand')&.value || "IPPLANNING" %>
+                <% brand_label = Setting.find_by_name("Brand")&.value.presence || "IPPLANNING" %>
+                <% brand_mark_url = Setting.find_by_name("BrandMark")&.value.to_s.strip %>
+                <a href="<%= root_path %>" class="group flex items-center gap-2.5 rounded-md text-xl font-bold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                  <% if brand_mark_url.present? %>
+                    <%= image_tag brand_mark_url, alt: "", class: "h-8 w-auto max-h-8 max-w-[2.75rem] object-contain" %>
+                  <% else %>
+                    <%= image_tag "brand-mark.svg", alt: "", class: "h-8 w-8 shrink-0 object-contain opacity-90 transition-opacity group-hover:opacity-100" %>
+                  <% end %>
+                  <span class="truncate tracking-tight"><%= brand_label %></span>
                 </a>
               </div>
               <div class="hidden md:block">

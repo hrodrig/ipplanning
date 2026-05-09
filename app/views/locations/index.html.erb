@@ -11,6 +11,8 @@
 
   <%= render "common/admin_flash" %>
 
+  <%= render "common/admin_section_intro", section: :locations %>
+
   <% if @locations.present? %>
     <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
       <div class="overflow-x-auto">

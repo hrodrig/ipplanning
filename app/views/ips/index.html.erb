@@ -14,6 +14,8 @@
 
   <%= render "common/admin_flash" %>
 
+  <%= render "common/admin_section_intro", section: :ips %>
+
   <% if @orphaned_ips.present? %>
     <div class="mb-8 rounded-lg border border-red-100 bg-red-50 px-4 py-3 shadow-sm text-sm text-red-900" role="alert">
       <%= t("orphaned_ips_message").html_safe %>

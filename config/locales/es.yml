@@ -543,3 +543,91 @@ es:
   vlan_was_successfully_updated: La vlan fue actualizada con éxito.
   vlan: VLAN
   vlans: VLANs
+  section_intro_tips_label: Consejos
+  section_intro_toggle_label: Guía
+  section_intro:
+    infrastructures:
+      title: Para qué sirven las infraestructuras
+      body: |
+        Las infraestructuras agrupan hosts bajo un límite lógico: un centro de datos, una cuenta cloud, una región o un proyecto.
+        Así el inventario de IPs y la responsabilidad de cada equipo quedan alineadas.
+      tips:
+        - Use nombres que la organización ya entienda (por ejemplo código de sitio más entorno).
+        - Cada host debe pertenecer a una sola infraestructura.
+    locations:
+      title: Ubicaciones físicas
+      body: |
+        Una ubicación es un sitio real: edificio, sala de equipos, oficina o jaula de colocación.
+        Los racks se asocian a una ubicación para poder rastrear cableado e inventario en planta.
+      tips:
+        - Una ubicación por sitio distinto, no un rack por ubicación artificial.
+        - No se puede borrar una ubicación mientras tenga racks vinculados.
+    server_racks:
+      title: Racks de servidores
+      body: |
+        Los racks documentan el armario dentro de la ubicación (nombre o código), la altura opcional en U y notas de cableado o energía.
+        Los hosts con despliegue “montaje en rack” pueden enlazar un rack y su ocupación en U.
+      tips:
+        - El nombre del rack es único por ubicación, no a nivel global.
+        - En la ficha del rack verá qué hosts están montados allí.
+    environments:
+      title: Ambientes
+      body: |
+        Los ambientes clasifican hosts por ciclo de vida o propósito: producción, preproducción, desarrollo, laboratorio, etc.
+        Complementan VLANs e IPs y aparecen en cada host para dar contexto.
+      tips:
+        - Mantenga pocos ambientes claros para que las etiquetas sigan siendo útiles.
+    host_types:
+      title: Tipos de host
+      body: |
+        El tipo de host describe qué clase de equipo inventaria (por ejemplo servidor de aplicación, base de datos, hipervisor, puesto de trabajo).
+        No es lo mismo que el despliegue (nube vs rack); conviene usar ambos para describir bien el activo.
+      tips:
+        - Defina tipos con el mismo vocabulario que usa operaciones.
+    hosts:
+      title: Hosts
+      body: |
+        Los hosts son las cargas de trabajo a las que asocia direcciones IP: servidores físicos, MV o instancias cloud.
+        Indique infraestructura, ambiente, tipo de host y despliegue (incluido rack si aplica) para separar bien lo físico de lo virtual.
+      tips:
+        - El nombre del host debe ser único; influye en los nombres generados en el plan de IPs.
+        - Añada o quite IPs desde la ficha del host una vez creado.
+    vlans:
+      title: VLANs y segmentos de red
+      body: |
+        Cada VLAN define un segmento de capa 2: ID, nombre, red y máscara, gateway y un descriptor opcional para sufijos de hostname.
+        Las IPs siempre pertenecen a una VLAN; eso valida datos y alimenta la exportación a /etc/hosts.
+      tips:
+        - Mantenga gateway y red/máscara coherentes con el enrutamiento real.
+        - Use el descriptor cuando el mismo nombre base necesite sufijos distintos por segmento.
+    ips:
+      title: Direcciones IP
+      body: |
+        Un registro IP es una asignación dentro de una VLAN: dirección, alias, reglas de nombre y si entra en el archivo hosts generado.
+        Enlace la IP a uno o más hosts cuando esa máquina use la dirección.
+      tips:
+        - Las IPs reservadas no reciben alias ni líneas en /etc/hosts.
+        - La unicidad del alias de hostname se aplica en toda la aplicación; evite duplicados si su política lo exige.
+    externalips:
+      title: IPs externas
+      body: |
+        Las IPs externas son direcciones que no pertenecen a una VLAN interna pero deben salir en el hosts generado—
+        por ejemplo nombres públicos, bastiones o servicios que quiera resolver localmente el equipo de operaciones.
+      tips:
+        - Mantenga únicos el address, el hostname completo y el nombre corto.
+    settings:
+      title: Configuración de la plataforma
+      body: |
+        Estos parámetros controlan marca, dominio por defecto, autenticación HTTP básica opcional en descargas y otros comportamientos globales.
+        Un cambio aquí afecta a todas las pantallas y al resultado generado.
+      tips:
+        - Edite fila a fila; los valores sensibles pueden mostrarse ocultos en el listado.
+        - Tras cambiar dominio o nombre del sitio, revise nombres de host y la vista previa de /etc/hosts.
+    etchosts:
+      title: "Exportación /etc/hosts"
+      body: |
+        Esta página muestra la vista previa del archivo hosts unificado a partir de VLANs, IPs, IPs externas y la configuración global.
+        Descárguelo para distribuirlo a servidores o scripts que sustituyen /etc/hosts.
+      tips:
+        - Si hay autenticación básica, use el ejemplo wget documentado con credenciales.
+        - Haga copia de seguridad del /etc/hosts actual en cada máquina antes de reemplazarlo.

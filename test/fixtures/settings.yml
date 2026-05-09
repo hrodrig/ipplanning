@@ -6,6 +6,10 @@ brand:
   name: Brand
   value: IPPLANNING
   description: Brand name
+brand_mark:
+  name: BrandMark
+  value: ""
+  description: Optional navbar logo URL; empty uses default mark
 footer:
   name: Footer
   value: © 2024 Test

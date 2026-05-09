@@ -539,3 +539,91 @@ en:
   vlan_was_successfully_updated: Vlan was successfully updated
   vlan: VLAN
   vlans: VLANs
+  section_intro_tips_label: Tips
+  section_intro_toggle_label: Guide
+  section_intro:
+    infrastructures:
+      title: What this section is for
+      body: |
+        Infrastructures group hosts under a logical boundary—such as a data center, cloud account, region, or project.
+        Use them so IP plans and host ownership stay consistent across teams.
+      tips:
+        - Pick names your organization already uses (for example a site code plus environment).
+        - Every host should belong to exactly one infrastructure.
+    locations:
+      title: Physical locations
+      body: |
+        Locations represent real-world sites—buildings, computer rooms, offices, or colocation cages.
+        Server racks belong to a location so cabling and on-site inventory stay traceable.
+      tips:
+        - Use one location per distinct site, not per rack.
+        - You cannot delete a location while it still has racks linked to it.
+    server_racks:
+      title: Server racks
+      body: |
+        Racks document cabinet identity inside a location (name or code), optional height in U, and notes for cabling or power.
+        Hosts with rack-mount deployment can reference a rack and their height in rack units (U).
+      tips:
+        - Rack names are unique per location, not globally.
+        - Open a rack’s detail page to see which hosts are mounted there.
+    environments:
+      title: Environments
+      body: |
+        Environments classify hosts by lifecycle or purpose—production, staging, development, lab, and similar labels.
+        They complement VLANs and IPs and appear on each host for clarity.
+      tips:
+        - Keep a small, clear set of environments so labels stay meaningful over time.
+    host_types:
+      title: Host types
+      body: |
+        Host types describe what kind of machine you track (for example application server, database, hypervisor, workstation).
+        They are not the same as deployment form (cloud versus rack); use both together for fuller context.
+      tips:
+        - Define types using the same vocabulary your operations team uses.
+    hosts:
+      title: Hosts
+      body: |
+        Hosts are workloads you attach IP addresses to—physical servers, VMs, or cloud instances.
+        Set infrastructure, environment, host type, and deployment (including optional rack data) so physical and virtual inventory stay clear.
+      tips:
+        - Host names must be unique; they feed generated hostnames in IP planning.
+        - Add or remove IPs from the host detail view after the host exists.
+    vlans:
+      title: VLANs and network segments
+      body: |
+        Each VLAN defines a layer-2 segment—VLAN ID, name, network and mask, gateway, and optional descriptor for hostname suffixes.
+        IP addresses always belong to a VLAN, which drives validation and the /etc/hosts export.
+      tips:
+        - Keep gateway and network or mask aligned with real routing in your network.
+        - Use the VLAN descriptor when the same base hostname needs different suffixes per segment.
+    ips:
+      title: IP addresses
+      body: |
+        IP records are assignments inside a VLAN—address, aliases, hostname rules, and whether they appear in the generated hosts file.
+        Link an IP to one or more hosts when a machine uses that address.
+      tips:
+        - Reserved addresses never receive host aliases or /etc/hosts lines.
+        - Hostname alias uniqueness is enforced across the app—avoid duplicates where your policy requires it.
+    externalips:
+      title: External IPs
+      body: |
+        External IPs capture addresses that are not tied to an internal VLAN but should still appear in the exported hosts file—
+        for example public DNS names, jump hosts, or endpoints you want operators to resolve locally.
+      tips:
+        - Keep address, full hostname, and short hostname unique.
+    settings:
+      title: Platform settings
+      body: |
+        These parameters control branding, default domain, optional HTTP basic authentication for downloads, and other global behavior.
+        Changes here affect every page and generated output.
+      tips:
+        - Use Edit on each row; sensitive values may be masked in the list.
+        - After changing domain or site name, spot-check IP hostname generation and the /etc/hosts preview.
+    etchosts:
+      title: "/etc/hosts export"
+      body: |
+        This page shows a live preview of the merged hosts file built from VLANs, IPs, external IPs, and your global settings.
+        Download it for distribution to servers or automation that replaces /etc/hosts on managed machines.
+      tips:
+        - When basic authentication is enabled, use the documented wget example with credentials.
+        - Always back up the existing /etc/hosts on target machines before replacing it.

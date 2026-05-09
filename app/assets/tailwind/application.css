@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+/* Admin “section intro” accordion: rotate chevron when <details> is open */
+details.admin-section-intro > summary .admin-section-intro-chevron {
+  transition: transform 200ms ease-out;
+}
+details.admin-section-intro[open] > summary .admin-section-intro-chevron {
+  transform: rotate(180deg);
+}

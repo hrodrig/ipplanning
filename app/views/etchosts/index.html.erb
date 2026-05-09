@@ -11,6 +11,8 @@
 
   <%= render "common/admin_flash" %>
 
+  <%= render "common/admin_section_intro", section: :etchosts %>
+
   <div class="overflow-hidden rounded-xl border border-gray-800 bg-gray-900 shadow-sm">
     <div class="max-h-[32rem] overflow-x-auto overflow-y-auto p-6">
       <pre class="whitespace-pre font-mono text-sm leading-relaxed text-gray-200"><%= Ip.generate_etc_hosts %></pre>
