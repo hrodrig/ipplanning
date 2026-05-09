@@ -241,14 +241,14 @@ en:
   add_host_to_ip: Add host to ip
   add_host_type: Add host type
   add_host: Add host
-  add_infraestructure: Add Infraestructure
+  add_infrastructure: Add Infrastructure
   add_ip_to: Add ip to
   add_ip: add ip
   add_vlan: Add VLAN
   add: Add
   adding_external_ip: Adding External Ip
   adding_host_type: Adding Host Type
-  adding_infraestructure: Adding Infraestructure
+  adding_infrastructure: Adding Infrastructure
   adding_ip: Adding Ip
   additional_information: Additional information
   are_you_sure_to_delete_this_ip: 'Are you sure to delete this IP address? Take care that IP address information must be consistent. If you remove this IP address, rails console must be required to add again.'
@@ -256,7 +256,7 @@ en:
   assign_this_ip_to_host: Assign this ip address to host
   back_to_environments: Back to environments
   back_to_hosts: Back to hosts
-  back_to_infraestructures: Back to infraestructures
+  back_to_infrastructures: Back to infrastructures
   back_to_ips: Back to IPs
   back_to_vlans: Back to VLANs
   back: Back
@@ -276,7 +276,7 @@ en:
   edit_external_ip: Edit External IP
   edit_host_type: Edit Host Type
   edit_host: Edit Host
-  edit_infraestructure: Edit Infraestructure
+  edit_infrastructure: Edit Infrastructure
   edit_ip: Edit IP
   edit_vlan: Edit VLAN
   edit: Edit
@@ -287,8 +287,8 @@ en:
   editing_external_ip: Editing External IP
   editing_host_type: Editing Host Type
   editing_host: Editing Host
-  editing_infraestructure: Editing Infraestructure
-  editing_infraestructure: Editing Infraestructure
+  editing_infrastructure: Editing Infrastructure
+  editing_infrastructure: Editing Infrastructure
   editing_ip: Editing IP
   editing_setting: Editing setting
   editing_vlan: Editing VLAN
@@ -332,15 +332,15 @@ en:
   hostname: Hostname
   hosts: Hosts
   include_in_etc_hosts: Include in /etc/hosts
-  infraestructure_description: Description
-  infraestructure_hosts: Hosts
-  infraestructure_name: Name
-  infraestructure_notes: Notes
-  infraestructure_was_successfully_created: Infraestructure was successfully created.
-  infraestructure_was_successfully_destroyed: Infraestructure was successfully destroyed.
-  infraestructure_was_successfully_updated: Infraestructure was successfully updated.
-  infraestructure: Infraestructure
-  infraestructures: Infraestructures
+  infrastructure_description: Description
+  infrastructure_hosts: Hosts
+  infrastructure_name: Name
+  infrastructure_notes: Notes
+  infrastructure_was_successfully_created: Infrastructure was successfully created.
+  infrastructure_was_successfully_destroyed: Infrastructure was successfully destroyed.
+  infrastructure_was_successfully_updated: Infrastructure was successfully updated.
+  infrastructure: Infrastructure
+  infrastructures: Infrastructures
   ip_address_added_to_host: IP address was successfully added to Host
   ip_address_created: IP address was successfully created.
   ip_address_destroyed: IP address was successfully destroyed.
@@ -363,14 +363,14 @@ en:
   netmask: Netmask
   network: Network
   new_host: Add Host
-  new_infraestructure: Add Infraestructure
+  new_infrastructure: Add Infrastructure
   new_sesion: Sign in
   not_assigned_ips: 'There are not assigned ips'
   not_found_environments: 'There are not environments. Please add one.'
   not_found_externalips: 'There are not external ips address. Please add one.'
   not_found_host_types: 'There are not hosts types. Please add one.'
   not_found_hosts: 'There are not hosts. Please add one.'
-  not_found_infraestructures: 'There are not infraestructures. Please add one.'
+  not_found_infrastructures: 'There are not infrastructures. Please add one.'
   not_found_vlans_ips: 'There are not vlans or ips. Please add one vlan prior to add any ip address.'
   not_found_vlans: 'There are not vlans. Please add one.'
   not_include_in_hosts_file: Not included in generated hosts file
@@ -402,10 +402,10 @@ en:
   placeholder_hosts_memory_size: 'Assigned memory size in GB. (optional)'
   placeholder_hosts_total_sockets: 'Assigned virtual or physical sockets. (optional)'
   placeholder_hosts_total_vcpus: 'Assigned or virtual CPUs. The total of CPUS will be the sockets count by vCPU per socket. (optional)'
-  placeholder_infraestructure_description_help: 'Add here any restricted information infraestructure related. (optional)'
-  placeholder_infraestructure_description: 'Some notes about this infraestructure. (optional)'
-  placeholder_infraestructure_name_help: 'Add here infraestructure name. Must be unique. (required)'
-  placeholder_infraestructure_name: 'Infraestructure name. Must be unique. (required)'
+  placeholder_infrastructure_description_help: 'Add here any restricted information infrastructure related. (optional)'
+  placeholder_infrastructure_description: 'Some notes about this infrastructure. (optional)'
+  placeholder_infrastructure_name_help: 'Add here infrastructure name. Must be unique. (required)'
+  placeholder_infrastructure_name: 'Infrastructure name. Must be unique. (required)'
   placeholder_ip_complete_hostname_alias_help: 'Entry complete FQDN hostname alias. Only required if not use domain name.'
   placeholder_ip_descriptor_help: 'Add VLAN descriptor to ip address hostname'
   placeholder_ip_hostname_alias_help: 'Hostname alias. Must be unique if added.'

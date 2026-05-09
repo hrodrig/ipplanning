@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   resources :settings
   resources :host_types
-  resources :infraestructures
+  resources :infrastructures
   resources :environments
   resources :externalips
   get "etc/hosts", :controller => "etchosts", :action => "index"

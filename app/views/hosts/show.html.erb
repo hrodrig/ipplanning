@@ -42,14 +42,14 @@
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('infraestructure') %></th>
+              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('infrastructure') %></th>
               <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('environment') %></th>
               <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('host_type') %></th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200 text-center">
             <tr>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= @host.infraestructure.name if @host.infraestructure.present? %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= @host.infrastructure.name if @host.infrastructure.present? %></td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= @host.environment.name if @host.environment.present? %></td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= @host.host_type.name if @host.host_type.present? %></td>
             </tr>

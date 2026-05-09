@@ -1,7 +1,7 @@
 require "test_helper"
 
 class IpTest < ActiveSupport::TestCase
-  fixtures :vlans, :hosts, :settings, :environments, :infraestructures, :host_types, :ips, :externalips
+  fixtures :vlans, :hosts, :settings, :environments, :infrastructures, :host_types, :ips, :externalips
 
   setup { AppSettings.clear_cache! }
 
@@ -85,7 +85,7 @@ class IpTest < ActiveSupport::TestCase
       memory_size: 1024,
       total_sockets: 1,
       total_vcpus: 1,
-      infraestructure: infraestructures(:one),
+      infrastructure: infrastructures(:one),
       host_type: host_types(:one)
     )
     short = Ip.create!(

@@ -24,7 +24,7 @@
 # SOFTWARE.
 #
 # ----------------------------------------------------------------------------
-class Infraestructure < ApplicationRecord
+class Infrastructure < ApplicationRecord
   validates :name, uniqueness: true, presence: true
   has_many :hosts
 end

@@ -1,5 +1,5 @@
-<%= form_with(model: infraestructure, local: true, class: "space-y-6") do |form| %>
-  <% if infraestructure.errors.any? %>
+<%= form_with(model: infrastructure, local: true, class: "space-y-6") do |form| %>
+  <% if infrastructure.errors.any? %>
     <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
       <div class="flex">
         <div class="flex-shrink-0">
@@ -9,11 +9,11 @@
         </div>
         <div class="ml-3">
           <h3 class="text-sm font-medium text-red-800">
-            <%= pluralize(infraestructure.errors.count, "error") %> <%= t('prohibited_this_information_from_being_saved') %>:
+            <%= pluralize(infrastructure.errors.count, "error") %> <%= t('prohibited_this_information_from_being_saved') %>:
           </h3>
           <div class="mt-2 text-sm text-red-700">
             <ul class="list-disc pl-5 space-y-1">
-              <% infraestructure.errors.full_messages.each do |message| %>
+              <% infrastructure.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
               <% end %>
             </ul>
@@ -24,19 +24,19 @@
   <% end %>
 
   <div>
-    <%= form.label :name, t('infraestructure_name'), class: "block font-medium text-sm text-gray-700" %>
+    <%= form.label :name, t('infrastructure_name'), class: "block font-medium text-sm text-gray-700" %>
     <div class="mt-1">
-      <%= form.text_field :name, id: :infraestructure_name, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full", placeholder: t('placeholder_infraestructure_name') %>
+      <%= form.text_field :name, id: :infrastructure_name, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full", placeholder: t('placeholder_infrastructure_name') %>
     </div>
-    <p class="mt-2 text-sm text-gray-500"><%= t('placeholder_infraestructure_name_help') %></p>
+    <p class="mt-2 text-sm text-gray-500"><%= t('placeholder_infrastructure_name_help') %></p>
   </div>
 
   <div>
     <%= form.label :description, t('description'), class: "block font-medium text-sm text-gray-700" %>
     <div class="mt-1">
-      <%= form.text_area :description, id: :infraestructure_description, rows: 3, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full", placeholder: t('placeholder_infraestructure_description') %>
+      <%= form.text_area :description, id: :infrastructure_description, rows: 3, class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full", placeholder: t('placeholder_infrastructure_description') %>
     </div>
-    <p class="mt-2 text-sm text-gray-500"><%= t('placeholder_infraestructure_description_help') %></p>
+    <p class="mt-2 text-sm text-gray-500"><%= t('placeholder_infrastructure_description_help') %></p>
   </div>
 
   <div class="flex items-center justify-end mt-4">

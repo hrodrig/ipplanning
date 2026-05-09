@@ -43,7 +43,7 @@
         <tr>
           <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b">#</th>
           <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('hostname') %></th>
-          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('infraestructure') %></th>
+          <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('infrastructure') %></th>
           <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('environment') %></th>
           <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b"><%= t('description') %></th>
         </tr>
@@ -55,7 +55,7 @@
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600 hover:text-blue-800 text-center border-b">
               <%= link_to host.name, host, class: "underline" %>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center border-b"><%= host.infraestructure.name %></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center border-b"><%= host.infrastructure.name %></td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center border-b"><%= host.environment.name %></td>
             <td class="px-6 py-4 text-sm text-gray-900 text-center border-b"><%= host.description.html_safe %></td>
           </tr>

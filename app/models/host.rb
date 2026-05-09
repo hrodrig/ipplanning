@@ -27,7 +27,7 @@
 class Host < ApplicationRecord
   has_and_belongs_to_many :ips
   before_create :check_params
-  belongs_to :infraestructure
+  belongs_to :infrastructure
   belongs_to :environment
   belongs_to :host_type
 

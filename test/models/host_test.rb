@@ -1,7 +1,7 @@
 require "test_helper"
 
 class HostTest < ActiveSupport::TestCase
-  fixtures :vlans, :hosts, :settings, :environments, :infraestructures, :host_types
+  fixtures :vlans, :hosts, :settings, :environments, :infrastructures, :host_types
 
   setup { AppSettings.clear_cache! }
 

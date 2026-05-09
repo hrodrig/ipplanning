@@ -66,9 +66,9 @@
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-gray-200">
     <div>
-      <%= form.label :infraestructure_id, t('infraestructure'), class: "block font-medium text-sm text-gray-700" %>
+      <%= form.label :infrastructure_id, t('infrastructure'), class: "block font-medium text-sm text-gray-700" %>
       <div class="mt-1">
-        <%= form.select :infraestructure_id, Infraestructure.order(:name).collect{|row| [row.name, row.id]}, {}, { class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full" } %>
+        <%= form.select :infrastructure_id, Infrastructure.order(:name).collect{|row| [row.name, row.id]}, {}, { class: "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full" } %>
       </div>
     </div>
 

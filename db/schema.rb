@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_09_112440) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_10_120000) do
   create_table "admins", charset: "utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -66,11 +66,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_09_112440) do
     t.integer "memory_size"
     t.integer "total_sockets"
     t.integer "total_vcpus"
-    t.bigint "infraestructure_id"
+    t.bigint "infrastructure_id"
     t.bigint "host_type_id"
     t.index ["environment_id"], name: "index_hosts_on_environment_id"
     t.index ["host_type_id"], name: "index_hosts_on_host_type_id"
-    t.index ["infraestructure_id"], name: "index_hosts_on_infraestructure_id"
+    t.index ["infrastructure_id"], name: "index_hosts_on_infrastructure_id"
     t.index ["name"], name: "index_hosts_on_name", unique: true
   end
 
@@ -80,12 +80,12 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_09_112440) do
     t.index ["host_id", "ip_id"], name: "index_hosts_ips_on_host_id_and_ip_id", unique: true
   end
 
-  create_table "infraestructures", charset: "utf8", force: :cascade do |t|
+  create_table "infrastructures", charset: "utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description"
-    t.index ["name"], name: "index_infraestructures_on_name", unique: true
+    t.index ["name"], name: "index_infrastructures_on_name", unique: true
   end
 
   create_table "ips", charset: "utf8", force: :cascade do |t|
@@ -149,5 +149,5 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_09_112440) do
 
   add_foreign_key "hosts", "environments"
   add_foreign_key "hosts", "host_types"
-  add_foreign_key "hosts", "infraestructures"
+  add_foreign_key "hosts", "infrastructures"
 end

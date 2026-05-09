@@ -129,7 +129,7 @@ class HostsController < ApplicationController
   end
 
   def host_params
-    params.require(:host).permit(:name, :description, :infraestructure_id,
+    params.require(:host).permit(:name, :description, :infrastructure_id,
       :environment_id, :host_type_id, :memory_size, :total_sockets, :total_vcpus)
   end
 

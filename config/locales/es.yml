@@ -245,14 +245,14 @@ es:
   add_host_to_ip: Agregar host a la ip
   add_host_type: Agregar tipo de host
   add_host: Agregar host
-  add_infraestructure: Agregar infraestructura
+  add_infrastructure: Agregar infraestructura
   add_ip_to: Agregar ip a
   add_ip: agregar ip
   add_vlan: Agregar vlan
   add: Agregar
   adding_external_ip: Agregando ip externa
   adding_host_type: Agregando tipo de host
-  adding_infraestructure: Agregando infraestructura
+  adding_infrastructure: Agregando infraestructura
   adding_ip: Agregando ip
   additional_information: Información adicional
   are_you_sure_to_delete_this_ip: '¿Seguro que desea eliminar esta dirección ip? Tenga presente que la información de las direcciones ips debe ser consistente. Si Ud. elimina esta dirección ip, deberá de agregarla luego desde la cónsola.'
@@ -260,7 +260,7 @@ es:
   assign_this_ip_to_host: Asignar estar dirección ip a un host
   back_to_environments: Volver a los ambientes
   back_to_hosts: Volver a los hosts
-  back_to_infraestructures: Volver a las infraestructuras
+  back_to_infrastructures: Volver a las infraestructuras
   back_to_ips: Volver a las ips
   back_to_vlans: Volver a las vlans
   back: Regresar
@@ -280,7 +280,7 @@ es:
   edit_external_ip: Editar ip externa
   edit_host_type: Editar tipo de host
   edit_host: Editar host
-  edit_infraestructure: Editar infraestructura
+  edit_infrastructure: Editar infraestructura
   edit_ip: Editar ip
   edit_vlan: Editar vlan
   edit: Editar
@@ -291,8 +291,8 @@ es:
   editing_external_ip: Editando ip externa
   editing_host_type: Editando tipo de host
   editing_host: Editando host
-  editing_infraestructure: Editando infraestructura
-  editing_infraestructure: Editing Infraestructure
+  editing_infrastructure: Editando infraestructura
+  editing_infrastructure: Editing Infrastructure
   editing_ip: Editando ip
   editing_setting: Editando configuraciones
   editing_vlan: Editando vlan
@@ -336,15 +336,15 @@ es:
   hostname: Nombre de host
   hosts: Hosts
   include_in_etc_hosts: Incluir en /etc/hosts
-  infraestructure_description: Descripción
-  infraestructure_hosts: Hosts
-  infraestructure_name: Nombre
-  infraestructure_notes: Notas
-  infraestructure_was_successfully_created: La infraestructura fue creada con éxito.
-  infraestructure_was_successfully_destroyed: La infraestructura fue eliminada con éxito.
-  infraestructure_was_successfully_updated: La infraestructura fue actualizada con éxito.
-  infraestructure: Infraestructura
-  infraestructures: Infraestructuras
+  infrastructure_description: Descripción
+  infrastructure_hosts: Hosts
+  infrastructure_name: Nombre
+  infrastructure_notes: Notas
+  infrastructure_was_successfully_created: La infraestructura fue creada con éxito.
+  infrastructure_was_successfully_destroyed: La infraestructura fue eliminada con éxito.
+  infrastructure_was_successfully_updated: La infraestructura fue actualizada con éxito.
+  infrastructure: Infraestructura
+  infrastructures: Infraestructuras
   ip_address_added_to_host: La dirección ip fue añadida al host con éxito.
   ip_address_created: La dirección ip fue creada con éxito.
   ip_address_destroyed: La dirección ip fue eliminada con éxito.
@@ -367,14 +367,14 @@ es:
   netmask: Máscara
   network: Red
   new_host: Agregar Host
-  new_infraestructure: Agregar Infraestructura
+  new_infrastructure: Agregar Infraestructura
   new_sesion: Iniciar sesión
   not_assigned_ips: 'No existen direcciones ips en asignadas !'
   not_found_environments: 'No existen ambientes. Por favor, cree al menos uno.'
   not_found_externalips: 'No existen direcciones ips externas. Por favor, cree al menos una vlan.'
   not_found_host_types: 'No existen tipos de hosts. Por favor, cree al menos uno.'
   not_found_hosts: 'No existen hosts. Por favor, cree al menos uno.'
-  not_found_infraestructures: 'No existen infraestructuras. Por favor, cree al menos una.'
+  not_found_infrastructures: 'No existen infraestructuras. Por favor, cree al menos una.'
   not_found_vlans_ips: 'No existen vlans. Por favor, cree al menos una vlan para poder agregar las direcciones ips.'
   not_found_vlans: 'No existen vlans. Por favor, cree al menos una vlan.'
   not_include_in_hosts_file: No incluido en el archivo hosts generado
@@ -406,10 +406,10 @@ es:
   placeholder_hosts_memory_size: 'Memoria asignada en GB. (opcional)'
   placeholder_hosts_total_sockets: 'Sockets virtuales o físicos asignados. (opcional)'
   placeholder_hosts_total_vcpus: 'CPUs virtuales asignados. (opcional)'
-  placeholder_infraestructure_description_help: 'Información extra relacionada con la infraestructura. (opcional)'
-  placeholder_infraestructure_description: 'Notas acerca de la infraestructura. (opcional)'
-  placeholder_infraestructure_name_help: 'Nombre de la infraestructura. Debe ser único. (requerido)'
-  placeholder_infraestructure_name: 'Nombre de la infraestructura. Debe ser único. (requerido)'
+  placeholder_infrastructure_description_help: 'Información extra relacionada con la infraestructura. (opcional)'
+  placeholder_infrastructure_description: 'Notas acerca de la infraestructura. (opcional)'
+  placeholder_infrastructure_name_help: 'Nombre de la infraestructura. Debe ser único. (requerido)'
+  placeholder_infrastructure_name: 'Nombre de la infraestructura. Debe ser único. (requerido)'
   placeholder_ip_complete_hostname_alias_help: 'Agregue aquí el alias para el hostname completo.Solamente requerido si no se utiliza el nombre de dominio.'
   placeholder_ip_descriptor_help: 'Agregar descriptor de VLAN al hostname de la dirección ip'
   placeholder_ip_hostname_alias_help: 'Hostname alias. Debe ser único si es indicado.'
