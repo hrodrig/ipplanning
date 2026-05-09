@@ -46,7 +46,7 @@
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-900"><%= t('hostname') %></dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @ip.hostname_with_descriptor.html_safe %></dd>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= ip_hostname_with_descriptor_markup(@ip) %></dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-900"><%= t('hostname_alias') %></dt>
@@ -65,7 +65,7 @@
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-900"><%= t('extras_ips') %></dt>
           <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-            <% if @ip.host.present? %><%= @ip.host.all_ips_except_this(@ip.address).html_safe %><% end %>
+            <% if @ip.host.present? %><%= host_linked_ip_addresses_markup(@ip.host, except_address: @ip.address) %><% end %>
           </dd>
         </div>
       </dl>

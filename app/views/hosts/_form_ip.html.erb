@@ -24,7 +24,7 @@
   <div>
     <label class="block text-sm font-medium leading-6 text-gray-900"><%= t('extras_ips') %></label>
     <div class="mt-2 text-sm text-gray-700">
-      <%= @host.all_ips.html_safe %>
+      <%= host_linked_ip_addresses_markup(@host) %>
     </div>
   </div>
 

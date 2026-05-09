@@ -33,40 +33,13 @@ class Host < ApplicationRecord
 
   validates :name, uniqueness: true, presence: true
 
+  # Comma-separated IP addresses (no HTML). Use +host_linked_ip_addresses_markup(host)+ in views for anchor links.
   def all_ips
-    ips = self.ips
-    ips_string = ''
-    if ips.count > 0
-      array_of_ips = []
-      ips.each do |ip|
-        array_of_ips << '<a href="#'+ip.address+'">'+ip.address+'</a>'
-      end
-      if array_of_ips.count > 0
-        ips_string = array_of_ips.join ', '
-      end
-      return ips_string
-    else
-      return ''
-    end
+    ips.order(:address).pluck(:address).join(', ')
   end
 
   def all_ips_except_this(ip_to_exclude)
-    ips = self.ips
-    ips_string = ''
-    if ips.count > 0
-      array_of_ips = []
-      ips.each do |ip|
-        if ip.address != ip_to_exclude
-          array_of_ips << '<a href="#'+ip.address+'">'+ip.address+'</a>'
-        end
-      end
-      if array_of_ips.count > 0
-        ips_string = array_of_ips.join ', '
-      end
-      return ips_string
-    else
-      return ''
-    end
+    ips.where.not(address: ip_to_exclude).order(:address).pluck(:address).join(', ')
   end
 
   def other_ips(exclude_this)

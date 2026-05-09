@@ -49,7 +49,7 @@
               <% if ip.is_reserved? %>
                 <span class="italic text-gray-600"><%= ip.long_hostname %></span>
               <% else %>
-                <%= ip.hostname_with_descriptor.html_safe %>
+                <%= ip_hostname_with_descriptor_markup(ip) %>
               <% end %>
             </div>
             <% if ip.hostname_alias.present? and ip.host.present? %>
@@ -67,7 +67,7 @@
         <td class="px-4 py-3 text-sm text-gray-900 border-b">
           <% if ip.host.present? %>
             <div class="text-xs text-gray-600">
-              <%= ip.host.all_ips_except_this(ip.address).html_safe %>
+              <%= host_linked_ip_addresses_markup(ip.host, except_address: ip.address) %>
             </div>
           <% end %>
         </td>

@@ -86,7 +86,7 @@
                     <%= link_to ip.address, ip_path(ip), title: t('show'), class: "text-indigo-600 hover:text-indigo-900" %>
                   </td>
                   <td class="px-3 py-4 text-sm text-gray-500">
-                    <%= ip.hostname_with_descriptor.html_safe %>
+                    <%= ip_hostname_with_descriptor_markup(ip) %>
                     <% if ip.hostname_alias.present? and ip.host.present? %>
                       <div class="mt-1">
                         <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">

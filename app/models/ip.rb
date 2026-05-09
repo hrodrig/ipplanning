@@ -30,30 +30,23 @@ class Ip < ApplicationRecord
   validates :address, uniqueness: true, presence: true
   validates :hostname_alias, uniqueness: true, if: :hostname_alias?
 
-  # return the host name
-  #
-  # if this ip has an associated host, then return this hostname link to
-  #
+  # Plain host name when linked to a host (no HTML).
   def hostname
-    if self.host.present?
-      '<a href="/hosts/'+self.host.id.to_s+'">'+self.host.name + '</a>'
-    else
-      ''
-    end
+    host&.name.to_s
   end
 
+  # Plain-text label for UI (no HTML). Use +ip_hostname_with_descriptor_markup(ip)+ in views when a link to the host is needed.
   def hostname_with_descriptor
-    if self.is_reserved?
+    if is_reserved?
       return I18n.t('reserved')
     end
-    if self.hostname_alias.present?
-      return self.long_hostname
+    if hostname_alias.present?
+      return long_hostname
     end
-    if self.host.present?
-      '<a href="/hosts/'+self.host.id.to_s+'">'+ self.text_hostname_with_descriptor + '</a>'
-    else
-      ''
+    if host.present?
+      return text_hostname_with_descriptor
     end
+    ''
   end
 
   def text_hostname_with_descriptor

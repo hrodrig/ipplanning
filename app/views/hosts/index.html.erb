@@ -37,7 +37,7 @@
                 <%= link_to t('destroy'), host, data: { turbo_method: :delete, turbo_confirm: t('are_you_sure') }, class: 'text-red-600 hover:text-red-800 hover:underline text-xs' %>
               </div>
             </td>
-            <td class="px-6 py-4 text-sm text-gray-900 border-b"><%= host.all_ips.html_safe %></td>
+            <td class="px-6 py-4 text-sm text-gray-900 border-b"><%= host_linked_ip_addresses_markup(host) %></td>
             <td class="px-6 py-4 text-sm text-gray-600 border-b"><%= host.description.html_safe %></td>
           </tr>
           <% i+= 1 %>

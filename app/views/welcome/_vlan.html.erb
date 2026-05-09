@@ -55,7 +55,7 @@
         <td class="px-4 py-3 text-sm text-gray-900 border-b" width="20%">
           <% if ip.host.present? %>
             <div class="text-xs text-gray-600">
-              <%= ip.host.all_ips_except_this(ip.address).html_safe %>
+              <%= host_linked_ip_addresses_markup(ip.host, except_address: ip.address) %>
             </div>
           <% end %>
         </td>
