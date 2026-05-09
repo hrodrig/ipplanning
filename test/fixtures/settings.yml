@@ -14,3 +14,7 @@ basic_auth_required:
   name: BasicAuthRequired
   value: "0"
   description: Required?
+domain_name:
+  name: DomainName
+  value: lab.example.test
+  description: Default internal domain

@@ -70,7 +70,7 @@
         </div>
         <div class="ml-3 text-sm">
           <%= form.label :use_domain_name, t('use_domain_name') + '?', class: "font-medium text-gray-700" %>
-          <p class="text-gray-500"><%= t('placeholder_ip_use_domain_name_help') %> <strong><%= Setting.find_by_name('DomainName')&.value %></strong></p>
+          <p class="text-gray-500"><%= t('placeholder_ip_use_domain_name_help') %> <strong><%= AppSettings.domain_name %></strong></p>
         </div>
       </div>
 

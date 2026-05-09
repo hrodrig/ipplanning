@@ -116,13 +116,13 @@ class Ip < ApplicationRecord
         end
       end
       if self.use_domain_name.present?
-        str_hostname = str_hostname + ".#{Setting.find_by_name('DomainName')&.value}"
+        str_hostname = str_hostname + ".#{domain_suffix}"
       end
       return str_hostname
     end
     if self.hostname_alias.present? and self.host.nil?
       if self.use_domain_name.present?
-        str_hostname = self.hostname_alias + ".#{Setting.find_by_name('DomainName')&.value}"
+        str_hostname = self.hostname_alias + ".#{domain_suffix}"
       else
         str_hostname =  self.complete_hostname_alias
       end
@@ -135,7 +135,7 @@ class Ip < ApplicationRecord
 
     if self.host.present?
       if self.use_domain_name.present?
-        return self.short_hostname + ".#{Setting.find_by_name('DomainName')&.value}"
+        return self.short_hostname + ".#{domain_suffix}"
       else
         if self.hostname_alias.present?
           return self.complete_hostname_alias
@@ -225,6 +225,10 @@ class Ip < ApplicationRecord
     etc_hosts << separator
 
     return etc_hosts
+  end
+
+  private def domain_suffix
+    AppSettings.domain_name
   end
 
   # return true if long hostname is bigger than 13 characters

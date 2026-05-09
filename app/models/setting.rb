@@ -26,4 +26,14 @@
 # ----------------------------------------------------------------------------
 class Setting < ApplicationRecord
   validates :name, presence: true, uniqueness: true
+
+  # after_commit does not run inside transactional tests; save/destroy keeps cache in sync everywhere.
+  after_save :invalidate_app_settings_cache
+  after_destroy :invalidate_app_settings_cache
+
+  private
+
+  def invalidate_app_settings_cache
+    AppSettings.clear_cache!
+  end
 end
