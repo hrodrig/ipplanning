@@ -1,0 +1,35 @@
+<%= render layout: "common/admin_resource_form", locals: {
+  heading: "#{t('location')}: #{@location.name}",
+  index_path: locations_path,
+  index_label: t("locations"),
+  current_label: @location.name,
+  back_path: locations_path,
+  primary_action_path: edit_location_path(@location),
+  width_class: "max-w-6xl",
+  form_card: false
+} do %>
+  <div class="mb-10 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div class="border-b border-gray-100 bg-gradient-to-b from-gray-50 to-gray-100/80 px-5 py-4">
+      <h2 class="text-base font-semibold text-gray-900"><%= t("details") %></h2>
+    </div>
+    <dl class="divide-y divide-gray-100">
+      <div class="px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+        <dt class="text-sm font-medium text-gray-700"><%= t("location_name") %></dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @location.name %></dd>
+      </div>
+      <div class="px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+        <dt class="text-sm font-medium text-gray-700"><%= t("location_description") %></dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @location.description %></dd>
+      </div>
+    </dl>
+  </div>
+
+  <h2 class="mb-4 text-lg font-bold tracking-tight text-gray-900"><%= t("location_racks") %></h2>
+  <div class="rounded-lg border border-amber-100 bg-amber-50 px-4 py-3 text-sm text-amber-900 shadow-sm" role="status">
+    <%= t("not_found_location_racks") %>
+  </div>
+
+  <div class="mt-10">
+    <%= link_to t("add_location"), new_location_path, class: "inline-flex items-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-indigo-700 shadow-sm ring-1 ring-inset ring-indigo-200 hover:bg-indigo-50" %>
+  </div>
+<% end %>

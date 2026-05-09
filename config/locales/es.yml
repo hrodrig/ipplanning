@@ -246,6 +246,7 @@ es:
   add_host_type: Agregar tipo de host
   add_host: Agregar host
   add_infrastructure: Agregar infraestructura
+  add_location: Agregar locación
   add_ip_to: Agregar ip a
   add_ip: agregar ip
   add_vlan: Agregar vlan
@@ -253,6 +254,7 @@ es:
   adding_external_ip: Agregando ip externa
   adding_host_type: Agregando tipo de host
   adding_infrastructure: Agregando infraestructura
+  adding_location: Agregando locación
   adding_ip: Agregando ip
   additional_information: Información adicional
   are_you_sure_to_delete_this_ip: '¿Seguro que desea eliminar esta dirección ip? Tenga presente que la información de las direcciones ips debe ser consistente. Si Ud. elimina esta dirección ip, deberá de agregarla luego desde la cónsola.'
@@ -261,6 +263,7 @@ es:
   back_to_environments: Volver a los ambientes
   back_to_hosts: Volver a los hosts
   back_to_infrastructures: Volver a las infraestructuras
+  back_to_locations: Volver a las locaciones
   back_to_ips: Volver a las ips
   back_to_vlans: Volver a las vlans
   back: Regresar
@@ -268,6 +271,7 @@ es:
   complete_hostname: Nombre de host
   create_host_to_add_ip: Por favor, añada este nuevo host antes de agregarle cualquier dirección ip.
   description: Descripción
+  details: Detalles
   destroy_session: Salir
   destroy: Borrar
   diagnostic_agent_hostname_compliance: Nombre de Host válido para el Diagnostic Agent
@@ -281,6 +285,7 @@ es:
   edit_host_type: Editar tipo de host
   edit_host: Editar host
   edit_infrastructure: Editar infraestructura
+  edit_location: Editar locación
   edit_ip: Editar ip
   edit_vlan: Editar vlan
   edit: Editar
@@ -293,6 +298,7 @@ es:
   editing_host: Editando host
   editing_infrastructure: Editando infraestructura
   editing_infrastructure: Editing Infrastructure
+  editing_location: Editando locación
   editing_ip: Editando ip
   editing_setting: Editando configuraciones
   editing_vlan: Editando vlan
@@ -345,6 +351,14 @@ es:
   infrastructure_was_successfully_updated: La infraestructura fue actualizada con éxito.
   infrastructure: Infraestructura
   infrastructures: Infraestructuras
+  location_description: Descripción
+  location_name: Nombre
+  location_racks: Racks
+  location_was_successfully_created: La locación fue creada con éxito.
+  location_was_successfully_destroyed: La locación fue eliminada con éxito.
+  location_was_successfully_updated: La locación fue actualizada con éxito.
+  location: Locación
+  locations: Locaciones
   ip_address_added_to_host: La dirección ip fue añadida al host con éxito.
   ip_address_created: La dirección ip fue creada con éxito.
   ip_address_destroyed: La dirección ip fue eliminada con éxito.
@@ -368,6 +382,7 @@ es:
   network: Red
   new_host: Agregar Host
   new_infrastructure: Agregar Infraestructura
+  new_location: Agregar locación
   new_sesion: Iniciar sesión
   not_assigned_ips: 'No existen direcciones ips en asignadas !'
   not_found_environments: 'No existen ambientes. Por favor, cree al menos uno.'
@@ -375,6 +390,8 @@ es:
   not_found_host_types: 'No existen tipos de hosts. Por favor, cree al menos uno.'
   not_found_hosts: 'No existen hosts. Por favor, cree al menos uno.'
   not_found_infrastructures: 'No existen infraestructuras. Por favor, cree al menos una.'
+  not_found_location_racks: Aún no hay racks. Aparecerán aquí cuando existan racks asociados a esta locación.
+  not_found_locations: 'No hay locaciones. Por favor, cree al menos una.'
   not_found_vlans_ips: 'No existen vlans. Por favor, cree al menos una vlan para poder agregar las direcciones ips.'
   not_found_vlans: 'No existen vlans. Por favor, cree al menos una vlan.'
   not_include_in_hosts_file: No incluido en el archivo hosts generado
@@ -410,6 +427,10 @@ es:
   placeholder_infrastructure_description: 'Notas acerca de la infraestructura. (opcional)'
   placeholder_infrastructure_name_help: 'Nombre de la infraestructura. Debe ser único. (requerido)'
   placeholder_infrastructure_name: 'Nombre de la infraestructura. Debe ser único. (requerido)'
+  placeholder_location_description_help: 'Notas del sitio, dirección, acceso u otro contexto. (opcional)'
+  placeholder_location_description: 'Notas sobre esta sede o sala. (opcional)'
+  placeholder_location_name_help: 'Nombre de la locación. Debe ser único. (requerido)'
+  placeholder_location_name: 'Nombre de la locación. Debe ser único. (requerido)'
   placeholder_ip_complete_hostname_alias_help: 'Agregue aquí el alias para el hostname completo.Solamente requerido si no se utiliza el nombre de dominio.'
   placeholder_ip_descriptor_help: 'Agregar descriptor de VLAN al hostname de la dirección ip'
   placeholder_ip_hostname_alias_help: 'Hostname alias. Debe ser único si es indicado.'

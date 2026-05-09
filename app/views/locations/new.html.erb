@@ -1,0 +1,9 @@
+<%= render layout: "common/admin_resource_form", locals: {
+  heading: t("add_location"),
+  index_path: locations_path,
+  index_label: t("locations"),
+  current_label: t("add_location"),
+  back_path: locations_path
+} do %>
+  <%= render "form", location: @location %>
+<% end %>

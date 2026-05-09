@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_10_120000) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_10_120001) do
   create_table "admins", charset: "utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -105,6 +105,14 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_10_120000) do
     t.index ["address"], name: "index_ips_on_address", unique: true
     t.index ["hostname_alias"], name: "index_ips_on_hostname_alias"
     t.index ["vlan_id"], name: "index_ips_on_vlan_id"
+  end
+
+  create_table "locations", charset: "utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_locations_on_name", unique: true
   end
 
   create_table "settings", charset: "utf8", force: :cascade do |t|

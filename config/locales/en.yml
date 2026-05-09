@@ -242,6 +242,7 @@ en:
   add_host_type: Add host type
   add_host: Add host
   add_infrastructure: Add Infrastructure
+  add_location: Add location
   add_ip_to: Add ip to
   add_ip: add ip
   add_vlan: Add VLAN
@@ -249,6 +250,7 @@ en:
   adding_external_ip: Adding External Ip
   adding_host_type: Adding Host Type
   adding_infrastructure: Adding Infrastructure
+  adding_location: Adding location
   adding_ip: Adding Ip
   additional_information: Additional information
   are_you_sure_to_delete_this_ip: 'Are you sure to delete this IP address? Take care that IP address information must be consistent. If you remove this IP address, rails console must be required to add again.'
@@ -257,6 +259,7 @@ en:
   back_to_environments: Back to environments
   back_to_hosts: Back to hosts
   back_to_infrastructures: Back to infrastructures
+  back_to_locations: Back to locations
   back_to_ips: Back to IPs
   back_to_vlans: Back to VLANs
   back: Back
@@ -264,6 +267,7 @@ en:
   complete_hostname: Complete hostname
   create_host_to_add_ip: Please, create this new host prior to add any ip address.
   description: Description
+  details: Details
   destroy_session: Close session
   destroy: Destroy
   diagnostic_agent_hostname_compliance: Diagnostic Agent Hostname Compliance
@@ -277,6 +281,7 @@ en:
   edit_host_type: Edit Host Type
   edit_host: Edit Host
   edit_infrastructure: Edit Infrastructure
+  edit_location: Edit location
   edit_ip: Edit IP
   edit_vlan: Edit VLAN
   edit: Edit
@@ -289,6 +294,7 @@ en:
   editing_host: Editing Host
   editing_infrastructure: Editing Infrastructure
   editing_infrastructure: Editing Infrastructure
+  editing_location: Editing location
   editing_ip: Editing IP
   editing_setting: Editing setting
   editing_vlan: Editing VLAN
@@ -341,6 +347,14 @@ en:
   infrastructure_was_successfully_updated: Infrastructure was successfully updated.
   infrastructure: Infrastructure
   infrastructures: Infrastructures
+  location_description: Description
+  location_name: Name
+  location_racks: Racks
+  location_was_successfully_created: Location was successfully created.
+  location_was_successfully_destroyed: Location was successfully destroyed.
+  location_was_successfully_updated: Location was successfully updated.
+  location: Location
+  locations: Locations
   ip_address_added_to_host: IP address was successfully added to Host
   ip_address_created: IP address was successfully created.
   ip_address_destroyed: IP address was successfully destroyed.
@@ -364,6 +378,7 @@ en:
   network: Network
   new_host: Add Host
   new_infrastructure: Add Infrastructure
+  new_location: Add location
   new_sesion: Sign in
   not_assigned_ips: 'There are not assigned ips'
   not_found_environments: 'There are not environments. Please add one.'
@@ -371,6 +386,8 @@ en:
   not_found_host_types: 'There are not hosts types. Please add one.'
   not_found_hosts: 'There are not hosts. Please add one.'
   not_found_infrastructures: 'There are not infrastructures. Please add one.'
+  not_found_location_racks: No racks yet. They will appear here once rack records are linked to this location.
+  not_found_locations: 'There are no locations. Please add one.'
   not_found_vlans_ips: 'There are not vlans or ips. Please add one vlan prior to add any ip address.'
   not_found_vlans: 'There are not vlans. Please add one.'
   not_include_in_hosts_file: Not included in generated hosts file
@@ -406,6 +423,10 @@ en:
   placeholder_infrastructure_description: 'Some notes about this infrastructure. (optional)'
   placeholder_infrastructure_name_help: 'Add here infrastructure name. Must be unique. (required)'
   placeholder_infrastructure_name: 'Infrastructure name. Must be unique. (required)'
+  placeholder_location_description_help: 'Site notes, address, access, or other context. (optional)'
+  placeholder_location_description: 'Notes about this physical site or room. (optional)'
+  placeholder_location_name_help: 'Location name. Must be unique. (required)'
+  placeholder_location_name: 'Location name. Must be unique. (required)'
   placeholder_ip_complete_hostname_alias_help: 'Entry complete FQDN hostname alias. Only required if not use domain name.'
   placeholder_ip_descriptor_help: 'Add VLAN descriptor to ip address hostname'
   placeholder_ip_hostname_alias_help: 'Hostname alias. Must be unique if added.'
