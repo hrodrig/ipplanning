@@ -106,10 +106,10 @@ class Ip < ApplicationRecord
   # 2.- if ip is reserved, then the hostname is conformed by translated "reserved"
   #    word joined by ip with dashes: reserved-10.10.10.1
   # 3.- if "use domain name" option is set, then this is joined with this:
-  #    mypc-bck.midomain.name, reserved-10.10.10.1.midomain.name, etc
+  #    mypc-bck.mydomain.name, reserved-10.10.10.1.mydomain.name, etc
   # 4.- if the associated host has an alias, then use this takeing care of
   #   vlan space descriptor and domain name: (host alias: myaliaspc)
-  #    myaliaspc-bck.midomain.name, myaliaspc.midomain.name, etc
+  #    myaliaspc-bck.mydomain.name, myaliaspc.mydomain.name, etc
   #
   def long_hostname
     if self.is_reserved?

@@ -284,6 +284,9 @@ es:
   edit_ip: Editar ip
   edit_vlan: Editar vlan
   edit: Editar
+  email: Correo electrónico
+  password: Contraseña
+  sign_in_to_ipplanning: Entrar en IPPLANNING
   editing_environment: Editando ambiente
   editing_external_ip: Editando ip externa
   editing_host_type: Editando tipo de host

@@ -35,16 +35,16 @@ class Host < ApplicationRecord
 
   def all_ips
     ips = self.ips
-    string_de_ips = ''
+    ips_string = ''
     if ips.count > 0
       array_of_ips = []
       ips.each do |ip|
         array_of_ips << '<a href="#'+ip.address+'">'+ip.address+'</a>'
       end
       if array_of_ips.count > 0
-        string_de_ips = array_of_ips.join ', '
+        ips_string = array_of_ips.join ', '
       end
-      return string_de_ips
+      return ips_string
     else
       return ''
     end
@@ -52,7 +52,7 @@ class Host < ApplicationRecord
 
   def all_ips_except_this(ip_to_exclude)
     ips = self.ips
-    string_de_ips = ''
+    ips_string = ''
     if ips.count > 0
       array_of_ips = []
       ips.each do |ip|
@@ -61,9 +61,9 @@ class Host < ApplicationRecord
         end
       end
       if array_of_ips.count > 0
-        string_de_ips = array_of_ips.join ', '
+        ips_string = array_of_ips.join ', '
       end
-      return string_de_ips
+      return ips_string
     else
       return ''
     end

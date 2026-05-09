@@ -1,9 +1,7 @@
 # IPPLANNING: Ip Address Management System
-# Copyright (c) 2016-2017 Hermes Rodríguez, hejeroaz@gmail.com
+# Copyright (c) 2016-2024 Hermes Rodríguez, hejeroaz@gmail.com
 #
 # The MIT License (MIT)
-#
-# Copyright (c) 2014 Evan Wallace
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,16 +25,26 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  before_action :set_locale
   before_action :authenticate_with_basic_auth
 
   private
+
+  def set_locale
+    I18n.locale = params[:locale] || session[:locale] || I18n.default_locale
+    session[:locale] = I18n.locale
+  end
+
+  def default_url_options
+    { locale: I18n.locale }
+  end
 
   def authenticate_with_basic_auth
     return unless Setting.find_by(name: 'BasicAuthRequired')&.value == '1'
 
     authenticate_or_request_with_http_basic do |username, password|
-      username == Setting.find_by(name: 'BasicAuthUsername')&.value &&
-        password == Setting.find_by(name: 'BasicAuthPassword')&.value
+      username == (Setting.find_by(name: 'BasicAuthUsername')&.value || "foo") &&
+        password == (Setting.find_by(name: 'BasicAuthPassword')&.value || "bar")
     end
   end
 end

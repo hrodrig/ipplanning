@@ -280,6 +280,9 @@ en:
   edit_ip: Edit IP
   edit_vlan: Edit VLAN
   edit: Edit
+  email: Email
+  password: Password
+  sign_in_to_ipplanning: Sign in to IPPLANNING
   editing_environment: Editing Environment
   editing_external_ip: Editing External IP
   editing_host_type: Editing Host Type
@@ -361,7 +364,7 @@ en:
   network: Network
   new_host: Add Host
   new_infraestructure: Add Infraestructure
-  new_sesion: Iniciar sesión
+  new_sesion: Sign in
   not_assigned_ips: 'There are not assigned ips'
   not_found_environments: 'There are not environments. Please add one.'
   not_found_externalips: 'There are not external ips address. Please add one.'
