@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_10_120003) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_10_120004) do
   create_table "active_storage_attachments", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -90,10 +90,15 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_10_120003) do
     t.integer "total_vcpus"
     t.bigint "infrastructure_id"
     t.bigint "host_type_id"
+    t.string "deployment_form", default: "other", null: false
+    t.bigint "server_rack_id"
+    t.integer "rack_units"
+    t.integer "rack_position_start"
     t.index ["environment_id"], name: "index_hosts_on_environment_id"
     t.index ["host_type_id"], name: "index_hosts_on_host_type_id"
     t.index ["infrastructure_id"], name: "index_hosts_on_infrastructure_id"
     t.index ["name"], name: "index_hosts_on_name", unique: true
+    t.index ["server_rack_id"], name: "index_hosts_on_server_rack_id"
   end
 
   create_table "hosts_ips", id: false, charset: "utf8", force: :cascade do |t|
@@ -192,5 +197,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_10_120003) do
   add_foreign_key "hosts", "environments"
   add_foreign_key "hosts", "host_types"
   add_foreign_key "hosts", "infrastructures"
+  add_foreign_key "hosts", "server_racks"
   add_foreign_key "server_racks", "locations"
 end

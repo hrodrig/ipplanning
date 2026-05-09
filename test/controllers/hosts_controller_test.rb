@@ -29,6 +29,7 @@ class HostsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to host_url(Host.last)
+    assert_equal "other", Host.last.deployment_form
   end
 
   test "should show host" do

@@ -87,6 +87,54 @@
     </div>
   </div>
 
+  <div class="space-y-6 pt-6 border-t border-gray-200" data-controller="host-deployment">
+    <div>
+      <%= form.label :deployment_form, t("host_deployment_form"), class: form_label_class %>
+      <div class="mt-1">
+        <%= form.select :deployment_form,
+          Host.deployment_form_select_options,
+          {},
+          {
+            id: "host_deployment_form",
+            class: form_select_class,
+            data: { action: "change->host-deployment#sync" }
+          } %>
+      </div>
+      <p class="mt-1 text-xs text-gray-500"><%= t("placeholder_host_deployment_form_help") %></p>
+    </div>
+
+    <div data-host-deployment-target="rackSection" class="space-y-6 rounded-lg border border-gray-200 bg-gray-50 p-6 <%= "hidden" unless host.rack_mount? %>">
+      <p class="text-sm text-gray-600"><%= t("host_rack_mount_section_hint") %></p>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div class="md:col-span-2">
+          <%= form.label :server_rack_id, t("host_server_rack"), class: form_label_class %>
+          <div class="mt-1">
+            <%= form.select :server_rack_id,
+              ServerRack.left_joins(:location).order("locations.name ASC", "server_racks.name ASC").map { |sr|
+                ["#{sr.name} — #{sr.location.name}", sr.id]
+              },
+              { include_blank: true },
+              { class: form_select_class } %>
+          </div>
+        </div>
+        <div>
+          <%= form.label :rack_units, t("host_rack_units"), class: form_label_class %>
+          <div class="mt-1">
+            <%= form.number_field :rack_units, min: 1, class: form_control_class, placeholder: t("placeholder_host_rack_units") %>
+          </div>
+          <p class="mt-1 text-xs text-gray-500"><%= t("placeholder_host_rack_units_help") %></p>
+        </div>
+        <div>
+          <%= form.label :rack_position_start, t("host_rack_position_start"), class: form_label_class %>
+          <div class="mt-1">
+            <%= form.number_field :rack_position_start, min: 1, class: form_control_class, placeholder: t("placeholder_host_rack_position_start") %>
+          </div>
+          <p class="mt-1 text-xs text-gray-500"><%= t("placeholder_host_rack_position_start_help") %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-gray-200">
     <div>
       <%= form.label :memory_size, t('memory_size'), class: form_label_class %>

@@ -23,6 +23,27 @@
             <dt class="text-sm font-medium text-gray-700"><%= t("notes") %></dt>
             <dd class="mt-1 text-sm leading-relaxed text-gray-900 sm:col-span-2 sm:mt-0"><%= @host.description.html_safe %></dd>
           </div>
+          <div class="px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+            <dt class="text-sm font-medium text-gray-700"><%= t("host_deployment_form") %></dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @host.deployment_form_label %></dd>
+          </div>
+          <% if @host.rack_mount? && @host.server_rack.present? %>
+            <div class="px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+              <dt class="text-sm font-medium text-gray-700"><%= t("host_server_rack") %></dt>
+              <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                <%= link_to "#{@host.server_rack.name} (#{@host.server_rack.location.name})", @host.server_rack, class: "text-indigo-600 hover:text-indigo-500" %>
+              </dd>
+            </div>
+            <div class="px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+              <dt class="text-sm font-medium text-gray-700"><%= t("host_rack_units") %> / <%= t("host_rack_position_start") %></dt>
+              <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                <%= @host.rack_units %>
+                <% if @host.rack_position_start.present? %>
+                  <span class="text-gray-500"> · U<%= @host.rack_position_start %>+</span>
+                <% end %>
+              </dd>
+            </div>
+          <% end %>
         </dl>
       </div>
 

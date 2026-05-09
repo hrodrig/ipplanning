@@ -341,9 +341,28 @@ es:
   host_type: Tipo de host
   host_types: Tipos de hosts
   host_updated: El host fue actualizado con éxito.
+  host_deployment_form: Despliegue
+  host_deployment_cloud_vm: Nube / VM (sin rack)
+  host_deployment_rack_mount: Montaje en rack
+  host_deployment_tower: Torre / independiente
+  host_deployment_desktop: Escritorio / estación de trabajo
+  host_deployment_shelf: Bandeja / montaje no estándar
+  host_deployment_other: Otro
+  host_server_rack: Rack
+  host_rack_units: Unidades de rack (U)
+  host_rack_position_start: Posición inicial (U)
+  host_rack_mount_section_hint: Obligatorio si el despliegue es montaje en rack. Las VM y torres no usan rack.
+  placeholder_host_deployment_form_help: Cómo está desplegado el host en físico. Montaje en rack exige rack y altura en U.
+  placeholder_host_rack_units: ej. 2
+  placeholder_host_rack_units_help: Cantidad de unidades de rack que ocupa el equipo (mínimo 1).
+  placeholder_host_rack_position_start: ej. 10
+  placeholder_host_rack_position_start_help: Opcional. Número de U más bajo usado (la convención arriba/abajo depende del sitio).
+  server_rack_hosts: Hosts en este rack
+  server_rack_no_hosts: Aún no hay hosts asignados a este rack.
   hostname_alias_with_host: Alias de
   hostname_alias: Nombre de host alias
   hostname: Nombre de host
+  host: Host
   hosts: Hosts
   include_in_etc_hosts: Incluir en /etc/hosts
   infrastructure_description: Descripción

@@ -34,6 +34,32 @@
     </dl>
   </div>
 
+  <div class="mb-10 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div class="border-b border-gray-100 bg-gradient-to-b from-gray-50 to-gray-100/80 px-5 py-4">
+      <h2 class="text-base font-semibold text-gray-900"><%= t("server_rack_hosts") %></h2>
+    </div>
+    <div class="p-5">
+      <% rack_hosts = @server_rack.hosts.order(:name).to_a %>
+      <% if rack_hosts.any? %>
+        <ul class="divide-y divide-gray-100">
+          <% rack_hosts.each do |h| %>
+            <li class="flex flex-wrap items-center justify-between gap-2 py-3 text-sm">
+              <%= link_to h.name, h, class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+              <span class="text-gray-600">
+                <%= h.rack_units %> U
+                <% if h.rack_position_start.present? %>
+                  <span class="text-gray-500">· <%= t("host_rack_position_start") %> <%= h.rack_position_start %></span>
+                <% end %>
+              </span>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-sm text-gray-500"><%= t("server_rack_no_hosts") %></p>
+      <% end %>
+    </div>
+  </div>
+
   <h2 class="mb-4 text-lg font-bold tracking-tight text-gray-900"><%= t("server_rack_photos") %></h2>
   <% if @server_rack.photos.attached? %>
     <div class="flex flex-wrap gap-4">

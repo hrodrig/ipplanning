@@ -25,13 +25,43 @@
 #
 # ----------------------------------------------------------------------------
 class Host < ApplicationRecord
+  DEPLOYMENT_FORMS = %w[cloud_vm rack_mount tower desktop shelf other].freeze
+  RACK_MOUNT = "rack_mount"
+
   has_and_belongs_to_many :ips
   before_create :check_params
   belongs_to :infrastructure
   belongs_to :environment
   belongs_to :host_type
+  belongs_to :server_rack, optional: true
+
+  after_initialize -> { self.deployment_form ||= "other" }, if: :new_record?
+
+  before_validation :clear_rack_fields_unless_rack_mount
 
   validates :name, uniqueness: true, presence: true
+  validates :deployment_form, inclusion: { in: DEPLOYMENT_FORMS }
+  validates :server_rack_id, presence: true, if: :rack_mount?
+  validates :rack_units,
+    numericality: { only_integer: true, greater_than_or_equal_to: 1 },
+    presence: true,
+    if: :rack_mount?
+  validates :rack_position_start,
+    numericality: { only_integer: true, greater_than_or_equal_to: 1, allow_nil: true }
+
+  def self.deployment_form_select_options
+    DEPLOYMENT_FORMS.map { |key| [I18n.t("host_deployment_#{key}"), key] }
+  end
+
+  def rack_mount?
+    deployment_form == RACK_MOUNT
+  end
+
+  def deployment_form_label
+    return "" if deployment_form.blank?
+
+    I18n.t("host_deployment_#{deployment_form}", default: deployment_form.humanize)
+  end
 
   # Comma-separated IP addresses (no HTML). Use +host_linked_ip_addresses_markup(host)+ in views for anchor links.
   def all_ips
@@ -58,5 +88,13 @@ class Host < ApplicationRecord
   def check_params
    self.name.downcase!
  end
+
+  def clear_rack_fields_unless_rack_mount
+    return if rack_mount?
+
+    self.server_rack_id = nil
+    self.rack_units = nil
+    self.rack_position_start = nil
+  end
 
 end

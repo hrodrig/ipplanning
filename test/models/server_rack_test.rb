@@ -24,4 +24,11 @@ class ServerRackTest < ActiveSupport::TestCase
     rack = ServerRack.new(location: locations(:one), name: "X", u_height: 0)
     assert_not rack.valid?
   end
+
+  test "cannot destroy rack while hosts reference it" do
+    rack = server_racks(:one)
+    assert Host.exists?(server_rack_id: rack.id)
+    assert_not rack.destroy
+    assert rack.errors[:base].present?
+  end
 end

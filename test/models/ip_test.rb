@@ -81,6 +81,7 @@ class IpTest < ActiveSupport::TestCase
       name: "tiny",
       description: "short-name host",
       hosts_type: "Virtual Host",
+      deployment_form: "other",
       environment: environments(:one),
       memory_size: 1024,
       total_sockets: 1,
