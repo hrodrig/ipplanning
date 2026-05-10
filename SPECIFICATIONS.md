@@ -1,7 +1,9 @@
 # IPPLANNING Specifications
 
+**Document version:** aligned with app release **0.8.10** (see [`VERSION`](VERSION)).
+
 ## 1. Overview
-IPPLANNING is a web-based IP Address Management (IPAM) application designed for network administrators to manage VLANs, IP allocations, and Host assignments. A key unique feature is its ability to generate synchronized `/etc/hosts` files, which is particularly valuable in environments where high-frequency name resolution is required and DNS latency or implementation is a concern (e.g., SAP, Oracle clusters).
+IPPLANNING is a web-based IP Address Management (IPAM) application designed for network administrators to manage VLANs, IP allocations, and Host assignments. It also supports **physical inventory** cues such as **locations**, **server racks**, and **network switches** (with per-switch ports) for operators who want rack context without modeling switches as hosts. A key unique feature is its ability to generate synchronized `/etc/hosts` files, which is particularly valuable in environments where high-frequency name resolution is required and DNS latency or implementation is a concern (e.g., SAP, Oracle clusters).
 
 ## 2. Core Domain Model
 
@@ -14,6 +16,11 @@ erDiagram
     Host }|--|| Environment : "belongs to"
     Host }|--|| Infrastructure : "belongs to"
     Host }|--|| HostType : "classified as"
+    Location ||--o{ ServerRack : "contains"
+    ServerRack }o--|| Location : "at"
+    ServerRack ||--o{ Host : "rack_mount"
+    ServerRack ||--o{ NetworkSwitch : "has"
+    NetworkSwitch ||--o{ SwitchPort : "has"
     Externalip {
         string address
         string hostname
@@ -47,6 +54,10 @@ erDiagram
 | **Infrastructure**| Hosting platform classification. | `name` (e.g., VMWare, AWS, Bare Metal, Azure) |
 | **HostType** | Functional classification of the host. | `name` (e.g., DB Server, App Server, Load Balancer) |
 | **Setting** | Global application configuration. | `name`, `value` (e.g., WebsiteName, DomainName) |
+| **Location** | Physical site (building, room, cage). | `name`, `description` |
+| **ServerRack** | Cabinet within a location. | `name`, `u_height`, `notes`; `has_many` hosts (rack-mount) and network switches |
+| **NetworkSwitch** | Switch hardware tracked **outside** the Host model. | `name` (unique), `serial`, `equipment_model` (not the reserved AR name `model`), rack fields, firmware, management hint, photos (Active Storage); optional `belongs_to :server_rack` |
+| **SwitchPort** | Labelled port on a switch. | `name` (unique per `network_switch_id`); batch-created on switch create |
 
 ---
 
@@ -122,12 +133,19 @@ Authenticated **IPs** index and **home** (`welcome#index`) expose a **search** f
 - **Operations:** Cron-friendly; README documents a **2-hour** example schedule.
 
 ### 3.9 Server rack front (U) diagram
-- **Purpose:** Visualize rack capacity and placement of **rack-mount** hosts without external DCIM tooling.
+- **Purpose:** Visualize rack capacity and placement of **rack-mount** hosts and **network switches** (`NetworkSwitch`) in the rack without external DCIM tooling.
 - **Layout:** HTML/CSS (Tailwind): one row per rack unit, **highest U at the top** down to **U1 at the bottom** (EIA-310: U1 is the bottom of the rack).
-- **Placement rule:** `Host#rack_position_start` is the **lowest U** occupied; `rack_units` consecutive Us count upward (e.g. start 21, units 2 → U21–U22).
-- **Colors:** Neutral = free; **green** = any occupied U; **amber / strong border** = **focused** host (`highlight_host` or query `highlight_host_id` on the rack show URL, validated against that rack).
-- **Surfaces:** `server_racks#show` embeds the diagram; `hosts#show` embeds it when `deployment_form` is rack mount and `server_rack` is set, passing the current host as focus. Host list entries can link a **U range** label back to the rack with focus.
-- **Helpers / partial:** `RackUDiagramHelper` (`rack_u_diagram_rows`, `host_rack_u_range_label`) and `server_racks/_u_diagram.html.erb`. Hosts missing valid U data trigger a warning banner but still appear in the textual list.
+- **Placement rule:** `rack_position_start` is the **lowest U** occupied; `rack_units` consecutive Us count upward (hosts and switches use the same rule, e.g. start 21, units 2 → U21–U22).
+- **Colors:** Neutral = free; **green** = host; **indigo** = network switch; **amber / strong border** = **focused** item (`highlight_host_id` or `highlight_network_switch_id` on the rack show URL, validated against that rack).
+- **Surfaces:** `server_racks#show` embeds the diagram; `hosts#show` and `network_switches#show` embed it when a rack is linked, passing the current record as focus. Host and switch list entries on the rack can link a **U range** label back to the rack with focus.
+- **Helpers / partial:** `RackUDiagramHelper` (`rack_u_diagram_rows`, `host_rack_u_range_label`, `network_switch_rack_u_range_label`) and `server_racks/_u_diagram.html.erb`. Hosts or switches missing valid U data trigger warning banners; they still appear in the textual lists.
+
+### 3.10 Network switches & switch ports (admin)
+- **Purpose:** Inventory **L2/L3 switches** without conflating them with **Host** records (no IP assignment workflow on the switch model in this release).
+- **Admin UI:** Full CRUD under **Platform settings → Network switches**; nested **switch ports** (new/create/edit/update/destroy). Rack show page lists linked switches with U-range links (`highlight_network_switch_id`).
+- **Batch ports on create:** The new-switch form accepts **`port_count`** (not persisted on `NetworkSwitch`) and an optional **`default_port_name_template`**. If the template is blank, ports are named `1`…`N`. If it ends with digits (e.g. `Gi1/0/1`), that suffix is the start index and increments per port, preserving zero-padding width (e.g. `…09`, `…10`). If there is no trailing digit run (e.g. `Gi1/0/`), the suffix `1`, `2`, … is appended. Implementation: `NetworkSwitch.build_default_port_names` + `insert_all!` on `SwitchPort`.
+- **Display order:** `SwitchPort.sort_ports_for_display` orders purely numeric names numerically; names with a trailing digit run (e.g. `Gi1/0/10`) sort by that numeric suffix; other strings sort alphabetically in a final group.
+- **Data integrity:** Deleting a rack with assigned switches is blocked (`restrict_with_error` on `ServerRack#network_switches`), analogous to hosts.
 
 ---
 
@@ -174,6 +192,7 @@ sequenceDiagram
 - **IP-heavy views:** Chunked VLAN tables (§3.5), client-side filter (`ip-index-filter`, §3.6), and per-table column sort (`ip-table-sort`, §3.7) on the admin IPs index, home VLAN tables, and external IP tables where implemented.
 - **Operator guide:** Collapsible IP blocks and the search box are also summarized under `section_intro.ips` tips in locale files (`en.yml` / `es.yml`).
 - **Rack views:** Front-of-rack **U** diagram per §3.9.
+- **Network switch forms:** `autocomplete="off"` on the switch form and key text inputs to reduce browser autofill mixing `name` vs `equipment_model`; model field grouped under the switch name with a short example placeholder.
 
 ---
 

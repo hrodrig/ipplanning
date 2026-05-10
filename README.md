@@ -4,7 +4,7 @@
   <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80" alt="IPPLANNING Hero Image" width="100%" style="border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
 </p>
 
-[![Version](https://img.shields.io/badge/version-0.8.2-blue.svg)](https://github.com/hrodrig/ipplanning/releases)
+[![Version](https://img.shields.io/badge/version-0.8.10-blue.svg)](https://github.com/hrodrig/ipplanning/releases)
 [![Release](https://img.shields.io/github/v/release/hrodrig/ipplanning?sort=semver)](https://github.com/hrodrig/ipplanning/releases)
 [![License](https://img.shields.io/github/license/hrodrig/ipplanning)](https://github.com/hrodrig/ipplanning/blob/main/LICENSE)
 ![Rails Version](https://img.shields.io/badge/Rails-8.0-red)
@@ -46,7 +46,7 @@ Use **Ruby 3.3.0** (see [`.ruby-version`](.ruby-version)) and MySQL. For RVM gem
 
 The **version badge** above tracks the [`VERSION`](VERSION) file; keep them in sync when you cut a release.
 
-**0.8.2** adds a **rack front (U) diagram** on server rack and rack-mount host pages: EIA-310 numbering (U1 at bottom), green slots for occupied Us, and a highlighted span for the host you are viewing or select via `highlight_host_id`.
+**0.8.10** adds **network switches** as first-class inventory (not hosts): admin CRUD, optional rack placement, `SwitchPort` labels with batch creation on save, optional **port name pattern** (e.g. `Gi1/0/1` → auto-incrementing suffix), and natural **display order** for port lists. The **rack U diagram** also shows switches (indigo) alongside rack-mount hosts (green), with `highlight_network_switch_id` on the rack URL. See [SPECIFICATIONS.md](SPECIFICATIONS.md) §3.9–3.10.
 
 ---
 
@@ -72,7 +72,8 @@ The **version badge** above tracks the [`VERSION`](VERSION) file; keep them in s
 - **Automated `/etc/hosts` Generation:** Generate synchronized host files for Unix-like servers, essential for environments where DNS resolution is a bottleneck.
 - **Modern UI:** Clean and responsive interface built with Tailwind CSS.
 - **External IP Tracking:** Manage public or external IPs associated with your internal hosts.
-- **Rack visualization:** See each rack as a vertical **U** layout with occupancy and optional focus on a specific host.
+- **Rack visualization:** Vertical **U** layout with hosts and **network switches**, occupancy colors, and deep links that focus a chosen device.
+- **Network switches:** Track switch hardware, ports, firmware, and rack position separately from hosts (Platform settings → Network switches).
 
 [↑ Back to Top](#-table-of-contents)
 
@@ -164,6 +165,8 @@ For security reasons, user registration is disabled via the web interface. To cr
    ```ruby
    Admin.create!(email: 'admin@example.com', password: 'your_secure_password')
    ```
+
+There is **no web “forgot password”** flow (by design). To change an admin password later, use the **Rails console** on a trusted path with the same pattern (`find_by!` / assign `password` + `password_confirmation` / `save!`).
 
 [↑ Back to Top](#-table-of-contents)
 

@@ -253,6 +253,8 @@ en:
   adding_infrastructure: Adding Infrastructure
   adding_location: Adding location
   adding_server_rack: Adding server rack
+  adding_network_switch: Adding network switch
+  adding_switch_port: Adding switch port
   adding_ip: Adding Ip
   additional_information: Additional information
   are_you_sure_to_delete_this_ip: 'Are you sure to delete this IP address? Take care that IP address information must be consistent. If you remove this IP address, rails console must be required to add again.'
@@ -299,6 +301,8 @@ en:
   editing_infrastructure: Editing Infrastructure
   editing_location: Editing location
   editing_server_rack: Editing server rack
+  editing_network_switch: Editing network switch
+  editing_switch_port: Editing switch port
   editing_ip: Editing IP
   editing_setting: Editing setting
   editing_vlan: Editing VLAN
@@ -386,25 +390,89 @@ en:
   server_rack_select_location: Select location…
   server_rack_u_height: Rack height (U)
   server_rack_u_diagram_title: Rack front (U layout)
-  server_rack_u_diagram_hint: "U numbers follow EIA-310: U1 is the bottom of the rack. Position start is the lowest U occupied by the host."
+  server_rack_u_diagram_hint: "U numbers follow EIA-310: U1 is the bottom of the rack. Position start is the lowest U occupied by the equipment (host or network switch)."
   server_rack_u_diagram_legend_free: Free
-  server_rack_u_diagram_legend_occupied: Occupied
-  server_rack_u_diagram_legend_focus: Selected host
+  server_rack_u_diagram_legend_host: Host
+  server_rack_u_diagram_legend_network_switch: Network switch
+  server_rack_u_diagram_legend_focus: Highlighted
   server_rack_u_diagram_column_u: U
   server_rack_u_diagram_column_front: Front
   server_rack_u_diagram_footer_u1: U1 — bottom of rack
   server_rack_u_diagram_highlight_link_title: Show this host in the rack diagram
+  server_rack_u_diagram_highlight_network_switch_link_title: Show this network switch in the rack diagram
   server_rack_u_diagram_unplaced_warning:
     one: "This host is rack-mounted but has no valid U placement yet: %{names}"
     other: "These hosts are rack-mounted but have no valid U placement yet: %{names}"
+  server_rack_u_diagram_unplaced_switch_warning:
+    one: "This network switch is in the rack but has no valid U placement yet: %{names}"
+    other: "These network switches are in the rack but have no valid U placement yet: %{names}"
   server_rack_was_successfully_created: Server rack was successfully created.
   server_rack_was_successfully_destroyed: Server rack was successfully destroyed.
   server_rack_destroy_blocked_hosts:
     one: "Cannot delete rack %{name}: it still has one host assigned. Change the host to another rack or deployment, then try again."
     other: "Cannot delete rack %{name}: it still has %{count} hosts assigned. Reassign or remove those hosts first."
+  server_rack_destroy_blocked_network_switches:
+    one: "Cannot delete rack %{name}: it still has one network switch assigned. Move or delete that switch first."
+    other: "Cannot delete rack %{name}: it still has %{count} network switches assigned. Move or delete those switches first."
+  server_rack_cannot_be_destroyed: "Cannot delete rack %{name}. Remove dependent records and try again."
   server_rack_was_successfully_updated: Server rack was successfully updated.
   server_rack: Server rack
   server_racks: Server racks
+  server_rack_network_switches: Network switches in this rack
+  server_rack_no_network_switches: No network switches are linked to this rack yet.
+  add_network_switch: Add network switch
+  add_switch_port: Add port
+  network_switch: Network switch
+  network_switches: Network switches
+  network_switch_name: Name
+  network_switch_serial: Serial number
+  network_switch_equipment_model: Equipment model
+  network_switch_server_rack: Server rack
+  network_switch_no_rack: Not in a rack
+  network_switch_rack_units: Rack height (U)
+  network_switch_rack_position_start: Rack position (U start)
+  network_switch_pdu_reference: PDU reference
+  network_switch_outlet_reference: Outlet reference
+  network_switch_firmware_version: Firmware version
+  network_switch_firmware_updated_on: Firmware updated on
+  network_switch_management_username: Management username
+  network_switch_management_secret_hint: Credential hint (vault / secret manager)
+  network_switch_photos: Photos
+  network_switch_port_count: Number of ports to create
+  network_switch_default_port_name_template: Default port name pattern (optional)
+  network_switch_port_count_invalid: "Port count must be between 0 and %{max}."
+  network_switch_port_name_template_too_long: "A generated port name would exceed %{max} characters. Use a shorter pattern or fewer ports."
+  network_switch_port_name_template_duplicate: "The pattern and port count would create duplicate port names. Adjust the starting number or the count."
+  network_switch_was_successfully_created: Network switch was successfully created.
+  network_switch_was_successfully_updated: Network switch was successfully updated.
+  network_switch_was_successfully_destroyed: Network switch was successfully destroyed.
+  network_switch_cannot_be_destroyed: "Could not delete %{name}."
+  switch_ports: Ports
+  switch_port_name: Port label
+  switch_port_was_successfully_created: Port was successfully created.
+  switch_port_was_successfully_updated: Port was successfully updated.
+  switch_port_was_successfully_destroyed: Port was successfully destroyed.
+  not_found_network_switches: There are no network switches yet. Add one to track switches separately from hosts.
+  not_found_switch_ports: This switch has no ports yet. Add a port or recreate the switch with a port count.
+  not_found_network_switch_photos: No photos attached yet. Add images when editing this switch.
+  placeholder_network_switch_name: Short name or hostname for the switch (unique).
+  placeholder_network_switch_name_help: Switch names must be unique across the whole application.
+  placeholder_network_switch_port_count_help: "After saving, ports are created in one batch. Leave the pattern empty for names 1…N, or set a template (see below). Maximum %{max} ports."
+  placeholder_network_switch_default_port_name_template: "e.g. Gi1/0/1 or GigabitEthernet1/0/1"
+  placeholder_network_switch_default_port_name_template_help: "If the value ends with digits (e.g. Gi1/0/1), that number is the first port and increases for each new port; leading zeros are kept (e.g. …09, …10). If it has no trailing digits (e.g. Gi1/0/), the suffix 1, 2, 3… is appended. Leave blank for simple numeric names 1…N."
+  placeholder_network_switch_serial: Optional chassis serial.
+  placeholder_network_switch_equipment_model: "e.g. Cisco Catalyst 2960"
+  placeholder_network_switch_equipment_model_help: Make and model as on the chassis or datasheet. This is separate from the switch name above; do not store passwords here.
+  placeholder_network_switch_server_rack_help: When a rack is selected, rack height in U is required. Position start is optional.
+  placeholder_network_switch_rack_units: Height of the switch in rack units when mounted.
+  placeholder_network_switch_rack_position_start: Lowest U number occupied (optional).
+  placeholder_network_switch_pdu_reference: PDU name, label, or circuit (optional).
+  placeholder_network_switch_outlet_reference: Outlet/socket identifier (optional).
+  placeholder_network_switch_management_secret_hint: e.g. vault path, ticket ID, or team note—never store passwords in clear text here.
+  placeholder_network_switch_management_secret_hint_help: Store real credentials in your vault or password manager; use this only as a pointer.
+  placeholder_network_switch_photos_help: Optional photos of the front panel, labels, or cabling.
+  placeholder_switch_port_name: Port name or label (unique within this switch).
+  placeholder_switch_port_name_help: Examples Gi1/0/1, eth0, or a patch panel position.
   ip_address_added_to_host: IP address was successfully added to Host
   ip_address_created: IP address was successfully created.
   ip_address_destroyed: IP address was successfully destroyed.
@@ -438,6 +506,7 @@ en:
   new_infrastructure: Add Infrastructure
   new_location: Add location
   new_server_rack: Add server rack
+  new_network_switch: Add network switch
   new_sesion: Sign in
   not_assigned_ips: 'There are not assigned ips'
   not_found_environments: 'There are not environments. Please add one.'
@@ -589,6 +658,16 @@ en:
       tips:
         - Rack names are unique per location, not globally.
         - Open a rack’s detail page to see which hosts are mounted there.
+        - Network switches can be linked to a rack without being modeled as hosts.
+    network_switches:
+      title: Network switches
+      body: |
+        Switches are tracked on their own record type—not as hosts—so you can capture serials, firmware, rack placement, power references, and port labels.
+        On create you choose how many ports to generate and an optional name pattern (e.g. Gi1/0/1) so labels match your device CLI; otherwise names default to 1, 2, 3….
+      tips:
+        - Switch names are globally unique; pick a label your team already uses in diagrams or CMDB.
+        - Use the credential hint field for vault paths or ticket IDs, not plaintext passwords.
+        - You cannot delete a rack while a switch is still assigned to it.
     environments:
       title: Environments
       body: |

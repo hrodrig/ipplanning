@@ -1,0 +1,9 @@
+<%= render layout: "common/admin_resource_form", locals: {
+  heading: t("adding_switch_port"),
+  index_path: network_switch_path(@network_switch),
+  index_label: @network_switch.name,
+  current_label: t("adding_switch_port"),
+  back_path: network_switch_path(@network_switch)
+} do %>
+  <%= render "form", switch_port: @switch_port %>
+<% end %>

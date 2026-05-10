@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_10_120005) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_10_120006) do
   create_table "active_storage_attachments", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -142,6 +142,26 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_10_120005) do
     t.index ["name"], name: "index_locations_on_name", unique: true
   end
 
+  create_table "network_switches", charset: "utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "serial"
+    t.string "equipment_model"
+    t.text "notes"
+    t.string "firmware_version"
+    t.date "firmware_updated_on"
+    t.string "management_username"
+    t.text "management_secret_hint"
+    t.bigint "server_rack_id"
+    t.integer "rack_position_start"
+    t.integer "rack_units"
+    t.string "pdu_reference"
+    t.string "outlet_reference"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_network_switches_on_name", unique: true
+    t.index ["server_rack_id"], name: "index_network_switches_on_server_rack_id"
+  end
+
   create_table "server_racks", charset: "utf8", force: :cascade do |t|
     t.bigint "location_id", null: false
     t.string "name", null: false
@@ -160,6 +180,15 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_10_120005) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_settings_on_name", unique: true
+  end
+
+  create_table "switch_ports", charset: "utf8", force: :cascade do |t|
+    t.bigint "network_switch_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["network_switch_id", "name"], name: "index_switch_ports_on_network_switch_id_and_name", unique: true
+    t.index ["network_switch_id"], name: "index_switch_ports_on_network_switch_id"
   end
 
   create_table "users", charset: "utf8", force: :cascade do |t|
@@ -198,5 +227,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_10_120005) do
   add_foreign_key "hosts", "host_types"
   add_foreign_key "hosts", "infrastructures"
   add_foreign_key "hosts", "server_racks"
+  add_foreign_key "network_switches", "server_racks"
   add_foreign_key "server_racks", "locations"
+  add_foreign_key "switch_ports", "network_switches"
 end

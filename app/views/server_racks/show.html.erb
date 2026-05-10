@@ -34,7 +34,7 @@
     </dl>
   </div>
 
-  <%= render "server_racks/u_diagram", server_rack: @server_rack, highlight_host: @rack_diagram_highlight_host %>
+  <%= render "server_racks/u_diagram", server_rack: @server_rack, highlight_host: @rack_diagram_highlight_host, highlight_network_switch: @rack_diagram_highlight_network_switch %>
 
   <div class="mb-10 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
     <div class="border-b border-gray-100 bg-gradient-to-b from-gray-50 to-gray-100/80 px-5 py-4">
@@ -63,6 +63,39 @@
         </ul>
       <% else %>
         <p class="text-sm text-gray-500"><%= t("server_rack_no_hosts") %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mb-10 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div class="border-b border-gray-100 bg-gradient-to-b from-gray-50 to-gray-100/80 px-5 py-4 flex flex-wrap items-center justify-between gap-3">
+      <h2 class="text-base font-semibold text-gray-900"><%= t("server_rack_network_switches") %></h2>
+      <%= link_to t("add_network_switch"), new_network_switch_path(server_rack_id: @server_rack.id), class: "inline-flex items-center rounded-lg bg-white px-3 py-1.5 text-sm font-semibold text-indigo-700 shadow-sm ring-1 ring-inset ring-indigo-200 hover:bg-indigo-50" %>
+    </div>
+    <div class="p-5">
+      <% rack_switches = @server_rack.network_switches.sort_by(&:name) %>
+      <% if rack_switches.any? %>
+        <ul class="divide-y divide-gray-100">
+          <% rack_switches.each do |sw| %>
+            <li class="flex flex-wrap items-center justify-between gap-2 py-3 text-sm">
+              <%= link_to sw.name, sw, class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+              <span class="flex flex-wrap items-center gap-2 text-gray-600">
+                <% if (label = network_switch_rack_u_range_label(sw)) %>
+                  <%= link_to label, server_rack_path(@server_rack, highlight_network_switch_id: sw.id), class: "font-mono text-xs font-semibold text-amber-800 hover:text-amber-950 hover:underline", title: t("server_rack_u_diagram_highlight_network_switch_link_title") %>
+                <% end %>
+                <span>
+                  <%= sw.rack_units %> U
+                  <% if sw.rack_position_start.present? %>
+                    <span class="text-gray-500">· <%= t("network_switch_rack_position_start") %> <%= sw.rack_position_start %></span>
+                  <% end %>
+                </span>
+                <span class="text-gray-500"><%= sw.switch_ports.size %> <%= t("switch_ports") %></span>
+              </span>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-sm text-gray-500"><%= t("server_rack_no_network_switches") %></p>
       <% end %>
     </div>
   </div>

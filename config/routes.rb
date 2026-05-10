@@ -31,13 +31,16 @@ Rails.application.routes.draw do
   resources :infrastructures
   resources :locations
   resources :server_racks
+  resources :network_switches do
+    resources :switch_ports, only: [:new, :create, :edit, :update, :destroy]
+  end
   resources :environments
   resources :externalips
   get "etc/hosts", :controller => "etchosts", :action => "index"
   get "etc/hosts/download", :controller => "etchosts", :action => "download", :as => :download_etc_hosts
 
-  devise_for :admins
-  devise_for :users
+  devise_for :admins, skip: [:passwords]
+  devise_for :users, skip: [:passwords]
   resources :hosts
 
   delete "hosts/:id/:ip_id/destroy", :controller => "hosts", :action => "destroy_ip_from_host", :as => :destroy_ip_from_host

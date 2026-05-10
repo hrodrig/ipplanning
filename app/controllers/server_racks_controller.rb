@@ -18,6 +18,13 @@ class ServerRacksController < ApplicationController
         @rack_diagram_highlight_host = candidate
       end
     end
+    @rack_diagram_highlight_network_switch = nil
+    if params[:highlight_network_switch_id].present?
+      candidate = NetworkSwitch.find_by(id: params[:highlight_network_switch_id])
+      if candidate&.server_rack_id == @server_rack.id
+        @rack_diagram_highlight_network_switch = candidate
+      end
+    end
   end
 
   def new
@@ -57,6 +64,8 @@ class ServerRacksController < ApplicationController
 
   def destroy
     rack_name = @server_rack.name
+    host_count = @server_rack.hosts.count
+    switch_count = @server_rack.network_switches.count
     if @server_rack.destroy
       respond_to do |format|
         format.html { redirect_to server_racks_url, notice: t("server_rack_was_successfully_destroyed") }
@@ -64,7 +73,13 @@ class ServerRacksController < ApplicationController
       end
     else
       msg = @server_rack.errors.full_messages.to_sentence.presence
-      msg ||= t("server_rack_destroy_blocked_hosts", name: rack_name, count: @server_rack.hosts.count)
+      msg ||= if host_count.positive?
+        t("server_rack_destroy_blocked_hosts", name: rack_name, count: host_count)
+      elsif switch_count.positive?
+        t("server_rack_destroy_blocked_network_switches", name: rack_name, count: switch_count)
+      else
+        t("server_rack_cannot_be_destroyed", name: rack_name)
+      end
       respond_to do |format|
         format.html { redirect_to server_racks_url, alert: msg }
         format.json { render json: { errors: @server_rack.errors.full_messages }, status: :unprocessable_entity }
@@ -75,7 +90,7 @@ class ServerRacksController < ApplicationController
   private
 
   def set_server_rack
-    @server_rack = ServerRack.find(params[:id])
+    @server_rack = ServerRack.includes(network_switches: :switch_ports).find(params[:id])
   end
 
   def server_rack_params

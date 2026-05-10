@@ -257,6 +257,8 @@ es:
   adding_infrastructure: Agregando infraestructura
   adding_location: Agregando locación
   adding_server_rack: Agregando rack
+  adding_network_switch: Agregando switch de red
+  adding_switch_port: Agregando puerto
   adding_ip: Agregando ip
   additional_information: Información adicional
   are_you_sure_to_delete_this_ip: '¿Seguro que desea eliminar esta dirección ip? Tenga presente que la información de las direcciones ips debe ser consistente. Si Ud. elimina esta dirección ip, deberá de agregarla luego desde la cónsola.'
@@ -303,6 +305,8 @@ es:
   editing_infrastructure: Editing Infrastructure
   editing_location: Editando locación
   editing_server_rack: Editando rack
+  editing_network_switch: Editando switch de red
+  editing_switch_port: Editando puerto
   editing_ip: Editando ip
   editing_setting: Editando configuraciones
   editing_vlan: Editando vlan
@@ -390,25 +394,89 @@ es:
   server_rack_select_location: Elija locación…
   server_rack_u_height: Altura del rack (U)
   server_rack_u_diagram_title: Vista frontal del rack (unidades U)
-  server_rack_u_diagram_hint: "La numeración sigue EIA-310: U1 es la base del rack. La posición inicial es la U más baja que ocupa el host."
+  server_rack_u_diagram_hint: "La numeración sigue EIA-310: U1 es la base del rack. La posición inicial es la U más baja que ocupa el equipo (host o switch de red)."
   server_rack_u_diagram_legend_free: Libre
-  server_rack_u_diagram_legend_occupied: Ocupado
-  server_rack_u_diagram_legend_focus: Host seleccionado
+  server_rack_u_diagram_legend_host: Host
+  server_rack_u_diagram_legend_network_switch: Switch de red
+  server_rack_u_diagram_legend_focus: Resaltado
   server_rack_u_diagram_column_u: U
   server_rack_u_diagram_column_front: Frente
   server_rack_u_diagram_footer_u1: U1 — base del rack
   server_rack_u_diagram_highlight_link_title: Resaltar este host en el diagrama del rack
+  server_rack_u_diagram_highlight_network_switch_link_title: Resaltar este switch en el diagrama del rack
   server_rack_u_diagram_unplaced_warning:
     one: "Este host está en rack pero aún no tiene posición U válida: %{names}"
     other: "Estos hosts están en rack pero aún no tienen posición U válida: %{names}"
+  server_rack_u_diagram_unplaced_switch_warning:
+    one: "Este switch de red está en el rack pero aún no tiene posición U válida: %{names}"
+    other: "Estos switches de red están en el rack pero aún no tienen posición U válida: %{names}"
   server_rack_was_successfully_created: El rack fue creado con éxito.
   server_rack_was_successfully_destroyed: El rack fue eliminado con éxito.
   server_rack_destroy_blocked_hosts:
     one: "No se puede eliminar el rack %{name}: aún tiene un host asignado. Cambie el host a otro rack o despliegue e inténtelo de nuevo."
     other: "No se puede eliminar el rack %{name}: aún tiene %{count} hosts asignados. Reasigne o quite esos hosts primero."
+  server_rack_destroy_blocked_network_switches:
+    one: "No se puede eliminar el rack %{name}: aún tiene un switch de red asignado. Muévalo o elimínelo primero."
+    other: "No se puede eliminar el rack %{name}: aún tiene %{count} switches de red asignados. Muévalos o elimínelos primero."
+  server_rack_cannot_be_destroyed: "No se puede eliminar el rack %{name}. Quite los registros dependientes e inténtelo de nuevo."
   server_rack_was_successfully_updated: El rack fue actualizado con éxito.
   server_rack: Rack
   server_racks: Racks
+  server_rack_network_switches: Switches de red en este rack
+  server_rack_no_network_switches: Aún no hay switches de red vinculados a este rack.
+  add_network_switch: Agregar switch de red
+  add_switch_port: Agregar puerto
+  network_switch: Switch de red
+  network_switches: Switches de red
+  network_switch_name: Nombre
+  network_switch_serial: Número de serie
+  network_switch_equipment_model: Modelo del equipo
+  network_switch_server_rack: Rack
+  network_switch_no_rack: Sin rack
+  network_switch_rack_units: Altura en rack (U)
+  network_switch_rack_position_start: Posición en rack (U inicial)
+  network_switch_pdu_reference: Referencia PDU
+  network_switch_outlet_reference: Referencia de toma
+  network_switch_firmware_version: Versión de firmware
+  network_switch_firmware_updated_on: Firmware actualizado el
+  network_switch_management_username: Usuario de gestión
+  network_switch_management_secret_hint: Pista de credencial (vault / gestor de secretos)
+  network_switch_photos: Fotos
+  network_switch_port_count: Puertos a crear
+  network_switch_default_port_name_template: Patrón de nombre de puerto (opcional)
+  network_switch_port_count_invalid: "La cantidad de puertos debe estar entre 0 y %{max}."
+  network_switch_port_name_template_too_long: "Algún nombre generado superaría %{max} caracteres. Use un patrón más corto o menos puertos."
+  network_switch_port_name_template_duplicate: "El patrón y la cantidad generarían nombres duplicados. Ajuste el número inicial o la cantidad."
+  network_switch_was_successfully_created: El switch de red se creó correctamente.
+  network_switch_was_successfully_updated: El switch de red se actualizó correctamente.
+  network_switch_was_successfully_destroyed: El switch de red se eliminó correctamente.
+  network_switch_cannot_be_destroyed: "No se pudo eliminar %{name}."
+  switch_ports: Puertos
+  switch_port_name: Etiqueta del puerto
+  switch_port_was_successfully_created: El puerto se creó correctamente.
+  switch_port_was_successfully_updated: El puerto se actualizó correctamente.
+  switch_port_was_successfully_destroyed: El puerto se eliminó correctamente.
+  not_found_network_switches: Aún no hay switches de red. Añada uno para inventariarlos aparte de los hosts.
+  not_found_switch_ports: Este switch no tiene puertos. Añada uno o cree el switch de nuevo indicando cuántos puertos necesita.
+  not_found_network_switch_photos: Aún no hay fotos. Puede añadir imágenes al editar este switch.
+  placeholder_network_switch_name: Nombre corto o hostname del switch (único).
+  placeholder_network_switch_name_help: Los nombres de switch deben ser únicos en toda la aplicación.
+  placeholder_network_switch_port_count_help: "Al guardar se crean los puertos en bloque. Deje el patrón vacío para nombres 1…N, o defina una plantilla (véase abajo). Máximo %{max} puertos."
+  placeholder_network_switch_default_port_name_template: "ej. Gi1/0/1 o GigabitEthernet1/0/1"
+  placeholder_network_switch_default_port_name_template_help: "Si termina en dígitos (p. ej. Gi1/0/1), ese número es el primer puerto y se incrementa en cada uno; se reservan ceros a la izquierda (…09, …10). Sin dígitos finales (p. ej. Gi1/0/) se añade el sufijo 1, 2, 3…. Vacío = nombres solo numéricos 1…N."
+  placeholder_network_switch_serial: Serie del chasis (opcional).
+  placeholder_network_switch_equipment_model: "ej. Cisco Catalyst 2960"
+  placeholder_network_switch_equipment_model_help: Marca y modelo como en la chapa o ficha técnica. Es independiente del nombre del switch; no guarde contraseñas aquí.
+  placeholder_network_switch_server_rack_help: Si elige rack, la altura en U es obligatoria. La posición inicial es opcional.
+  placeholder_network_switch_rack_units: Altura del equipo en unidades U cuando está montado.
+  placeholder_network_switch_rack_position_start: Número de U más bajo ocupado (opcional).
+  placeholder_network_switch_pdu_reference: Nombre, etiqueta o circuito del PDU (opcional).
+  placeholder_network_switch_outlet_reference: Identificador de toma/enchufe (opcional).
+  placeholder_network_switch_management_secret_hint: p. ej. ruta en vault, ticket o nota del equipo—nunca contraseñas en claro.
+  placeholder_network_switch_management_secret_hint_help: Guarde credenciales reales en su vault; aquí solo una referencia.
+  placeholder_network_switch_photos_help: Fotos opcionales del panel frontal, etiquetas o cableado.
+  placeholder_switch_port_name: Nombre o etiqueta del puerto (único en este switch).
+  placeholder_switch_port_name_help: Ejemplos Gi1/0/1, eth0 o posición en patch panel.
   ip_address_added_to_host: La dirección ip fue añadida al host con éxito.
   ip_address_created: La dirección ip fue creada con éxito.
   ip_address_destroyed: La dirección ip fue eliminada con éxito.
@@ -442,6 +510,7 @@ es:
   new_infrastructure: Agregar Infraestructura
   new_location: Agregar locación
   new_server_rack: Agregar rack
+  new_network_switch: Agregar switch de red
   new_sesion: Iniciar sesión
   not_assigned_ips: 'No existen direcciones ips en asignadas !'
   not_found_environments: 'No existen ambientes. Por favor, cree al menos uno.'
@@ -593,6 +662,16 @@ es:
       tips:
         - El nombre del rack es único por ubicación, no a nivel global.
         - En la ficha del rack verá qué hosts están montados allí.
+        - Los switches de red pueden enlazarse a un rack sin modelarse como hosts.
+    network_switches:
+      title: Switches de red
+      body: |
+        Los switches se gestionan con un registro propio—no como hosts—para guardar serie, firmware, posición en rack, energía y etiquetas de puertos.
+        Al crear elija cuántos puertos generar y un patrón de nombre opcional (p. ej. Gi1/0/1) para alinearlo con la CLI del equipo; si lo deja vacío, los nombres serán 1, 2, 3….
+      tips:
+        - El nombre del switch es único en toda la aplicación; use la misma etiqueta que en diagramas o CMDB.
+        - En la pista de credencial ponga rutas de vault o tickets, nunca contraseñas en claro.
+        - No puede eliminar un rack mientras un switch siga asignado a él.
     environments:
       title: Ambientes
       body: |

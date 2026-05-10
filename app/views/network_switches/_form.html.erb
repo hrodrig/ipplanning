@@ -1,0 +1,151 @@
+<%= form_with(model: network_switch, local: true, class: "space-y-6", html: { multipart: true, autocomplete: "off" }) do |form| %>
+  <% if network_switch.errors.any? %>
+    <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800">
+            <%= pluralize(network_switch.errors.count, "error") %> <%= t("prohibited_this_information_from_being_saved") %>:
+          </h3>
+          <div class="mt-2 text-sm text-red-700">
+            <ul class="list-disc pl-5 space-y-1">
+              <% network_switch.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, t("network_switch_name"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_field :name, class: form_control_class, placeholder: t("placeholder_network_switch_name"), autocomplete: "off" %>
+    </div>
+    <p class="mt-2 text-sm text-gray-500"><%= t("placeholder_network_switch_name_help") %></p>
+  </div>
+
+  <div>
+    <%= form.label :equipment_model, t("network_switch_equipment_model"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_field :equipment_model, class: form_control_class, placeholder: t("placeholder_network_switch_equipment_model"), autocomplete: "off" %>
+    </div>
+    <p class="mt-2 text-sm text-gray-500"><%= t("placeholder_network_switch_equipment_model_help") %></p>
+  </div>
+
+  <% if local_assigns.fetch(:show_port_count, false) %>
+    <div>
+      <%= label_tag "network_switch_port_count", t("network_switch_port_count"), class: form_label_class %>
+      <div class="mt-1">
+        <%= number_field_tag "network_switch[port_count]", params.dig(:network_switch, :port_count).presence || 24, min: 0, max: NetworkSwitch::MAX_DEFAULT_PORTS, step: 1, class: form_control_class, id: "network_switch_port_count" %>
+      </div>
+      <p class="mt-2 text-sm text-gray-500"><%= t("placeholder_network_switch_port_count_help", max: NetworkSwitch::MAX_DEFAULT_PORTS) %></p>
+    </div>
+
+    <div>
+      <%= label_tag "network_switch_default_port_name_template", t("network_switch_default_port_name_template"), class: form_label_class %>
+      <div class="mt-1">
+        <%= text_field_tag "network_switch[default_port_name_template]", params.dig(:network_switch, :default_port_name_template), class: form_control_class, id: "network_switch_default_port_name_template", placeholder: t("placeholder_network_switch_default_port_name_template"), autocomplete: "off" %>
+      </div>
+      <p class="mt-2 text-sm text-gray-500"><%= t("placeholder_network_switch_default_port_name_template_help") %></p>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :serial, t("network_switch_serial"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_field :serial, class: form_control_class, placeholder: t("placeholder_network_switch_serial"), autocomplete: "off" %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :server_rack_id, t("network_switch_server_rack"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.collection_select :server_rack_id, ServerRack.joins(:location).includes(:location).order("locations.name", "server_racks.name"), :id, ->(r) { "#{r.location.name} — #{r.name}" }, { include_blank: t("network_switch_no_rack") }, { class: form_select_class } %>
+    </div>
+    <p class="mt-2 text-sm text-gray-500"><%= t("placeholder_network_switch_server_rack_help") %></p>
+  </div>
+
+  <div>
+    <%= form.label :rack_units, t("network_switch_rack_units"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.number_field :rack_units, class: form_control_class, min: 1, step: 1, placeholder: t("placeholder_network_switch_rack_units") %>
+    </div>
+    <p class="mt-2 text-sm text-gray-500"><%= t("placeholder_network_switch_rack_units_help") %></p>
+  </div>
+
+  <div>
+    <%= form.label :rack_position_start, t("network_switch_rack_position_start"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.number_field :rack_position_start, class: form_control_class, min: 1, step: 1, placeholder: t("placeholder_network_switch_rack_position_start") %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :pdu_reference, t("network_switch_pdu_reference"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_field :pdu_reference, class: form_control_class, placeholder: t("placeholder_network_switch_pdu_reference"), autocomplete: "off" %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :outlet_reference, t("network_switch_outlet_reference"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_field :outlet_reference, class: form_control_class, placeholder: t("placeholder_network_switch_outlet_reference"), autocomplete: "off" %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :firmware_version, t("network_switch_firmware_version"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_field :firmware_version, class: form_control_class, autocomplete: "off" %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :firmware_updated_on, t("network_switch_firmware_updated_on"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.date_field :firmware_updated_on, class: form_control_class %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :management_username, t("network_switch_management_username"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_field :management_username, class: form_control_class, autocomplete: "off" %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :management_secret_hint, t("network_switch_management_secret_hint"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_area :management_secret_hint, rows: 2, class: form_control_class, placeholder: t("placeholder_network_switch_management_secret_hint"), autocomplete: "off" %>
+    </div>
+    <p class="mt-2 text-sm text-gray-500"><%= t("placeholder_network_switch_management_secret_hint_help") %></p>
+  </div>
+
+  <div>
+    <%= form.label :notes, t("notes"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_area :notes, rows: 3, class: form_control_class, autocomplete: "off" %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :photos, t("network_switch_photos"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.file_field :photos, multiple: true, accept: "image/*", class: "#{form_control_class} file:mr-4 file:rounded-md file:border-0 file:bg-indigo-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-indigo-700 hover:file:bg-indigo-100" %>
+    </div>
+    <p class="mt-2 text-sm text-gray-500"><%= t("placeholder_network_switch_photos_help") %></p>
+  </div>
+
+  <div class="flex items-center justify-end mt-4">
+    <%= form.submit t("ok"), class: "inline-flex items-center rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+  </div>
+<% end %>
