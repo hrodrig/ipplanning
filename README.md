@@ -4,7 +4,7 @@
   <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80" alt="IPPLANNING Hero Image" width="100%" style="border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
 </p>
 
-[![Version](https://img.shields.io/badge/version-0.8.0-blue.svg)](https://github.com/hrodrig/ipplanning/releases)
+[![Version](https://img.shields.io/badge/version-0.8.2-blue.svg)](https://github.com/hrodrig/ipplanning/releases)
 [![Release](https://img.shields.io/github/v/release/hrodrig/ipplanning?sort=semver)](https://github.com/hrodrig/ipplanning/releases)
 [![License](https://img.shields.io/github/license/hrodrig/ipplanning)](https://github.com/hrodrig/ipplanning/blob/main/LICENSE)
 ![Rails Version](https://img.shields.io/badge/Rails-8.0-red)
@@ -46,6 +46,8 @@ Use **Ruby 3.3.0** (see [`.ruby-version`](.ruby-version)) and MySQL. For RVM gem
 
 The **version badge** above tracks the [`VERSION`](VERSION) file; keep them in sync when you cut a release.
 
+**0.8.2** adds a **rack front (U) diagram** on server rack and rack-mount host pages: EIA-310 numbering (U1 at bottom), green slots for occupied Us, and a highlighted span for the host you are viewing or select via `highlight_host_id`.
+
 ---
 
 ## 📋 Table of Contents
@@ -70,6 +72,7 @@ The **version badge** above tracks the [`VERSION`](VERSION) file; keep them in s
 - **Automated `/etc/hosts` Generation:** Generate synchronized host files for Unix-like servers, essential for environments where DNS resolution is a bottleneck.
 - **Modern UI:** Clean and responsive interface built with Tailwind CSS.
 - **External IP Tracking:** Manage public or external IPs associated with your internal hosts.
+- **Rack visualization:** See each rack as a vertical **U** layout with occupancy and optional focus on a specific host.
 
 [↑ Back to Top](#-table-of-contents)
 

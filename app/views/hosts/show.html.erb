@@ -31,7 +31,7 @@
             <div class="px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
               <dt class="text-sm font-medium text-gray-700"><%= t("host_server_rack") %></dt>
               <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                <%= link_to "#{@host.server_rack.name} (#{@host.server_rack.location.name})", @host.server_rack, class: "text-indigo-600 hover:text-indigo-500" %>
+                <%= link_to "#{@host.server_rack.name} (#{@host.server_rack.location.name})", server_rack_path(@host.server_rack, highlight_host_id: @host.id), class: "text-indigo-600 hover:text-indigo-500" %>
               </dd>
             </div>
             <div class="px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
@@ -46,6 +46,10 @@
           <% end %>
         </dl>
       </div>
+
+      <% if @host.rack_mount? && @host.server_rack.present? %>
+        <%= render "server_racks/u_diagram", server_rack: @host.server_rack, highlight_host: @host %>
+      <% end %>
 
       <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
         <div class="border-b border-gray-100 bg-gradient-to-b from-gray-50 to-gray-100/80 px-5 py-4">

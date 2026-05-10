@@ -11,6 +11,13 @@ class ServerRacksController < ApplicationController
 
   def show
     @page_title = (Setting.find_by(name: "WebsiteName")&.value || "IP Planning") + " - " + I18n.t("server_racks") + " - " + @server_rack.name
+    @rack_diagram_highlight_host = nil
+    if params[:highlight_host_id].present?
+      candidate = Host.find_by(id: params[:highlight_host_id])
+      if candidate&.server_rack_id == @server_rack.id && candidate.rack_mount?
+        @rack_diagram_highlight_host = candidate
+      end
+    end
   end
 
   def new

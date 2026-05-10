@@ -389,6 +389,18 @@ es:
   server_rack_photos: Fotos
   server_rack_select_location: Elija locación…
   server_rack_u_height: Altura del rack (U)
+  server_rack_u_diagram_title: Vista frontal del rack (unidades U)
+  server_rack_u_diagram_hint: "La numeración sigue EIA-310: U1 es la base del rack. La posición inicial es la U más baja que ocupa el host."
+  server_rack_u_diagram_legend_free: Libre
+  server_rack_u_diagram_legend_occupied: Ocupado
+  server_rack_u_diagram_legend_focus: Host seleccionado
+  server_rack_u_diagram_column_u: U
+  server_rack_u_diagram_column_front: Frente
+  server_rack_u_diagram_footer_u1: U1 — base del rack
+  server_rack_u_diagram_highlight_link_title: Resaltar este host en el diagrama del rack
+  server_rack_u_diagram_unplaced_warning:
+    one: "Este host está en rack pero aún no tiene posición U válida: %{names}"
+    other: "Estos hosts están en rack pero aún no tienen posición U válida: %{names}"
   server_rack_was_successfully_created: El rack fue creado con éxito.
   server_rack_was_successfully_destroyed: El rack fue eliminado con éxito.
   server_rack_was_successfully_updated: El rack fue actualizado con éxito.

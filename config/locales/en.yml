@@ -385,6 +385,18 @@ en:
   server_rack_photos: Photos
   server_rack_select_location: Select location…
   server_rack_u_height: Rack height (U)
+  server_rack_u_diagram_title: Rack front (U layout)
+  server_rack_u_diagram_hint: "U numbers follow EIA-310: U1 is the bottom of the rack. Position start is the lowest U occupied by the host."
+  server_rack_u_diagram_legend_free: Free
+  server_rack_u_diagram_legend_occupied: Occupied
+  server_rack_u_diagram_legend_focus: Selected host
+  server_rack_u_diagram_column_u: U
+  server_rack_u_diagram_column_front: Front
+  server_rack_u_diagram_footer_u1: U1 — bottom of rack
+  server_rack_u_diagram_highlight_link_title: Show this host in the rack diagram
+  server_rack_u_diagram_unplaced_warning:
+    one: "This host is rack-mounted but has no valid U placement yet: %{names}"
+    other: "These hosts are rack-mounted but have no valid U placement yet: %{names}"
   server_rack_was_successfully_created: Server rack was successfully created.
   server_rack_was_successfully_destroyed: Server rack was successfully destroyed.
   server_rack_was_successfully_updated: Server rack was successfully updated.

@@ -1,4 +1,5 @@
 module ApplicationHelper
+  include RackUDiagramHelper
   # Unified admin form controls (Tailwind) — use on text_field, text_area, select, number_field.
   FORM_CONTROL_CLASS = [
     "block w-full rounded-lg border border-gray-300 bg-white px-3 py-2",

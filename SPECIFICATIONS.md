@@ -121,6 +121,14 @@ Authenticated **IPs** index and **home** (`welcome#index`) expose a **search** f
 - **Guardrail:** Outside Rails `local?` environments, tasks require **`DEMO_RESET_ALLOWED=1`**. Optional env: `DEMO_ADMIN_EMAIL`, `DEMO_ADMIN_PASSWORD`.
 - **Operations:** Cron-friendly; README documents a **2-hour** example schedule.
 
+### 3.9 Server rack front (U) diagram
+- **Purpose:** Visualize rack capacity and placement of **rack-mount** hosts without external DCIM tooling.
+- **Layout:** HTML/CSS (Tailwind): one row per rack unit, **highest U at the top** down to **U1 at the bottom** (EIA-310: U1 is the bottom of the rack).
+- **Placement rule:** `Host#rack_position_start` is the **lowest U** occupied; `rack_units` consecutive Us count upward (e.g. start 21, units 2 → U21–U22).
+- **Colors:** Neutral = free; **green** = any occupied U; **amber / strong border** = **focused** host (`highlight_host` or query `highlight_host_id` on the rack show URL, validated against that rack).
+- **Surfaces:** `server_racks#show` embeds the diagram; `hosts#show` embeds it when `deployment_form` is rack mount and `server_rack` is set, passing the current host as focus. Host list entries can link a **U range** label back to the rack with focus.
+- **Helpers / partial:** `RackUDiagramHelper` (`rack_u_diagram_rows`, `host_rack_u_range_label`) and `server_racks/_u_diagram.html.erb`. Hosts missing valid U data trigger a warning banner but still appear in the textual list.
+
 ---
 
 ## 4. Technical Workflows
@@ -165,6 +173,7 @@ sequenceDiagram
 - **Feedback:** Standardized Tailwind-styled alerts for notices and errors.
 - **IP-heavy views:** Chunked VLAN tables (§3.5), client-side filter (`ip-index-filter`, §3.6), and per-table column sort (`ip-table-sort`, §3.7) on the admin IPs index, home VLAN tables, and external IP tables where implemented.
 - **Operator guide:** Collapsible IP blocks and the search box are also summarized under `section_intro.ips` tips in locale files (`en.yml` / `es.yml`).
+- **Rack views:** Front-of-rack **U** diagram per §3.9.
 
 ---
 
