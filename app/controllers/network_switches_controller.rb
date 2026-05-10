@@ -11,7 +11,9 @@ class NetworkSwitchesController < ApplicationController
 
   def show
     @page_title = (Setting.find_by(name: "WebsiteName")&.value || "IP Planning") + " - " + I18n.t("network_switches") + " - " + @network_switch.name
-    @switch_ports = @network_switch.switch_ports_ordered_for_display
+    @switch_ports = SwitchPort.sort_ports_for_display(
+      @network_switch.switch_ports.includes(patch_connection: { host_port: :host })
+    )
   end
 
   def new

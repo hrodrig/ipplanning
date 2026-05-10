@@ -39,9 +39,12 @@ Rails.application.routes.draw do
   get "etc/hosts", :controller => "etchosts", :action => "index"
   get "etc/hosts/download", :controller => "etchosts", :action => "download", :as => :download_etc_hosts
 
-  devise_for :admins, skip: [:passwords]
-  devise_for :users, skip: [:passwords]
-  resources :hosts
+  devise_for :admins, skip: [:passwords], controllers: { sessions: "admins/sessions" }
+  devise_for :users, skip: [:passwords], controllers: { sessions: "users/sessions" }
+  resources :hosts do
+    resources :host_ports, except: %i[index show]
+    resources :patch_connections, only: %i[new create edit update destroy]
+  end
 
   delete "hosts/:id/:ip_id/destroy", :controller => "hosts", :action => "destroy_ip_from_host", :as => :destroy_ip_from_host
   get "hosts/:id/add_ip", :controller => "hosts", :action => "add_ip_to_host", :as => :add_ip_to_host

@@ -1,0 +1,7 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  host: one
+  name: eth0
+  port_kind: physical
+  mac_address: "00:11:22:33:44:55"

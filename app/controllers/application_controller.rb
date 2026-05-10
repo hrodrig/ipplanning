@@ -23,7 +23,8 @@
 #
 # ----------------------------------------------------------------------------
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+  # prepend: true keeps CSRF verification compatible with Devise (see Devise / Hotwire notes).
+  protect_from_forgery with: :exception, prepend: true
 
   before_action :set_locale
   before_action :authenticate_with_basic_auth

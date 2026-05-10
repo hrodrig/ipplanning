@@ -1,0 +1,48 @@
+<%= form_with(model: [@host, host_port], local: true, class: "space-y-6") do |form| %>
+  <% if host_port.errors.any? %>
+    <div class="border-l-4 border-red-400 bg-red-50 p-4">
+      <h3 class="text-sm font-medium text-red-800">
+        <%= pluralize(host_port.errors.count, "error") %> <%= t("prohibited_this_information_from_being_saved") %>
+      </h3>
+      <ul class="mt-2 list-disc pl-5 text-sm text-red-700">
+        <% host_port.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, t("host_port_name"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_field :name, class: form_control_class, placeholder: t("placeholder_host_port_name") %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :port_kind, t("host_port_kind"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.select :port_kind, HostPort::PORT_KINDS.map { |k| [t("host_port_kind_#{k}"), k] }, {}, class: form_control_class %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :mac_address, t("host_port_mac_address"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_field :mac_address, class: form_control_class, placeholder: "AA:BB:CC:DD:EE:FF" %>
+    </div>
+    <p class="mt-1 text-xs text-gray-500"><%= t("host_port_mac_hint") %></p>
+  </div>
+
+  <div>
+    <%= form.label :notes, t("notes"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_area :notes, rows: 3, class: form_control_class %>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-3 pt-2">
+    <%= form.submit t("save"), class: "inline-flex items-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" %>
+    <%= link_to t("cancel"), @host, class: "inline-flex items-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+  </div>
+<% end %>

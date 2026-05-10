@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_10_120006) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_10_120007) do
   create_table "active_storage_attachments", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -68,6 +68,18 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_10_120006) do
     t.string "short_hostname"
     t.index ["address", "hostname"], name: "index_externalips_on_address_and_hostname", unique: true
     t.index ["hostname"], name: "index_externalips_on_hostname"
+  end
+
+  create_table "host_ports", charset: "utf8", force: :cascade do |t|
+    t.bigint "host_id", null: false
+    t.string "name", null: false
+    t.string "port_kind", default: "physical", null: false
+    t.string "mac_address"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["host_id", "name"], name: "index_host_ports_on_host_id_and_name", unique: true
+    t.index ["host_id"], name: "index_host_ports_on_host_id"
   end
 
   create_table "host_types", charset: "utf8", force: :cascade do |t|
@@ -162,6 +174,19 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_10_120006) do
     t.index ["server_rack_id"], name: "index_network_switches_on_server_rack_id"
   end
 
+  create_table "patch_connections", charset: "utf8", force: :cascade do |t|
+    t.bigint "host_port_id", null: false
+    t.bigint "switch_port_id", null: false
+    t.string "label"
+    t.string "cable_color"
+    t.date "installed_on"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["host_port_id"], name: "index_patch_connections_on_host_port_id", unique: true
+    t.index ["switch_port_id"], name: "index_patch_connections_on_switch_port_id", unique: true
+  end
+
   create_table "server_racks", charset: "utf8", force: :cascade do |t|
     t.bigint "location_id", null: false
     t.string "name", null: false
@@ -223,11 +248,14 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_10_120006) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "host_ports", "hosts"
   add_foreign_key "hosts", "environments"
   add_foreign_key "hosts", "host_types"
   add_foreign_key "hosts", "infrastructures"
   add_foreign_key "hosts", "server_racks"
   add_foreign_key "network_switches", "server_racks"
+  add_foreign_key "patch_connections", "host_ports"
+  add_foreign_key "patch_connections", "switch_ports"
   add_foreign_key "server_racks", "locations"
   add_foreign_key "switch_ports", "network_switches"
 end

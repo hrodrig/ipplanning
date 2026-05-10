@@ -54,9 +54,21 @@ module Demo
       end
 
       Ip.delete_all
+      if conn.table_exists?("patch_connections")
+        PatchConnection.delete_all
+      end
+      if conn.table_exists?("host_ports")
+        HostPort.delete_all
+      end
       Host.delete_all
       Externalip.delete_all
       Vlan.delete_all
+      if conn.table_exists?("switch_ports")
+        SwitchPort.delete_all
+      end
+      if conn.table_exists?("network_switches")
+        NetworkSwitch.delete_all
+      end
       ServerRack.delete_all
       Location.delete_all
       Environment.delete_all
@@ -81,9 +93,10 @@ module Demo
       generate_all_ips!(vlans)
       seed_special_ips!(vlans, domain)
       seed_hosts!(vlans, taxonomy)
+      seed_network_demo!(taxonomy)
       seed_externalips!(domain)
 
-      log "Populate done (#{Ip.count} IPs, #{Host.count} hosts, #{Vlan.count} VLANs)."
+      log "Populate done (#{Ip.count} IPs, #{Host.count} hosts, #{Vlan.count} VLANs#{demo_network_suffix})."
     end
 
     private
@@ -293,6 +306,53 @@ module Demo
         total_vcpus: 2
       )
       lb.ips << large.ips.find_by!(address: "10.20.0.20")
+    end
+
+    # Access switch in the demo rack + one patched NIC on demo-db-01 (host ports / patch UI).
+    def seed_network_demo!(tax)
+      conn = ActiveRecord::Base.connection
+      unless conn.table_exists?("network_switches") &&
+          conn.table_exists?("switch_ports") &&
+          conn.table_exists?("host_ports") &&
+          conn.table_exists?("patch_connections")
+        return
+      end
+
+      sw = NetworkSwitch.create!(
+        name: "demo-sw-access-01",
+        server_rack: tax[:rack],
+        rack_units: 1,
+        rack_position_start: 5,
+        equipment_model: "Demo access",
+        serial: "DEMO-SW-001",
+        notes: "Demo switch for host ports and patch cables"
+      )
+      sw.create_default_ports!(8, name_template: "Gi1/0/")
+
+      db_host = Host.find_by!(name: "demo-db-01")
+      hp = HostPort.create!(
+        host: db_host,
+        name: "eno1",
+        port_kind: "physical",
+        mac_address: "AA:BB:CC:DD:EE:01",
+        notes: "Demo NIC patched to access switch"
+      )
+      first_port = sw.switch_ports.order(:name).first
+      PatchConnection.create!(
+        host_port: hp,
+        switch_port: first_port,
+        label: "PP-demo / SW Gi1/0/1",
+        cable_color: "yellow",
+        installed_on: Date.current,
+        notes: "Demo patch cable"
+      )
+    end
+
+    def demo_network_suffix
+      conn = ActiveRecord::Base.connection
+      return "" unless conn.table_exists?("network_switches")
+
+      ", #{NetworkSwitch.count} network switches"
     end
 
     def seed_externalips!(domain)

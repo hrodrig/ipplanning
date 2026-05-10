@@ -29,6 +29,7 @@ en:
     errors:
       messages:
         record_invalid: "Validation failed: %{errors}"
+        invalid_mac: "must look like AA:BB:CC:DD:EE:FF"
         restrict_dependent_destroy:
           has_one: "Cannot delete record because a dependent %{record} exists"
           has_many: "Cannot delete record because dependent %{record} exist"
@@ -341,6 +342,41 @@ en:
   host_type: Host type
   host_types: Host types
   host_updated: Host was successfully updated.
+  add_host_port: Add host port
+  adding_host_port: Add host port
+  adding_patch_connection: Add patch cable
+  connect_patch: Connect patch
+  editing_host_port: Edit host port
+  editing_patch_connection: Edit patch cable
+  host_port: Host port
+  host_port_created: Host port was successfully created.
+  host_port_destroyed: Host port was successfully destroyed.
+  host_port_kind: Port type
+  host_port_kind_physical: Physical
+  host_port_kind_logical: Logical
+  host_port_mac_address: MAC address
+  host_port_mac_hint: Optional. Colon-separated hex pairs (Ethernet style).
+  host_port_name: Port name
+  host_ports_empty_hint: No ports yet. Add a physical or logical port, then connect it to a switch port with a patch cable.
+  host_ports_required_for_patch: Add at least one host port before creating a patch connection.
+  host_ports_section: Host ports & patch
+  host_port_no_patch: No patch cable to a switch yet.
+  host_port_updated: Host port was successfully updated.
+  no_switch_ports_available_for_patch: No free switch ports are available. Add ports on a network switch or remove an existing patch.
+  patch_connection_created: Patch connection was successfully created.
+  patch_connection_destroyed: Patch connection was successfully removed.
+  patch_connection_installed_on: Installed on
+  patch_connection_cable_color: Cable color
+  patch_connection_label: Label / reference
+  patch_connection_select_switch_port: Select switch port…
+  patch_connection_updated: Patch connection was successfully updated.
+  patch_to_switch: Patch to
+  placeholder_host_port_name: e.g. eth0, Gi1, vNIC-1
+  remove_patch: Remove patch
+  switch_port_free: Free (no patch)
+  switch_port_patched_to: Patched to host
+  edit_patch: Edit patch
+  add_patch_connection: Add patch cable
   host_deployment_form: Deployment
   host_deployment_cloud_vm: Cloud / VM (no rack)
   host_deployment_rack_mount: Rack mount
@@ -448,6 +484,7 @@ en:
   network_switch_was_successfully_destroyed: Network switch was successfully destroyed.
   network_switch_cannot_be_destroyed: "Could not delete %{name}."
   switch_ports: Ports
+  switch_port: Switch port
   switch_port_name: Port label
   switch_port_was_successfully_created: Port was successfully created.
   switch_port_was_successfully_updated: Port was successfully updated.

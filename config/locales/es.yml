@@ -29,6 +29,7 @@ es:
     errors:
       messages:
         record_invalid: "La validación falló: %{errors}"
+        invalid_mac: "debe tener el formato AA:BB:CC:DD:EE:FF"
         restrict_dependent_destroy:
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
@@ -345,6 +346,41 @@ es:
   host_type: Tipo de host
   host_types: Tipos de hosts
   host_updated: El host fue actualizado con éxito.
+  add_host_port: Añadir puerto de host
+  adding_host_port: Añadir puerto de host
+  adding_patch_connection: Añadir cable de parcheo
+  connect_patch: Conectar parcheo
+  editing_host_port: Editar puerto de host
+  editing_patch_connection: Editar cable de parcheo
+  host_port: Puerto de host
+  host_port_created: El puerto de host se creó correctamente.
+  host_port_destroyed: El puerto de host se eliminó correctamente.
+  host_port_kind: Tipo de puerto
+  host_port_kind_physical: Físico
+  host_port_kind_logical: Lógico
+  host_port_mac_address: Dirección MAC
+  host_port_mac_hint: Opcional. Pares hexadecimales separados por dos puntos (estilo Ethernet).
+  host_port_name: Nombre del puerto
+  host_ports_empty_hint: Aún no hay puertos. Añada un puerto físico o lógico y luego enlace un puerto del switch con un cable de parcheo.
+  host_ports_required_for_patch: Añada al menos un puerto de host antes de crear un parcheo.
+  host_ports_section: Puertos del host y parcheo
+  host_port_no_patch: Sin cable de parcheo hacia un switch.
+  host_port_updated: El puerto de host se actualizó correctamente.
+  no_switch_ports_available_for_patch: No hay puertos libres en los switches. Añada puertos en un switch de red o elimine un parcheo existente.
+  patch_connection_created: El parcheo se creó correctamente.
+  patch_connection_destroyed: El parcheo se eliminó correctamente.
+  patch_connection_installed_on: Instalado el
+  patch_connection_cable_color: Color del cable
+  patch_connection_label: Etiqueta / referencia
+  patch_connection_select_switch_port: Elija puerto del switch…
+  patch_connection_updated: El parcheo se actualizó correctamente.
+  patch_to_switch: Parche a
+  placeholder_host_port_name: ej. eth0, Gi1, vNIC-1
+  remove_patch: Quitar parcheo
+  switch_port_free: Libre (sin parcheo)
+  switch_port_patched_to: Parcheado al host
+  edit_patch: Editar parcheo
+  add_patch_connection: Añadir cable de parcheo
   host_deployment_form: Despliegue
   host_deployment_cloud_vm: Nube / VM (sin rack)
   host_deployment_rack_mount: Montaje en rack
@@ -452,6 +488,7 @@ es:
   network_switch_was_successfully_destroyed: El switch de red se eliminó correctamente.
   network_switch_cannot_be_destroyed: "No se pudo eliminar %{name}."
   switch_ports: Puertos
+  switch_port: Puerto del switch
   switch_port_name: Etiqueta del puerto
   switch_port_was_successfully_created: El puerto se creó correctamente.
   switch_port_was_successfully_updated: El puerto se actualizó correctamente.

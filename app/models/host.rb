@@ -34,6 +34,7 @@ class Host < ApplicationRecord
   belongs_to :environment
   belongs_to :host_type
   belongs_to :server_rack, optional: true
+  has_many :host_ports, dependent: :destroy
 
   after_initialize -> { self.deployment_form ||= "other" }, if: :new_record?
 

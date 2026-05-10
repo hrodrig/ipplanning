@@ -39,6 +39,7 @@ class HostsController < ApplicationController
   # GET /hosts/1.json
   def show
     @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('hosts') + ' - ' + @host.name
+    @host_ports = @host.host_ports.includes(patch_connection: { switch_port: :network_switch }).order(:name)
   end
 
   # GET /hosts/new

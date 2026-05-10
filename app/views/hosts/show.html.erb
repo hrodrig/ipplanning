@@ -88,6 +88,58 @@
           </table>
         </div>
       </div>
+
+      <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 bg-gradient-to-b from-gray-50 to-gray-100/80 px-5 py-4">
+          <h2 class="text-base font-semibold text-gray-900"><%= t("host_ports_section") %></h2>
+          <div class="flex flex-wrap items-center gap-2">
+            <%= link_to t("add_host_port"), new_host_host_port_path(@host), class: "inline-flex items-center rounded-lg bg-white px-3 py-1.5 text-sm font-semibold text-indigo-700 shadow-sm ring-1 ring-inset ring-indigo-200 hover:bg-indigo-50" %>
+            <% if @host_ports.any? %>
+              <%= link_to t("add_patch_connection"), new_host_patch_connection_path(@host), class: "inline-flex items-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" %>
+            <% end %>
+          </div>
+        </div>
+        <div class="p-5">
+          <% if @host_ports.any? %>
+            <ul class="divide-y divide-gray-100">
+              <% @host_ports.each do |port| %>
+                <li class="flex flex-col gap-2 py-4 text-sm sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+                  <div>
+                    <span class="font-mono font-medium text-gray-900"><%= port.name %></span>
+                    <span class="ml-2 text-gray-600"><%= port.port_kind_label %></span>
+                    <% if port.mac_address.present? %>
+                      <span class="mt-1 block font-mono text-xs text-gray-500 sm:mt-0 sm:ml-2 sm:inline"><%= port.mac_address %></span>
+                    <% end %>
+                    <% if port.patch_connection.present? %>
+                      <p class="mt-1 text-gray-700">
+                        <span class="text-gray-500"><%= t("patch_to_switch") %>:</span>
+                        <%= link_to port.patch_connection.switch_end_label, network_switch_path(port.patch_connection.switch_port.network_switch), class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+                      </p>
+                    <% else %>
+                      <p class="mt-1 text-xs text-amber-700"><%= t("host_port_no_patch") %></p>
+                    <% end %>
+                    <% if port.notes.present? %>
+                      <p class="mt-1 text-xs text-gray-600"><%= port.notes %></p>
+                    <% end %>
+                  </div>
+                  <span class="flex shrink-0 flex-wrap items-center gap-2">
+                    <% if port.patch_connection.present? %>
+                      <%= link_to t("edit_patch"), edit_host_patch_connection_path(@host, port.patch_connection), class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+                      <%= link_to t("remove_patch"), host_patch_connection_path(@host, port.patch_connection), data: { turbo_method: :delete, turbo_confirm: t("are_you_sure") }, class: "font-medium text-red-600 hover:text-red-500" %>
+                    <% else %>
+                      <%= link_to t("connect_patch"), new_host_patch_connection_path(@host, host_port_id: port.id), class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+                    <% end %>
+                    <%= link_to t("edit"), edit_host_host_port_path(@host, port), class: "font-medium text-gray-600 hover:text-gray-500" %>
+                    <%= link_to t("destroy"), host_host_port_path(@host, port), data: { turbo_method: :delete, turbo_confirm: t("are_you_sure") }, class: "font-medium text-red-600 hover:text-red-500" %>
+                  </span>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="text-sm text-gray-500"><%= t("host_ports_empty_hint") %></p>
+          <% end %>
+        </div>
+      </div>
     </div>
 
     <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">

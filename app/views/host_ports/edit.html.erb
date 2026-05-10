@@ -1,0 +1,9 @@
+<%= render layout: "common/admin_resource_form", locals: {
+  heading: t("editing_host_port"),
+  index_path: host_path(@host),
+  index_label: @host.name,
+  current_label: @host_port.name,
+  back_path: host_path(@host)
+} do %>
+  <%= render "form", host_port: @host_port %>
+<% end %>

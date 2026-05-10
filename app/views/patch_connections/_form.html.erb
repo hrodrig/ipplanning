@@ -1,0 +1,67 @@
+<%= form_with(model: [@host, patch_connection], local: true, class: "space-y-6") do |form| %>
+  <% if patch_connection.errors.any? %>
+    <div class="border-l-4 border-red-400 bg-red-50 p-4">
+      <h3 class="text-sm font-medium text-red-800">
+        <%= pluralize(patch_connection.errors.count, "error") %> <%= t("prohibited_this_information_from_being_saved") %>
+      </h3>
+      <ul class="mt-2 list-disc pl-5 text-sm text-red-700">
+        <% patch_connection.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :host_port_id, t("host_port"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.collection_select :host_port_id, @host.host_ports.order(:name), :id, :display_label, {}, class: form_control_class %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :switch_port_id, t("switch_port"), class: form_label_class %>
+    <div class="mt-1">
+      <% if @switch_ports_for_select.any? %>
+        <%= form.collection_select :switch_port_id, @switch_ports_for_select, :id, :select_label, { include_blank: t("patch_connection_select_switch_port") }, class: form_control_class %>
+      <% else %>
+        <p class="text-sm text-amber-800"><%= t("no_switch_ports_available_for_patch") %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :label, t("patch_connection_label"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_field :label, class: form_control_class %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :cable_color, t("patch_connection_cable_color"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_field :cable_color, class: form_control_class %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :installed_on, t("patch_connection_installed_on"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.date_field :installed_on, class: form_control_class %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :notes, t("notes"), class: form_label_class %>
+    <div class="mt-1">
+      <%= form.text_area :notes, rows: 3, class: form_control_class %>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-3 pt-2">
+    <% if @switch_ports_for_select.any? || patch_connection.persisted? %>
+      <%= form.submit t("save"), class: "inline-flex items-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" %>
+    <% end %>
+    <%= link_to t("cancel"), @host, class: "inline-flex items-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+  </div>
+<% end %>

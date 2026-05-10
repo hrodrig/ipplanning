@@ -93,7 +93,19 @@
         <ul class="divide-y divide-gray-100">
           <% @switch_ports.each do |port| %>
             <li class="flex flex-wrap items-center justify-between gap-2 py-3 text-sm">
-              <span class="font-mono font-medium text-gray-900"><%= port.name %></span>
+              <span class="min-w-0 flex-1">
+                <span class="font-mono font-medium text-gray-900"><%= port.name %></span>
+                <% pc = port.patch_connection %>
+                <% if pc %>
+                  <span class="mt-0.5 block text-xs text-gray-600">
+                    <%= t("switch_port_patched_to") %>:
+                    <%= link_to pc.host_port.host.name, host_path(pc.host_port.host), class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+                    · <%= pc.host_port.display_label %>
+                  </span>
+                <% else %>
+                  <span class="mt-0.5 block text-xs text-gray-500"><%= t("switch_port_free") %></span>
+                <% end %>
+              </span>
               <span class="flex items-center gap-2">
                 <%= link_to t("edit"), edit_network_switch_switch_port_path(@network_switch, port), class: "font-medium text-indigo-600 hover:text-indigo-500" %>
                 <%= link_to t("destroy"), network_switch_switch_port_path(@network_switch, port), data: { turbo_method: :delete, turbo_confirm: t("are_you_sure") }, class: "font-medium text-red-600 hover:text-red-500" %>

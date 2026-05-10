@@ -1,0 +1,9 @@
+<%= render layout: "common/admin_resource_form", locals: {
+  heading: t("adding_patch_connection"),
+  index_path: host_path(@host),
+  index_label: @host.name,
+  current_label: t("adding_patch_connection"),
+  back_path: host_path(@host)
+} do %>
+  <%= render "form", patch_connection: @patch_connection %>
+<% end %>
