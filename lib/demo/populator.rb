@@ -217,6 +217,8 @@ module Demo
       block.each_host do |addr|
         vlan.ips.create!(address: addr.to_s)
       end
+      gw = vlan.ips.find_by(address: vlan.gateway.to_s.strip)
+      gw&.update!(is_default_gateway: true)
     end
 
     def seed_special_ips!(vlans, domain)

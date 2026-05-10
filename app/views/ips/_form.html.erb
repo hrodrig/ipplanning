@@ -103,6 +103,16 @@
           <p class="text-gray-500"><%= t('placeholder_ip_reserved_help') %></p>
         </div>
       </div>
+
+      <div class="flex items-start">
+        <div class="flex items-center h-5">
+          <%= form.check_box :is_default_gateway, id: :ip_is_default_gateway, class: form_checkbox_class %>
+        </div>
+        <div class="ml-3 text-sm">
+          <%= form.label :is_default_gateway, t('is_default_gateway') + '?', class: "font-medium text-gray-700" %>
+          <p class="text-gray-500"><%= t('placeholder_ip_is_default_gateway_help') %></p>
+        </div>
+      </div>
     </div>
   </div>
 

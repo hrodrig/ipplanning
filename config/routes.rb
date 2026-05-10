@@ -55,7 +55,12 @@ Rails.application.routes.draw do
   post "ips/:id/add_host", :controller => "ips", :action => "create_host_to_ip", :as => :create_host_to_ip
 
   get "vlans/:id/generate_network", :controller => "vlans", :action => "generate_network", :as => :generate_network
-  resources :vlans
+  resources :vlans do
+    member do
+      get :new_ip
+      post :create_ip
+    end
+  end
   root 'welcome#index'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

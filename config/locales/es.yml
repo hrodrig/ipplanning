@@ -33,6 +33,12 @@ es:
         restrict_dependent_destroy:
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
+      models:
+        ip:
+          attributes:
+            address:
+              outside_vlan_network: "debe estar dentro de esta VLAN (%{cidr})"
+              not_a_valid_ipv4: "no es una dirección IPv4 válida"
   date:
     abbr_day_names:
     - dom
@@ -251,6 +257,11 @@ es:
   add_server_rack: Agregar rack
   add_ip_to: Agregar ip a
   add_ip: agregar ip
+  add_ip_to_vlan: Añadir IP a la VLAN
+  add_ip_to_vlan_heading: "Añadir IP — %{name} (%{cidr})"
+  add_ip_to_vlan_hint: "La dirección debe caer dentro de %{cidr} (misma red y máscara que esta VLAN)."
+  vlan_ip_delete_responsibility_notice: "El borrado de la información de una IP desde esta tabla no se confirma en la aplicación: es su decisión y su responsabilidad."
+  placeholder_add_ip_address: ej. 192.168.10.42
   add_vlan: Agregar vlan
   add: Agregar
   adding_external_ip: Agregando ip externa
@@ -272,6 +283,8 @@ es:
   back_to_ips: Volver a las ips
   back_to_vlans: Volver a las vlans
   back: Regresar
+  cancel: Cancelar
+  save: Guardar
   complete_hostname_alias: Alias del nombre de host completo
   complete_hostname: Nombre de host
   create_host_to_add_ip: Por favor, añada este nuevo host antes de agregarle cualquier dirección ip.
@@ -532,6 +545,7 @@ es:
   ips_filter_clear: Limpiar
   ips_filter_matches: "%{count} filas coincidentes"
   ips_filter_no_results: Ninguna dirección coincide con la búsqueda. Pruebe otro término o limpie el filtro.
+  is_default_gateway: Puerta de enlace predeterminada
   is_reserved: Está reservada
   legend_ip_reserved: esta dirección ip está reservada. No puede asociarla con ningún host.
   legend_not_include_in_hosts_file: esta dirección ip no será incluida en el contenido del archivo hosts generado.
@@ -613,6 +627,7 @@ es:
   placeholder_ip_include_in_etc_hosts_help: 'Seleccione esta opción si desea que la información relacionada con la dirección ip sea agregada al archivo de host generado.'
   placeholder_ip_notes_help: 'Agregue aquí cualquier otra información relacionada con la dirección ip. (opcional)'
   placeholder_ip_reserved_help: 'Si la dirección ip está reservada no puede poseer un alias para el hostname.'
+  placeholder_ip_is_default_gateway_help: "Marca esta IP como puerta de enlace predeterminada de la VLAN. Solo una IP por VLAN puede estar marcada; el campo gateway de la VLAN se actualiza a esta dirección."
   placeholder_ip_use_domain_name_help: 'Seleccione oara agregar el nombre de dominio: '
   placeholder_setting_description_help: 'Ingrese cualquier otra información relacionada con el parámetro. (opcional)'
   placeholder_setting_description: 'Algunas notas adicionales para este parámetro. (opcional)'

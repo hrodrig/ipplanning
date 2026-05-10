@@ -31,6 +31,16 @@ class Ip < ApplicationRecord
   has_and_belongs_to_many :hosts, dependent: :destroy
   validates :address, uniqueness: true, presence: true
   validates :hostname_alias, uniqueness: true, if: :hostname_alias?
+  validate :address_must_match_vlan_prefix, if: -> { vlan.present? && address.present? }
+
+  after_save :synchronize_vlan_default_gateway!, if: :saved_change_to_is_default_gateway?
+
+  # Highlight row on VLAN / IP tables (legacy match on vlan.gateway or explicit flag).
+  def default_gateway_row?(for_vlan = vlan)
+    return false if for_vlan.blank?
+
+    is_default_gateway? || address.to_s.strip == for_vlan.gateway.to_s.strip
+  end
 
   # Plain host name when linked to a host (no HTML).
   def hostname
@@ -178,6 +188,7 @@ class Ip < ApplicationRecord
       v&.descriptor,
       v&.network,
       v&.gateway,
+      ("defaultgateway" if is_default_gateway?),
       *hosts.map { |h| h.name.to_s }
     ]
     parts.flatten.compact.map { |x| x.to_s.downcase.strip }.reject(&:blank?).uniq.join(" ")
@@ -255,6 +266,23 @@ class Ip < ApplicationRecord
     etc_hosts << separator
 
     return etc_hosts
+  end
+
+  def address_must_match_vlan_prefix
+    cidr = "#{vlan.network}/#{vlan.netmask}"
+    prefix = IPAddress(cidr)
+    addr = IPAddress(address.to_s.strip)
+    errors.add(:address, :outside_vlan_network, cidr: cidr) unless prefix.include?(addr)
+  rescue StandardError
+    errors.add(:address, :not_a_valid_ipv4)
+  end
+
+  private def synchronize_vlan_default_gateway!
+    return unless vlan
+    return unless is_default_gateway?
+
+    Ip.where(vlan_id: vlan_id).where.not(id: id).update_all(is_default_gateway: false)
+    vlan.update!(gateway: address)
   end
 
   private def domain_suffix

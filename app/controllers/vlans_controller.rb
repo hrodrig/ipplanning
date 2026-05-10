@@ -25,7 +25,7 @@
 #
 # ----------------------------------------------------------------------------
 class VlansController < ApplicationController
-  before_action :set_vlan, only: [:show, :edit, :update, :destroy, :generate_network]
+  before_action :set_vlan, only: [:show, :edit, :update, :destroy, :generate_network, :new_ip, :create_ip]
   before_action :authenticate_admin!
 
   # GET /vlans
@@ -95,13 +95,33 @@ class VlansController < ApplicationController
 
   def generate_network
     ip = IPAddress "#{@vlan.network}/#{@vlan.netmask}"
-    net = ip.network
     ip.each_host do |ip_address|
-      @vlan.ips.create(address: ip_address)
+      @vlan.ips.find_or_create_by!(address: ip_address.to_s)
     end
     respond_to do |format|
       format.html { redirect_to vlans_url, notice: t('vlan_network_segment_was_created') }
       format.json { head :no_content }
+    end
+  end
+
+  def new_ip
+    @page_title = (Setting.find_by(name: "WebsiteName")&.value || "IP Planning") + " - " + t("vlans") + " - " + t("add_ip_to_vlan")
+    @ip = @vlan.ips.build(
+      include_in_etc_hosts: true,
+      use_vlan_descriptor: true,
+      use_domain_name: true,
+      is_reserved: false,
+      is_default_gateway: false
+    )
+  end
+
+  def create_ip
+    @ip = @vlan.ips.build(ip_create_params)
+    if @ip.save
+      redirect_to ips_path, notice: t("ip_address_created")
+    else
+      @page_title = (Setting.find_by(name: "WebsiteName")&.value || "IP Planning") + " - " + t("vlans") + " - " + t("add_ip_to_vlan")
+      render :new_ip, status: :unprocessable_entity
     end
   end
 
@@ -114,5 +134,12 @@ class VlansController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def vlan_params
       params.require(:vlan).permit(:number, :name, :descriptor, :network, :netmask, :gateway, :notes, :include_in_etc_hosts)
+    end
+
+    def ip_create_params
+      params.require(:ip).permit(
+        :address, :notes, :include_in_etc_hosts, :use_vlan_descriptor, :use_domain_name, :is_reserved, :is_default_gateway,
+        :hostname_alias, :complete_hostname_alias
+      )
     end
 end

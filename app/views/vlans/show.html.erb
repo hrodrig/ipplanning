@@ -52,6 +52,19 @@
     </dl>
   </div>
 
+  <div class="mb-4 flex flex-wrap items-center justify-end gap-2">
+    <%= link_to t("add_ip_to_vlan"), new_ip_vlan_path(@vlan), class: "inline-flex items-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" %>
+    <% if @vlan.ips.empty? %>
+      <%= link_to t("generate"), generate_network_path(@vlan), class: "inline-flex items-center rounded-lg bg-white px-3 py-1.5 text-sm font-semibold text-indigo-700 shadow-sm ring-1 ring-inset ring-indigo-200 hover:bg-indigo-50" %>
+    <% end %>
+  </div>
+
+  <% if @vlan.ips.any? %>
+    <p class="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-950">
+      <%= t("vlan_ip_delete_responsibility_notice") %>
+    </p>
+  <% end %>
+
   <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
     <div class="overflow-x-auto">
       <table class="min-w-full divide-y divide-gray-200">
@@ -65,11 +78,14 @@
             </th>
             <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("additional_information") %></th>
             <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("notes") %></th>
+            <th scope="col" class="w-px whitespace-nowrap px-3 py-3.5 text-right text-xs font-semibold uppercase tracking-wider text-gray-600">
+              <span class="sr-only"><%= t("destroy") %></span>
+            </th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100 bg-white">
           <% @vlan.ips.each do |ip| %>
-            <tr class="<%= "bg-red-50/80" if ip.address == @vlan.gateway %> transition-colors hover:bg-gray-50/90">
+            <tr class="<%= "bg-red-50/80" if ip.default_gateway_row?(@vlan) %> transition-colors hover:bg-gray-50/90">
               <td class="whitespace-nowrap px-5 py-4 text-sm font-medium">
                 <%= link_to ip.address, ip_path(ip), title: t("show"), class: "font-mono text-indigo-600 hover:text-indigo-500" %>
               </td>
@@ -121,6 +137,14 @@
               </td>
               <td class="px-5 py-4 text-sm text-gray-600">
                 <% if ip.host.present? %><%= ip.host.description.html_safe %><% end %>
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-right align-top">
+                <%= link_to ip_path(ip, from_vlan: @vlan.id),
+                  data: { turbo_method: :delete },
+                  class: "inline-flex min-h-8 min-w-8 items-center justify-center rounded-md text-sm font-semibold text-red-600 ring-1 ring-inset ring-red-200 hover:bg-red-50",
+                  title: t("destroy") do %>
+                  <span aria-hidden="true">×</span>
+                <% end %>
               </td>
             </tr>
           <% end %>

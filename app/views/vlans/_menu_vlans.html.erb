@@ -1,5 +1,10 @@
-<ul class="nav nav-tabs">
+<nav class="flex flex-wrap gap-2 text-sm" aria-label="<%= t('vlans') %>">
   <% @vlans.each do |vlan| %>
-  <li<% if vlan.number == @vlan.number %> class="active"<% end %>><%= link_to vlan.number, vlan_path(vlan) %></li>
+    <% active = vlan.id == @vlan.id %>
+    <%= link_to vlan.number, vlan_path(vlan),
+      class: [
+        "inline-flex min-h-9 min-w-9 items-center justify-center rounded-lg px-2.5 py-1 font-medium tabular-nums ring-1 ring-inset transition-colors",
+        active ? "bg-indigo-600 text-white ring-indigo-600 hover:bg-indigo-500" : "bg-white text-gray-700 ring-gray-200 hover:bg-gray-50 hover:text-indigo-700"
+      ].join(" ") %>
   <% end %>
-</ul>
+</nav>

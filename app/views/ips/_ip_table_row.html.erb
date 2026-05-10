@@ -1,7 +1,7 @@
 <%# locals: ip, vlan %>
 <% 
   row_class = "hover:bg-blue-50 transition-colors duration-150"
-  if ip.address == vlan.gateway
+  if ip.default_gateway_row?(vlan)
     row_class = "bg-red-50 hover:bg-red-100"
   elsif ip.is_reserved?
     row_class = "bg-yellow-50 hover:bg-yellow-100"

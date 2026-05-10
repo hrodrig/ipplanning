@@ -1,6 +1,6 @@
 # IPPLANNING Specifications
 
-**Document version:** aligned with app release **0.8.10** (see [`VERSION`](VERSION)).
+**Document version:** aligned with app release **0.9.0** (see [`VERSION`](VERSION)).
 
 ## 1. Overview
 IPPLANNING is a web-based IP Address Management (IPAM) application designed for network administrators to manage VLANs, IP allocations, and Host assignments. It also supports **physical inventory** cues such as **locations**, **server racks**, and **network switches** (with per-switch ports) for operators who want rack context without modeling switches as hosts. A key unique feature is its ability to generate synchronized `/etc/hosts` files, which is particularly valuable in environments where high-frequency name resolution is required and DNS latency or implementation is a concern (e.g., SAP, Oracle clusters).
@@ -47,7 +47,7 @@ erDiagram
 | Model | Description | Key Attributes |
 | :--- | :--- | :--- |
 | **Vlan** | Represents a logical network segment. | `number`, `name`, `network`, `netmask`, `gateway`, `descriptor` |
-| **Ip** | Represents a specific IP address within a VLAN. | `address`, `include_in_etc_hosts`, `hostname_alias`, `is_reserved`; see §3.5–3.7 for list UX, search, and sort helpers (`searchable_text`, `ipv4_sort_integer`, `sort_key_extras_ips`) |
+| **Ip** | Represents a specific IP address within a VLAN. | `address`, `include_in_etc_hosts`, `hostname_alias`, `is_reserved`, `is_default_gateway` (§3.11); see §3.5–3.7 for list UX, search, and sort helpers (`searchable_text`, `ipv4_sort_integer`, `sort_key_extras_ips`) |
 | **Host** | Represents a physical or virtual machine. | `name`, `description`, `memory_size`, `total_vcpus` |
 | **Externalip** | Standalone entries for external IPs to be included in `/etc/hosts`. | `address`, `hostname`, `short_hostname`; shares IPv4 ordering helpers with `Ip` via `Ipv4AddressSortable` (§3.7) |
 | **Environment** | Classification for host lifecycles. | `name` (e.g., Production, Staging, QA, Development) |
@@ -65,7 +65,8 @@ erDiagram
 
 ### 3.1 VLAN & Network Management
 - **VLAN Definition:** Admins can create VLANs by specifying a network address and CIDR netmask.
-- **Network Generation:** The `generate_network` action uses the `ipaddress` library to automatically populate a VLAN with all valid host IP addresses in its range.
+- **Network Generation:** The `generate_network` action uses the `ipaddress` library to automatically populate a VLAN with all valid host IP addresses in its range (`find_or_create_by!` per address so re-runs do not violate uniqueness).
+- **Single IP create:** Admins can add **one** IP to an existing VLAN via member routes `GET /vlans/:id/new_ip` and `POST /vlans/:id/create_ip` (`new_ip` / `create_ip` on `VlansController`). The new address must fall inside the VLAN’s network/netmask (validated on `Ip` with the `ipaddress` gem; i18n errors under `activerecord.errors.models.ip.attributes.address`).
 - **Reserved IPs:** IPs can be marked as `is_reserved`, preventing them from being associated with a Host.
 
 ### 3.2 Host & IP Assignment
@@ -146,6 +147,12 @@ Authenticated **IPs** index and **home** (`welcome#index`) expose a **search** f
 - **Batch ports on create:** The new-switch form accepts **`port_count`** (not persisted on `NetworkSwitch`) and an optional **`default_port_name_template`**. If the template is blank, ports are named `1`…`N`. If it ends with digits (e.g. `Gi1/0/1`), that suffix is the start index and increments per port, preserving zero-padding width (e.g. `…09`, `…10`). If there is no trailing digit run (e.g. `Gi1/0/`), the suffix `1`, `2`, … is appended. Implementation: `NetworkSwitch.build_default_port_names` + `insert_all!` on `SwitchPort`.
 - **Display order:** `SwitchPort.sort_ports_for_display` orders purely numeric names numerically; names with a trailing digit run (e.g. `Gi1/0/10`) sort by that numeric suffix; other strings sort alphabetically in a final group.
 - **Data integrity:** Deleting a rack with assigned switches is blocked (`restrict_with_error` on `ServerRack#network_switches`), analogous to hosts.
+
+### 3.11 VLAN IP maintenance & default gateway (0.9.0)
+- **VLAN navigation:** On `vlans#show`, other VLANs are linked in a **single horizontal, wrapping** control (`_menu_vlans`) instead of legacy stacked tabs markup.
+- **Add IP from VLAN context:** From VLAN show, IPs index, or VLANs index, admins can open **Add IP to VLAN**; after create, the app redirects to the IPs index (bulk list), unless future UX changes that flow.
+- **Delete IP from VLAN table:** VLAN show lists IPs with a compact **delete** control (`DELETE /ips/:id` with query `from_vlan=<vlan_id>`). When `from_vlan` matches the IP’s VLAN, the controller redirects back to **`vlan_path(vlan)`** and **does not** use a browser confirm dialog; a visible **responsibility notice** (`vlan_ip_delete_responsibility_notice`) explains that deletion is immediate. Other surfaces (e.g. IPs index row partial) keep **`turbo_confirm`** on destroy.
+- **Default gateway flag:** `Ip#is_default_gateway` (boolean, default false). At most one IP per VLAN should be marked: when an IP is saved with `is_default_gateway: true`, other IPs on that VLAN are cleared and **`Vlan#gateway`** is updated to that IP’s `address`. **Row highlight** (gateway styling) uses `Ip#default_gateway_row?(vlan)` — true if the flag is set **or** the legacy condition `address == vlan.gateway` matches (covers older data and manual VLAN edits). The IP edit form and VLAN “add IP” form expose the checkbox; `searchable_text` includes a `defaultgateway` token when the flag is set for client-side filtering.
 
 ---
 

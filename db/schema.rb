@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_10_120007) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_10_153000) do
   create_table "active_storage_attachments", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -141,6 +141,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_10_120007) do
     t.boolean "use_domain_name", default: true, null: false
     t.boolean "is_reserved"
     t.string "complete_hostname_alias"
+    t.boolean "is_default_gateway", default: false, null: false
     t.index ["address"], name: "index_ips_on_address", unique: true
     t.index ["hostname_alias"], name: "index_ips_on_hostname_alias"
     t.index ["vlan_id"], name: "index_ips_on_vlan_id"

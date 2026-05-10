@@ -14,7 +14,7 @@
       <% vlan.ips.each do |ip| %>
       <% 
         row_class = "hover:bg-blue-50 transition-colors duration-150"
-        if ip.address == vlan.gateway
+        if ip.default_gateway_row?(vlan)
           row_class = "bg-red-50 hover:bg-red-100"
         end
       %>

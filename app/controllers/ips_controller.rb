@@ -87,9 +87,16 @@ class IpsController < ApplicationController
   # DELETE /ips/1
   # DELETE /ips/1.json
   def destroy
+    vlan = @ip.vlan
     @ip.destroy
     respond_to do |format|
-      format.html { redirect_to ips_url, notice: I18n.t('ip_address_destroyed') }
+      format.html do
+        if vlan.present? && params[:from_vlan].present? && vlan.id == params[:from_vlan].to_i
+          redirect_to vlan_path(vlan), notice: I18n.t('ip_address_destroyed')
+        else
+          redirect_to ips_url, notice: I18n.t('ip_address_destroyed')
+        end
+      end
       format.json { head :no_content }
     end
   end
@@ -126,7 +133,7 @@ class IpsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ip_params
-      params.require(:ip).permit(:number, :name, :network, :netmask, :gateway, :notes, :include_in_etc_hosts, :use_vlan_descriptor, :hostname_alias, :is_reserved, :complete_hostname_alias, :use_domain_name)
+      params.require(:ip).permit(:number, :name, :network, :netmask, :gateway, :notes, :include_in_etc_hosts, :use_vlan_descriptor, :hostname_alias, :is_reserved, :is_default_gateway, :complete_hostname_alias, :use_domain_name)
     end
     def host_params
       params.require(:host).permit(:name, :description)

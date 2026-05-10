@@ -33,6 +33,12 @@ en:
         restrict_dependent_destroy:
           has_one: "Cannot delete record because a dependent %{record} exists"
           has_many: "Cannot delete record because dependent %{record} exist"
+      models:
+        ip:
+          attributes:
+            address:
+              outside_vlan_network: "must be inside this VLAN (%{cidr})"
+              not_a_valid_ipv4: "is not a valid IPv4 address"
   date:
     abbr_day_names:
     - Sun
@@ -247,6 +253,11 @@ en:
   add_server_rack: Add server rack
   add_ip_to: Add ip to
   add_ip: add ip
+  add_ip_to_vlan: Add IP to VLAN
+  add_ip_to_vlan_heading: "Add IP — %{name} (%{cidr})"
+  add_ip_to_vlan_hint: "The address must fall inside %{cidr} (same network and netmask as this VLAN)."
+  vlan_ip_delete_responsibility_notice: "Deleting an IP from this table is not confirmed by the application: it is your decision and your responsibility."
+  placeholder_add_ip_address: e.g. 192.168.10.42
   add_vlan: Add VLAN
   add: Add
   adding_external_ip: Adding External Ip
@@ -268,6 +279,8 @@ en:
   back_to_ips: Back to IPs
   back_to_vlans: Back to VLANs
   back: Back
+  cancel: Cancel
+  save: Save
   complete_hostname_alias: Complete hostname alias
   complete_hostname: Complete hostname
   create_host_to_add_ip: Please, create this new host prior to add any ip address.
@@ -528,6 +541,7 @@ en:
   ips_filter_clear: Clear
   ips_filter_matches: "%{count} matching rows"
   ips_filter_no_results: No addresses match your search. Try another term or clear the filter.
+  is_default_gateway: Default gateway
   is_reserved: Is reserved
   legend_ip_reserved: This IP address is reserved. You can not assign this to any host
   legend_not_include_in_hosts_file: This IP address will not be included in the generated hosts file
@@ -609,6 +623,7 @@ en:
   placeholder_ip_include_in_etc_hosts_help: 'Select this option if you want that ip related information will be added to generated hosts file.'
   placeholder_ip_notes_help: 'Add here any restricted information ip related. (optional)'
   placeholder_ip_reserved_help: 'If ip address is reserved, can not have hostname alias. Never will be added to generated hosts file.'
+  placeholder_ip_is_default_gateway_help: "Marks this IP as this VLAN's default gateway. Only one IP per VLAN can be marked; the VLAN gateway field is set to this address."
   placeholder_ip_use_domain_name_help: 'Select to add domain name: '
   placeholder_setting_description_help: 'Add here any restricted information setting related. (optional)'
   placeholder_setting_description: 'Some notes about this setting. (optional)'

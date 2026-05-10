@@ -39,6 +39,9 @@
                       <%= link_to t("generate"), generate_network_path(vlan), class: "ml-1 font-medium text-indigo-600 hover:text-indigo-500 underline" %>
                     </div>
                   <% end %>
+                  <div class="mt-2 text-center text-xs">
+                    <%= link_to t("add_ip_to_vlan"), new_ip_vlan_path(vlan), class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+                  </div>
                   <div class="mt-3 flex flex-wrap justify-center gap-2">
                     <%= link_to t("edit"), edit_vlan_path(vlan), class: "text-sm font-medium text-indigo-600 hover:text-indigo-500" %>
                     <span class="text-gray-300" aria-hidden="true">|</span>

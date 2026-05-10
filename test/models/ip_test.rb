@@ -12,6 +12,33 @@ class IpTest < ActiveSupport::TestCase
     assert_includes blob, "mgmt-gw"
   end
 
+  test "marking is_default_gateway clears siblings and updates vlan gateway" do
+    vlan = vlans(:one)
+    a = vlan.ips.create!(
+      address: "192.168.10.10",
+      include_in_etc_hosts: true,
+      use_vlan_descriptor: true,
+      use_domain_name: true,
+      is_reserved: false
+    )
+    b = vlan.ips.create!(
+      address: "192.168.10.11",
+      include_in_etc_hosts: true,
+      use_vlan_descriptor: true,
+      use_domain_name: true,
+      is_reserved: false
+    )
+    a.update!(is_default_gateway: true)
+    assert a.reload.is_default_gateway?
+    assert_not b.reload.is_default_gateway?
+    assert_equal "192.168.10.10", vlan.reload.gateway
+
+    b.update!(is_default_gateway: true)
+    assert b.reload.is_default_gateway?
+    assert_not a.reload.is_default_gateway?
+    assert_equal "192.168.10.11", vlan.reload.gateway
+  end
+
   test "IPv4 sort key orders octets numerically not lexically" do
     low = Ipv4AddressSortable.ipv4_string_to_integer("159.90.201.19")
     mid = Ipv4AddressSortable.ipv4_string_to_integer("159.90.201.187")

@@ -1,0 +1,69 @@
+<%= render layout: "common/admin_resource_form", locals: {
+  heading: t("add_ip_to_vlan_heading", name: @vlan.name, cidr: "#{@vlan.network}/#{@vlan.netmask}"),
+  index_path: ips_path,
+  index_label: t("ips"),
+  current_label: t("add_ip_to_vlan"),
+  back_path: ips_path,
+  width_class: "max-w-2xl"
+} do %>
+  <%= form_with model: @ip, url: create_ip_vlan_path(@vlan), method: :post, local: true, class: "space-y-6" do |form| %>
+    <% if @ip.errors.any? %>
+      <div class="border-l-4 border-red-400 bg-red-50 p-4">
+        <h3 class="text-sm font-medium text-red-800">
+          <%= pluralize(@ip.errors.count, "error") %> <%= t("prohibited_this_information_from_being_saved") %>
+        </h3>
+        <ul class="mt-2 list-disc pl-5 text-sm text-red-700">
+          <% @ip.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div>
+      <%= form.label :address, t("ip_address"), class: form_label_class %>
+      <div class="mt-1">
+        <%= form.text_field :address, class: form_control_class, placeholder: t("placeholder_add_ip_address"), autofocus: true %>
+      </div>
+      <p class="mt-1 text-xs text-gray-500"><%= t("add_ip_to_vlan_hint", cidr: "#{@vlan.network}/#{@vlan.netmask}") %></p>
+    </div>
+
+    <div>
+      <%= form.label :notes, t("notes"), class: form_label_class %>
+      <div class="mt-1">
+        <%= form.text_area :notes, rows: 2, class: form_control_class %>
+      </div>
+    </div>
+
+    <div class="space-y-3 rounded-lg border border-gray-100 bg-gray-50 p-4">
+      <div class="flex items-start gap-3">
+        <%= form.check_box :include_in_etc_hosts, class: form_checkbox_class %>
+        <%= form.label :include_in_etc_hosts, t("include_in_etc_hosts"), class: "text-sm text-gray-700" %>
+      </div>
+      <div class="flex items-start gap-3">
+        <%= form.check_box :use_vlan_descriptor, class: form_checkbox_class %>
+        <%= form.label :use_vlan_descriptor, t("use_vlan_descriptor") + "?", class: "text-sm text-gray-700" %>
+      </div>
+      <div class="flex items-start gap-3">
+        <%= form.check_box :use_domain_name, class: form_checkbox_class %>
+        <%= form.label :use_domain_name, t("use_domain_name") + "?", class: "text-sm text-gray-700" %>
+      </div>
+      <div class="flex items-start gap-3">
+        <%= form.check_box :is_reserved, class: form_checkbox_class %>
+        <%= form.label :is_reserved, t("is_reserved"), class: "text-sm text-gray-700" %>
+      </div>
+      <div class="flex items-start gap-3">
+        <%= form.check_box :is_default_gateway, class: form_checkbox_class %>
+        <div class="text-sm">
+          <%= form.label :is_default_gateway, t("is_default_gateway") + "?", class: "text-gray-700" %>
+          <p class="mt-0.5 text-xs text-gray-500"><%= t("placeholder_ip_is_default_gateway_help") %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-3 pt-2">
+      <%= form.submit t("save"), class: "inline-flex items-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" %>
+      <%= link_to t("cancel"), ips_path, class: "inline-flex items-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+    </div>
+  <% end %>
+<% end %>
