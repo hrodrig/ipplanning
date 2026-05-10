@@ -403,6 +403,9 @@ es:
     other: "Estos hosts están en rack pero aún no tienen posición U válida: %{names}"
   server_rack_was_successfully_created: El rack fue creado con éxito.
   server_rack_was_successfully_destroyed: El rack fue eliminado con éxito.
+  server_rack_destroy_blocked_hosts:
+    one: "No se puede eliminar el rack %{name}: aún tiene un host asignado. Cambie el host a otro rack o despliegue e inténtelo de nuevo."
+    other: "No se puede eliminar el rack %{name}: aún tiene %{count} hosts asignados. Reasigne o quite esos hosts primero."
   server_rack_was_successfully_updated: El rack fue actualizado con éxito.
   server_rack: Rack
   server_racks: Racks

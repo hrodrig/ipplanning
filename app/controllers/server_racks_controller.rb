@@ -56,10 +56,19 @@ class ServerRacksController < ApplicationController
   end
 
   def destroy
-    @server_rack.destroy
-    respond_to do |format|
-      format.html { redirect_to server_racks_url, notice: t("server_rack_was_successfully_destroyed") }
-      format.json { head :no_content }
+    rack_name = @server_rack.name
+    if @server_rack.destroy
+      respond_to do |format|
+        format.html { redirect_to server_racks_url, notice: t("server_rack_was_successfully_destroyed") }
+        format.json { head :no_content }
+      end
+    else
+      msg = @server_rack.errors.full_messages.to_sentence.presence
+      msg ||= t("server_rack_destroy_blocked_hosts", name: rack_name, count: @server_rack.hosts.count)
+      respond_to do |format|
+        format.html { redirect_to server_racks_url, alert: msg }
+        format.json { render json: { errors: @server_rack.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 

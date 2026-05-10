@@ -57,4 +57,19 @@ class ServerRacksControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to server_racks_url
   end
+
+  test "should not destroy server_rack with assigned hosts and show alert" do
+    rack = server_racks(:one)
+    assert Host.exists?(server_rack_id: rack.id)
+
+    assert_no_difference("ServerRack.count") do
+      delete server_rack_url(rack)
+    end
+
+    assert_redirected_to server_racks_url
+    assert_not_nil flash[:alert]
+    follow_redirect!
+    assert_response :success
+    assert_includes @response.body, I18n.t("server_rack_destroy_blocked_hosts", name: rack.name, count: rack.hosts.count)
+  end
 end

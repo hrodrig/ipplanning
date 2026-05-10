@@ -399,6 +399,9 @@ en:
     other: "These hosts are rack-mounted but have no valid U placement yet: %{names}"
   server_rack_was_successfully_created: Server rack was successfully created.
   server_rack_was_successfully_destroyed: Server rack was successfully destroyed.
+  server_rack_destroy_blocked_hosts:
+    one: "Cannot delete rack %{name}: it still has one host assigned. Change the host to another rack or deployment, then try again."
+    other: "Cannot delete rack %{name}: it still has %{count} hosts assigned. Reassign or remove those hosts first."
   server_rack_was_successfully_updated: Server rack was successfully updated.
   server_rack: Server rack
   server_racks: Server racks
