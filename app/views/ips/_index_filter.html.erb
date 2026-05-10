@@ -1,0 +1,30 @@
+<%# locals: suffix (String), show_no_results (boolean, default true) %>
+<% suffix = local_assigns.fetch(:suffix, "main") %>
+<div class="mb-6 rounded-xl border border-gray-200 bg-white p-4 shadow-sm ring-1 ring-gray-100/80">
+  <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+    <div class="min-w-0 flex-1">
+      <label for="ip-index-filter-<%= suffix %>" class="block text-sm font-medium text-gray-700"><%= t("ips_filter_label") %></label>
+      <input
+        type="search"
+        id="ip-index-filter-<%= suffix %>"
+        autocomplete="off"
+        spellcheck="false"
+        class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/25"
+        data-ip-index-filter-target="input"
+        data-action="input->ip-index-filter#filter"
+        placeholder="<%= t("ips_filter_placeholder") %>"
+      />
+    </div>
+    <div class="flex shrink-0 flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+      <p class="min-h-[1.25rem] text-sm text-gray-600" data-ip-index-filter-target="hint" aria-live="polite"></p>
+      <button type="button" class="whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-semibold text-indigo-700 ring-1 ring-indigo-200 hover:bg-indigo-50" data-action="click->ip-index-filter#clear">
+        <%= t("ips_filter_clear") %>
+      </button>
+    </div>
+  </div>
+</div>
+<% if local_assigns.fetch(:show_no_results, true) %>
+  <p class="mb-6 hidden rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950 shadow-sm" data-ip-index-filter-target="empty" role="status">
+    <%= t("ips_filter_no_results") %>
+  </p>
+<% end %>

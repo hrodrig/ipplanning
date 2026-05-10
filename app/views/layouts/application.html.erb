@@ -35,9 +35,8 @@
               </div>
               <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4">
-                  <a href="/" class="<%= controller_name == 'welcome' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' %> px-3 py-2 rounded-md text-sm font-medium"><%= t('home') %></a>
-                  
                   <% if admin_signed_in? %>
+                    <a href="/" class="<%= controller_name == 'welcome' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' %> px-3 py-2 rounded-md text-sm font-medium"><%= t('home') %></a>
                     <a href="/vlans" class="<%= controller_name == 'vlans' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' %> px-3 py-2 rounded-md text-sm font-medium"><%= t('vlans') %></a>
                     <a href="/ips" class="<%= controller_name == 'ips' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' %> px-3 py-2 rounded-md text-sm font-medium"><%= t('ips') %></a>
                     <a href="/externalips" class="<%= controller_name == 'externalips' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' %> px-3 py-2 rounded-md text-sm font-medium"><%= t('external_ips') %></a>
@@ -58,9 +57,8 @@
                         <a href="/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><%= t('settings') %></a>
                       </div>
                     </div>
+                    <a href="/etc/hosts" class="<%= controller_name == 'etchosts' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' %> px-3 py-2 rounded-md text-sm font-medium">/etc/hosts</a>
                   <% end %>
-                  
-                  <a href="/etc/hosts" class="<%= controller_name == 'etchosts' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' %> px-3 py-2 rounded-md text-sm font-medium">/etc/hosts</a>
                 </div>
               </div>
             </div>
@@ -89,14 +87,14 @@
         <!-- Mobile menu -->
         <div data-navbar-target="menu" class="hidden md:hidden">
           <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-            <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"><%= t('home') %></a>
             <% if admin_signed_in? %>
+              <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"><%= t('home') %></a>
               <a href="/vlans" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"><%= t('vlans') %></a>
               <a href="/ips" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"><%= t('ips') %></a>
               <a href="/externalips" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"><%= t('external_ips') %></a>
               <a href="/hosts" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"><%= t('hosts') %></a>
+              <a href="/etc/hosts" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">/etc/hosts</a>
             <% end %>
-            <a href="/etc/hosts" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">/etc/hosts</a>
           </div>
           <div class="border-t border-gray-700 pb-3 pt-4">
             <div class="px-2 flex items-center space-x-4 mb-4">

@@ -25,6 +25,8 @@
 #
 # ----------------------------------------------------------------------------
 class Ip < ApplicationRecord
+  include Ipv4AddressSortable
+
   belongs_to :vlan
   has_and_belongs_to_many :hosts, dependent: :destroy
   validates :address, uniqueness: true, presence: true
@@ -153,6 +155,34 @@ class Ip < ApplicationRecord
     end
   end
 
+  # Plain text for sorting the "extras" column (other IPs on the same host).
+  def sort_key_extras_ips
+    return "" unless host
+
+    host.ips.where.not(address: address).order_by_ipv4_address.pluck(:address).join(" ").downcase
+  end
+
+  # Lowercase plain-text blob for client-side filtering (IPs index / home).
+  def searchable_text
+    v = vlan
+    parts = [
+      address,
+      hostname_alias,
+      complete_hostname_alias,
+      short_hostname,
+      notes,
+      long_hostname,
+      text_hostname_with_descriptor,
+      v&.number,
+      v&.name,
+      v&.descriptor,
+      v&.network,
+      v&.gateway,
+      *hosts.map { |h| h.name.to_s }
+    ]
+    parts.flatten.compact.map { |x| x.to_s.downcase.strip }.reject(&:blank?).uniq.join(" ")
+  end
+
   # return the ip counter for used ip address
   def self.used_ips
     ips = Ip.all
@@ -189,7 +219,7 @@ class Ip < ApplicationRecord
         etc_hosts << separator
       end
 
-      vlan.ips.order(:address).each do |ip|
+      vlan.ips.order_by_ipv4_address.each do |ip|
         if !ip.include_in_etc_hosts.present?
           puts "Skipping ip adddress: #{ip.address}"
           next
@@ -208,7 +238,7 @@ class Ip < ApplicationRecord
     line = "# External Ips\n"
     etc_hosts << line
     etc_hosts << separator
-    Externalip.order(:address).each do |externalip|
+      Externalip.order_by_ipv4_address.each do |externalip|
       if externalip.include_in_etc_hosts.present?
         line = "#{externalip.address}\t#{externalip.hostname}\t#{externalip.short_hostname}\n"
         etc_hosts << line

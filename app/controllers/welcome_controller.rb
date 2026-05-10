@@ -30,7 +30,6 @@ class WelcomeController < ApplicationController
   def index
     @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('home_page')
     @vlans = Vlan.all.order(:number)
-    @ips = Ip.all.order(:number)
-    @externalips = Externalip.all.order(:address)
+    @externalips = Externalip.order_by_ipv4_address
   end
 end

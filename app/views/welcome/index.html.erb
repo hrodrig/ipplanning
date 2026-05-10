@@ -9,42 +9,73 @@
     </h1>
   </div>
 
-  <% @vlans.each do |vlan| %>
-    <% if vlan.ips.count == 0 %>
-      <p class="py-6 text-center text-sm italic text-gray-500"><%= t("not_assigned_ips") %></p>
-    <% else %>
-      <div class="mb-12 last:mb-0">
-        <%= render "ips/vlan", vlan: vlan %>
+  <div
+    data-controller="ip-index-filter"
+    data-ip-index-filter-matches-template-value="<%= h(t("ips_filter_matches")) %>"
+  >
+    <%= render "ips/index_filter", suffix: "welcome", show_no_results: true %>
+
+    <% @vlans.each do |vlan| %>
+      <div class="mb-12 last:mb-0" data-ip-vlan-section>
+        <% if vlan.ips.count == 0 %>
+          <p class="py-6 text-center text-sm italic text-gray-500"><%= t("not_assigned_ips") %></p>
+        <% else %>
+          <%= render "ips/vlan", vlan: vlan %>
+        <% end %>
+        <hr class="my-10 border-gray-200" />
       </div>
     <% end %>
-    <hr class="my-10 border-gray-200" />
-  <% end %>
 
-  <% if @externalips.count > 0 %>
-    <h2 class="mb-4 text-xl font-bold tracking-tight text-gray-900"><%= t("external_ips") %></h2>
-    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200" id="welcome-external-ips">
-          <thead class="bg-gradient-to-b from-gray-50 to-gray-100/80">
-            <tr>
-              <th scope="col" class="w-[15%] px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("ip") %></th>
-              <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("hostname") %></th>
-              <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("short_hostname") %></th>
-              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("notes") %></th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-100 bg-white">
-            <% @externalips.each do |externalip| %>
-              <tr class="transition-colors hover:bg-gray-50/90">
-                <td class="px-5 py-4 text-center text-sm font-mono font-medium text-gray-900"><%= externalip.address %></td>
-                <td class="px-5 py-4 text-center text-sm text-gray-700"><%= externalip.hostname %></td>
-                <td class="px-5 py-4 text-center text-sm text-gray-700"><%= externalip.short_hostname %></td>
-                <td class="px-5 py-4 text-sm text-gray-600"><%= externalip.notes %></td>
+    <% if @externalips.count > 0 %>
+      <h2 class="mb-4 text-xl font-bold tracking-tight text-gray-900"><%= t("external_ips") %></h2>
+      <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm" data-ip-external-block>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200" id="welcome-external-ips" data-controller="ip-table-sort">
+            <thead class="bg-gradient-to-b from-gray-50 to-gray-100/80">
+              <tr>
+                <th scope="col" class="w-[15%] px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600">
+                  <button type="button" class="mx-auto flex w-full max-w-full items-center justify-center gap-1 rounded-md px-1 py-0.5 text-gray-600 hover:bg-white/80 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40" data-action="click->ip-table-sort#sort" data-ip-table-sort-column-param="ip">
+                    <span><%= t("ip") %></span>
+                    <span data-sort-marker class="min-w-[1ch] font-normal text-indigo-600 normal-case" aria-hidden="true"></span>
+                  </button>
+                </th>
+                <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600">
+                  <button type="button" class="mx-auto flex w-full max-w-full items-center justify-center gap-1 rounded-md px-1 py-0.5 text-gray-600 hover:bg-white/80 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40" data-action="click->ip-table-sort#sort" data-ip-table-sort-column-param="complete">
+                    <span><%= t("hostname") %></span>
+                    <span data-sort-marker class="min-w-[1ch] font-normal text-indigo-600 normal-case" aria-hidden="true"></span>
+                  </button>
+                </th>
+                <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600">
+                  <button type="button" class="mx-auto flex w-full max-w-full items-center justify-center gap-1 rounded-md px-1 py-0.5 text-gray-600 hover:bg-white/80 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40" data-action="click->ip-table-sort#sort" data-ip-table-sort-column-param="short">
+                    <span><%= t("short_hostname") %></span>
+                    <span data-sort-marker class="min-w-[1ch] font-normal text-indigo-600 normal-case" aria-hidden="true"></span>
+                  </button>
+                </th>
+                <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+                  <button type="button" class="flex w-full max-w-full items-center justify-start gap-1 rounded-md px-1 py-0.5 text-gray-600 hover:bg-white/80 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40" data-action="click->ip-table-sort#sort" data-ip-table-sort-column-param="notes">
+                    <span><%= t("notes") %></span>
+                    <span data-sort-marker class="min-w-[1ch] font-normal text-indigo-600 normal-case" aria-hidden="true"></span>
+                  </button>
+                </th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody class="divide-y divide-gray-100 bg-white">
+              <% @externalips.each do |externalip| %>
+                <% ext_search = [externalip.address, externalip.hostname, externalip.short_hostname, externalip.notes].compact.join(" ").downcase %>
+                <% sc = ERB::Util.html_escape(externalip.hostname.to_s.downcase.strip) %>
+                <% ss = ERB::Util.html_escape(externalip.short_hostname.to_s.downcase.strip) %>
+                <% sn = ERB::Util.html_escape(externalip.notes.to_s.downcase.strip) %>
+                <tr class="transition-colors hover:bg-gray-50/90" data-ip-search="<%= ERB::Util.html_escape(ext_search) %>" data-sort-ip="<%= externalip.ipv4_sort_integer %>" data-sort-complete="<%= sc %>" data-sort-short="<%= ss %>" data-sort-notes="<%= sn %>">
+                  <td class="px-5 py-4 text-center text-sm font-mono font-medium text-gray-900"><%= externalip.address %></td>
+                  <td class="px-5 py-4 text-center text-sm text-gray-700"><%= externalip.hostname %></td>
+                  <td class="px-5 py-4 text-center text-sm text-gray-700"><%= externalip.short_hostname %></td>
+                  <td class="px-5 py-4 text-sm text-gray-600"><%= externalip.notes %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>

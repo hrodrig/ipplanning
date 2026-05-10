@@ -9,112 +9,51 @@
   </ul>
 <% end %>
 
-<div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-  <div class="overflow-x-auto">
-  <table class="min-w-full divide-y divide-gray-200" id="<%= dom_id(vlan, :ip_table) %>">
-    <thead class="bg-gradient-to-b from-gray-50 to-gray-100/80">
-      <tr>
-        <th scope="col" class="w-[28%] px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("address") %></th>
-        <th scope="col" class="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("complete_hostname") %></th>
-        <th scope="col" class="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("hostname") %></th>
-        <th scope="col" class="w-[10%] px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("extras_ips") %></th>
-        <th scope="col" class="w-[10%] px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("notes") %></th>
-        <th scope="col" class="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600">&nbsp;</th>
-      </tr>
-    </thead>
-    <tbody class="divide-y divide-gray-100 bg-white">
-      <% vlan.ips.each do |ip| %>
-      <% 
-        row_class = "hover:bg-blue-50 transition-colors duration-150"
-        if ip.address == vlan.gateway
-          row_class = "bg-red-50 hover:bg-red-100"
-        elsif ip.is_reserved?
-          row_class = "bg-yellow-50 hover:bg-yellow-100"
-        end
-      %>
-      <tr class="<%= row_class %>">
-        <td class="px-4 py-3 text-center text-sm text-gray-900">
-          <a name="<%= ip.address %>" class="font-mono font-medium">
-            <%= ip.address %>
-            <div class="mt-2 flex justify-center gap-2">
-              <%= link_to t("edit"), edit_ip_path(ip), class: "text-xs font-medium text-indigo-600 hover:text-indigo-500" %>
-              <%= link_to t("destroy"), ip, data: { turbo_method: :delete, turbo_confirm: t("are_you_sure_to_delete_this_ip") }, class: "text-xs font-medium text-red-600 hover:text-red-500" %>
-            </div>
-          </a>
-        </td>
-        <td class="px-4 py-3 text-sm text-gray-900">
-          <% if ip.host.nil? and ip.hostname_alias.nil? and ip.is_reserved.nil? %>
-            <div class="text-center">
-              <%= link_to '+', add_host_to_ip_path(ip), title: t('assign_this_ip_to_host'), class: 'inline-flex items-center justify-center w-6 h-6 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full text-xs transition duration-150 ease-in-out' %>
-            </div>
-          <% else %>
-            <div class="text-gray-900 font-medium">
-              <% if ip.is_reserved? %>
-                <span class="italic text-gray-600"><%= ip.long_hostname %></span>
-              <% else %>
-                <%= ip_hostname_with_descriptor_markup(ip) %>
+<% sorted_ips = vlan.ips.order_by_ipv4_address.to_a %>
+<% chunk_size = 64 %>
+<% chunks = sorted_ips.each_slice(chunk_size).to_a %>
+<% multichunk = chunks.size > 1 %>
+<% scroll_single = !multichunk && sorted_ips.size >= 36 %>
+
+<% if multichunk %>
+  <p class="mb-3 text-xs text-gray-500"><%= t("ips_chunk_index_hint") %></p>
+  <div class="space-y-3">
+    <% chunks.each_with_index do |chunk, idx| %>
+      <% chunk_used = chunk.count { |ip| ip.host.present? } %>
+      <details class="ip-index-chunk overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm" data-default-open="<%= idx.zero? %>" <%= "open" if idx.zero? %>>
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-3 bg-gradient-to-b from-slate-50 to-slate-50/90 px-4 py-3 text-left text-sm text-gray-900 hover:from-slate-100 hover:to-slate-50 [&::-webkit-details-marker]:hidden [&::marker]:hidden">
+          <span>
+            <span class="font-semibold text-indigo-700"><%= t("ips_chunk_range", from: chunk.first.address, to: chunk.last.address) %></span>
+            <span class="text-gray-600"> — <%= t("ips_chunk_meta", count: chunk.size, used: chunk_used) %></span>
+          </span>
+          <svg class="ip-index-chunk-chevron h-5 w-5 shrink-0 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+          </svg>
+        </summary>
+        <div class="max-h-[min(70vh,520px)] overflow-auto border-t border-gray-200">
+          <table class="min-w-full divide-y divide-gray-200" id="<%= idx.zero? ? dom_id(vlan, :ip_table) : "#{dom_id(vlan, :ip_table)}_chunk_#{idx}" %>" data-controller="ip-table-sort">
+            <%= render "ips/ip_table_head" %>
+            <tbody class="divide-y divide-gray-100 bg-white">
+              <% chunk.each do |ip| %>
+                <%= render "ips/ip_table_row", ip: ip, vlan: vlan %>
               <% end %>
-            </div>
-            <% if ip.hostname_alias.present? and ip.host.present? %>
-              <div class="mt-1">
-                <span class="px-2 py-0.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-300 rounded">
-                  <%= t('hostname_alias_with_host') %>: <%= ip.host.name %>
-                </span>
-              </div>
-            <% end %>
-          <% end %>
-        </td>
-        <td class="px-4 py-3 text-center text-sm text-gray-900">
-          <%= ip.short_hostname %>
-        </td>
-        <td class="px-4 py-3 text-sm text-gray-900">
-          <% if ip.host.present? %>
-            <div class="text-xs text-gray-600">
-              <%= host_linked_ip_addresses_markup(ip.host, except_address: ip.address) %>
-            </div>
-          <% end %>
-        </td>
-        <td class="px-4 py-3 text-sm text-gray-600">
-          <% if ip.notes? %>
-            <%= ip.notes %>
-          <% end %>
-        </td>
-        <td class="px-4 py-3 text-center text-sm text-gray-900">
-          <div class="flex items-center justify-center space-x-1">
-            <% if ip.include_in_etc_hosts == false %>
-              <%= image_tag 'edit-delete.png', title: t('not_include_in_hosts_file'), class: "w-5 h-5" %>
-            <% else %>
-              <div class="w-5 h-5"></div>
-            <% end %>
-            <% if ip.use_vlan_descriptor == false %>
-              <%= image_tag 'network-error.png', title: t('not_use_vlan_descriptor'), class: "w-5 h-5" %>
-            <% else %>
-              <div class="w-5 h-5"></div>
-            <% end %>
-            <% if ip.host.present? %>
-              <% if ip.hostname_alias.present? %>
-                <%= image_tag 'task-due.png', title: t('use_hostname_alias') + ip.host.name, class: "w-5 h-5" %>
-              <% else %>
-                <div class="w-5 h-5"></div>
-              <% end %>
-            <% else %>
-              <div class="w-5 h-5"></div>
-            <% end %>
-            <% if ip.is_reserved == true %>
-              <%= image_tag 'geany-close-all.png', title: t('is_reserved'), class: "w-5 h-5" %>
-            <% else %>
-              <div class="w-5 h-5"></div>
-            <% end %>
-            <% if ip.use_domain_name == false %>
-              <%= image_tag 'application-exit.png', title: t('not_use_domain_name'), class: "w-5 h-5" %>
-            <% else %>
-              <div class="w-5 h-5"></div>
-            <% end %>
-          </div>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    <% end %>
   </div>
-</div>
+<% else %>
+  <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm" data-ip-table-wrap>
+    <div class="<%= scroll_single ? "max-h-[min(70vh,560px)] overflow-auto" : "overflow-x-auto" %>">
+      <table class="min-w-full divide-y divide-gray-200" id="<%= dom_id(vlan, :ip_table) %>" data-controller="ip-table-sort">
+        <%= render "ips/ip_table_head" %>
+        <tbody class="divide-y divide-gray-100 bg-white">
+          <% sorted_ips.each do |ip| %>
+            <%= render "ips/ip_table_row", ip: ip, vlan: vlan %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>

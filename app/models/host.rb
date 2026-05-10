@@ -65,11 +65,11 @@ class Host < ApplicationRecord
 
   # Comma-separated IP addresses (no HTML). Use +host_linked_ip_addresses_markup(host)+ in views for anchor links.
   def all_ips
-    ips.order(:address).pluck(:address).join(', ')
+    ips.order_by_ipv4_address.pluck(:address).join(', ')
   end
 
   def all_ips_except_this(ip_to_exclude)
-    ips.where.not(address: ip_to_exclude).order(:address).pluck(:address).join(', ')
+    ips.where.not(address: ip_to_exclude).order_by_ipv4_address.pluck(:address).join(', ')
   end
 
   def other_ips(exclude_this)

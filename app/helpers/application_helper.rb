@@ -58,7 +58,7 @@ module ApplicationHelper
   def host_linked_ip_addresses_markup(host, except_address: nil)
     return "".html_safe unless host
 
-    scope = host.ips.order(:address)
+    scope = host.ips.order_by_ipv4_address
     scope = scope.where.not(address: except_address) if except_address.present?
     parts = scope.map { |ip| link_to(ip.address, "##{ip.address}") }
     safe_join(parts, ", ")

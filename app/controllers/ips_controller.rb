@@ -33,7 +33,7 @@ class IpsController < ApplicationController
   def index
     @page_title = (Setting.find_by(name: 'WebsiteName')&.value || "IP Planning") + ' - ' + I18n.t('ips')
     @vlans = Vlan.all.order(:number)
-    @ips = Ip.all.order(:number)
+    @ips = Ip.all
     @orphaned_ips = Ip.where(vlan_id: nil)
   end
 

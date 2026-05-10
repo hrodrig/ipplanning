@@ -400,6 +400,14 @@ en:
   ips_total: Total IPs
   ips_used: Used IPs
   ips: IPs
+  ips_chunk_range: "%{from} – %{to}"
+  ips_chunk_meta: "%{count} addresses · %{used} with a host"
+  ips_chunk_index_hint: "VLANs with more than 64 addresses are split into collapsible blocks. Open only the range you need; the first block starts expanded."
+  ips_filter_label: Search IPs and hostnames
+  ips_filter_placeholder: Filter by IP, VLAN, hostname, host, notes…
+  ips_filter_clear: Clear
+  ips_filter_matches: "%{count} matching rows"
+  ips_filter_no_results: No addresses match your search. Try another term or clear the filter.
   is_reserved: Is reserved
   legend_ip_reserved: This IP address is reserved. You can not assign this to any host
   legend_not_include_in_hosts_file: This IP address will not be included in the generated hosts file
@@ -604,6 +612,8 @@ en:
       tips:
         - Reserved addresses never receive host aliases or /etc/hosts lines.
         - Hostname alias uniqueness is enforced across the app—avoid duplicates where your policy requires it.
+        - Large subnets are listed in blocks of 64 addresses with sticky headers and scroll, so you do not have to cross hundreds of rows at once.
+        - Use the search box to narrow the list by address, VLAN fields, hostnames, linked hosts, or notes.
     externalips:
       title: External IPs
       body: |

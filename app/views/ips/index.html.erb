@@ -23,8 +23,14 @@
   <% end %>
 
   <% if @vlans.present? %>
-    <% @vlans.each do |vlan| %>
-      <section class="mb-12 rounded-xl border border-gray-200 bg-gray-50/60 p-6 shadow-sm last:mb-0">
+    <div
+      class="space-y-0"
+      data-controller="ip-index-filter"
+      data-ip-index-filter-matches-template-value="<%= h(t("ips_filter_matches")) %>"
+    >
+      <%= render "ips/index_filter", suffix: "admin", show_no_results: true %>
+      <% @vlans.each do |vlan| %>
+      <section class="mb-12 rounded-xl border border-gray-200 bg-gray-50/60 p-6 shadow-sm last:mb-0" data-ip-vlan-section>
         <div class="mb-6 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
           <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
@@ -62,7 +68,8 @@
           <%= render "vlan", vlan: vlan, show_meta: false %>
         <% end %>
       </section>
-    <% end %>
+      <% end %>
+    </div>
   <% else %>
     <div class="rounded-lg border border-amber-100 bg-amber-50 px-4 py-3 text-sm text-amber-900 shadow-sm" role="status">
       <%= t("not_found_vlans_ips") %>

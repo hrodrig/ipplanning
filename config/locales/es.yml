@@ -404,6 +404,14 @@ es:
   ips_total: IPs totales
   ips_used: IPs usadas
   ips: IPs
+  ips_chunk_range: "%{from} – %{to}"
+  ips_chunk_meta: "%{count} direcciones · %{used} con host asignado"
+  ips_chunk_index_hint: "Las VLAN con más de 64 direcciones se dividen en bloques plegables. Abra solo el rango que necesite; el primer bloque inicia expandido."
+  ips_filter_label: Buscar IPs y nombres de host
+  ips_filter_placeholder: Filtrar por IP, VLAN, hostname, host, notas…
+  ips_filter_clear: Limpiar
+  ips_filter_matches: "%{count} filas coincidentes"
+  ips_filter_no_results: Ninguna dirección coincide con la búsqueda. Pruebe otro término o limpie el filtro.
   is_reserved: Está reservada
   legend_ip_reserved: esta dirección ip está reservada. No puede asociarla con ningún host.
   legend_not_include_in_hosts_file: esta dirección ip no será incluida en el contenido del archivo hosts generado.
@@ -608,6 +616,8 @@ es:
       tips:
         - Las IPs reservadas no reciben alias ni líneas en /etc/hosts.
         - La unicidad del alias de hostname se aplica en toda la aplicación; evite duplicados si su política lo exige.
+        - Las subredes grandes se muestran en bloques de 64 direcciones, con cabecera fija y scroll, para no recorrer cientos de filas de una vez.
+        - Use el cuadro de búsqueda para acotar la lista por dirección, campos de VLAN, hostnames, hosts vinculados o notas.
     externalips:
       title: IPs externas
       body: |

@@ -25,6 +25,8 @@
 #
 # ----------------------------------------------------------------------------
 class Externalip < ApplicationRecord
+  include Ipv4AddressSortable
+
   validates :address, presence: true, uniqueness: true
   validates :hostname, presence: true, uniqueness: true
   validates :short_hostname, presence: true, uniqueness: true

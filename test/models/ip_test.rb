@@ -5,6 +5,21 @@ class IpTest < ActiveSupport::TestCase
 
   setup { AppSettings.clear_cache! }
 
+  test "searchable_text includes address and hostname fields for filtering" do
+    ip = ips(:one)
+    blob = ip.searchable_text
+    assert_includes blob, "192.168.10.1"
+    assert_includes blob, "mgmt-gw"
+  end
+
+  test "IPv4 sort key orders octets numerically not lexically" do
+    low = Ipv4AddressSortable.ipv4_string_to_integer("159.90.201.19")
+    mid = Ipv4AddressSortable.ipv4_string_to_integer("159.90.201.187")
+    high = Ipv4AddressSortable.ipv4_string_to_integer("159.90.201.189")
+    assert_operator low, :<, mid
+    assert_operator mid, :<, high
+  end
+
   test "short_hostname for reserved ip uses dashed address" do
     ip = Ip.create!(
       vlan: vlans(:one),

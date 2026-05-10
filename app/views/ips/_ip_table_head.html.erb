@@ -1,0 +1,56 @@
+<% sortable = local_assigns.fetch(:sortable, true) %>
+<thead class="sticky top-0 z-20 border-b border-gray-200 bg-gradient-to-b from-gray-50 to-gray-100/95 shadow-sm">
+  <tr>
+    <th scope="col" class="w-[28%] px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600">
+      <% if sortable %>
+        <button type="button" class="mx-auto flex w-full max-w-full items-center justify-center gap-1 rounded-md px-1 py-0.5 text-gray-600 hover:bg-white/80 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40" data-action="click->ip-table-sort#sort" data-ip-table-sort-column-param="ip">
+          <span><%= t("address") %></span>
+          <span data-sort-marker class="min-w-[1ch] font-normal text-indigo-600 normal-case" aria-hidden="true"></span>
+        </button>
+      <% else %>
+        <%= t("address") %>
+      <% end %>
+    </th>
+    <th scope="col" class="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600">
+      <% if sortable %>
+        <button type="button" class="mx-auto flex w-full max-w-full items-center justify-center gap-1 rounded-md px-1 py-0.5 text-gray-600 hover:bg-white/80 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40" data-action="click->ip-table-sort#sort" data-ip-table-sort-column-param="complete">
+          <span><%= t("complete_hostname") %></span>
+          <span data-sort-marker class="min-w-[1ch] font-normal text-indigo-600 normal-case" aria-hidden="true"></span>
+        </button>
+      <% else %>
+        <%= t("complete_hostname") %>
+      <% end %>
+    </th>
+    <th scope="col" class="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600">
+      <% if sortable %>
+        <button type="button" class="mx-auto flex w-full max-w-full items-center justify-center gap-1 rounded-md px-1 py-0.5 text-gray-600 hover:bg-white/80 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40" data-action="click->ip-table-sort#sort" data-ip-table-sort-column-param="short">
+          <span><%= t("hostname") %></span>
+          <span data-sort-marker class="min-w-[1ch] font-normal text-indigo-600 normal-case" aria-hidden="true"></span>
+        </button>
+      <% else %>
+        <%= t("hostname") %>
+      <% end %>
+    </th>
+    <th scope="col" class="w-[10%] px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600">
+      <% if sortable %>
+        <button type="button" class="mx-auto flex w-full max-w-full items-center justify-center gap-1 rounded-md px-1 py-0.5 text-gray-600 hover:bg-white/80 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40" data-action="click->ip-table-sort#sort" data-ip-table-sort-column-param="extras">
+          <span><%= t("extras_ips") %></span>
+          <span data-sort-marker class="min-w-[1ch] font-normal text-indigo-600 normal-case" aria-hidden="true"></span>
+        </button>
+      <% else %>
+        <%= t("extras_ips") %>
+      <% end %>
+    </th>
+    <th scope="col" class="w-[10%] px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600">
+      <% if sortable %>
+        <button type="button" class="mx-auto flex w-full max-w-full items-center justify-center gap-1 rounded-md px-1 py-0.5 text-gray-600 hover:bg-white/80 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40" data-action="click->ip-table-sort#sort" data-ip-table-sort-column-param="notes">
+          <span><%= t("notes") %></span>
+          <span data-sort-marker class="min-w-[1ch] font-normal text-indigo-600 normal-case" aria-hidden="true"></span>
+        </button>
+      <% else %>
+        <%= t("notes") %>
+      <% end %>
+    </th>
+    <th scope="col" class="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600">&nbsp;</th>
+  </tr>
+</thead>

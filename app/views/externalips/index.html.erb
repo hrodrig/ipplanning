@@ -16,14 +16,34 @@
   <% if @externalips.present? %>
     <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
       <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
+        <table class="min-w-full divide-y divide-gray-200" data-controller="ip-table-sort">
           <thead class="bg-gradient-to-b from-gray-50 to-gray-100/80">
             <tr>
               <th scope="col" class="w-14 px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600">#</th>
-              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("ip") %></th>
-              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("hostname") %></th>
-              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("short_hostname") %></th>
-              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("notes") %></th>
+              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+                <button type="button" class="flex w-full max-w-full items-center justify-start gap-1 rounded-md px-1 py-0.5 text-gray-600 hover:bg-white/80 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40" data-action="click->ip-table-sort#sort" data-ip-table-sort-column-param="ip">
+                  <span><%= t("ip") %></span>
+                  <span data-sort-marker class="min-w-[1ch] font-normal text-indigo-600 normal-case" aria-hidden="true"></span>
+                </button>
+              </th>
+              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+                <button type="button" class="flex w-full max-w-full items-center justify-start gap-1 rounded-md px-1 py-0.5 text-gray-600 hover:bg-white/80 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40" data-action="click->ip-table-sort#sort" data-ip-table-sort-column-param="complete">
+                  <span><%= t("hostname") %></span>
+                  <span data-sort-marker class="min-w-[1ch] font-normal text-indigo-600 normal-case" aria-hidden="true"></span>
+                </button>
+              </th>
+              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+                <button type="button" class="flex w-full max-w-full items-center justify-start gap-1 rounded-md px-1 py-0.5 text-gray-600 hover:bg-white/80 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40" data-action="click->ip-table-sort#sort" data-ip-table-sort-column-param="short">
+                  <span><%= t("short_hostname") %></span>
+                  <span data-sort-marker class="min-w-[1ch] font-normal text-indigo-600 normal-case" aria-hidden="true"></span>
+                </button>
+              </th>
+              <th scope="col" class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+                <button type="button" class="flex w-full max-w-full items-center justify-start gap-1 rounded-md px-1 py-0.5 text-gray-600 hover:bg-white/80 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40" data-action="click->ip-table-sort#sort" data-ip-table-sort-column-param="notes">
+                  <span><%= t("notes") %></span>
+                  <span data-sort-marker class="min-w-[1ch] font-normal text-indigo-600 normal-case" aria-hidden="true"></span>
+                </button>
+              </th>
               <th scope="col" class="px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-600"><%= t("include_in_etc_hosts") %></th>
               <th scope="col" class="relative px-5 py-3.5 text-right text-xs font-semibold uppercase tracking-wider text-gray-600">
                 <span class="sr-only"><%= t("edit") %></span>
@@ -32,8 +52,11 @@
           </thead>
           <tbody class="divide-y divide-gray-100 bg-white">
             <% @externalips.each_with_index do |externalip, idx| %>
-              <tr class="transition-colors hover:bg-gray-50/90">
-                <td class="whitespace-nowrap px-5 py-4 text-center text-sm font-mono text-gray-500"><%= idx + 1 %></td>
+              <% sc = ERB::Util.html_escape(externalip.hostname.to_s.downcase.strip) %>
+              <% ss = ERB::Util.html_escape(externalip.short_hostname.to_s.downcase.strip) %>
+              <% sn = ERB::Util.html_escape(externalip.notes.to_s.downcase.strip) %>
+              <tr class="transition-colors hover:bg-gray-50/90" data-sort-ip="<%= externalip.ipv4_sort_integer %>" data-sort-complete="<%= sc %>" data-sort-short="<%= ss %>" data-sort-notes="<%= sn %>">
+                <td class="js-row-index whitespace-nowrap px-5 py-4 text-center text-sm font-mono text-gray-500"><%= idx + 1 %></td>
                 <td class="whitespace-nowrap px-5 py-4 text-sm font-mono font-medium text-gray-900"><%= externalip.address %></td>
                 <td class="whitespace-nowrap px-5 py-4 text-sm text-gray-600"><%= externalip.hostname %></td>
                 <td class="whitespace-nowrap px-5 py-4 text-sm text-gray-600"><%= externalip.short_hostname %></td>

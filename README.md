@@ -56,8 +56,9 @@ The **version badge** above tracks the [`VERSION`](VERSION) file; keep them in s
 4. [Installation & Setup](#-installation--setup)
 5. [User Management](#-user-management)
 6. [Basic Configuration](#-basic-configuration)
-7. [Contributing](#-contributing) · [CONTRIBUTING.md](CONTRIBUTING.md)
-8. [License](#-license)
+7. [Demo sandbox reset](#-demo-sandbox-reset)
+8. [Contributing](#-contributing) · [CONTRIBUTING.md](CONTRIBUTING.md)
+9. [License](#-license)
 
 ---
 
@@ -171,6 +172,37 @@ Once logged in, navigate to the **Settings** section to configure:
 - **Brand & Website Name:** Customize the app's appearance.
 - **Domain Name:** Define your default internal domain.
 - **Auth Requirements:** Enable or disable additional HTTP Basic Auth for specific endpoints.
+
+[↑ Back to Top](#-table-of-contents)
+
+---
+
+## 🧪 Demo sandbox reset
+
+For a **public demo** or QA host where visitors may change data, you can wipe and reload a **fixed dataset** (VLANs with many IPs, hosts, external IPs, settings, and a known admin).
+
+| Task | Command |
+| :--- | :--- |
+| Full reset (purge + populate) | `bin/rails demo:reset` |
+| Purge only | `bin/rails demo:purge` |
+| Populate only (after a manual purge) | `bin/rails demo:populate` |
+
+**Safety:** Outside `development` / `test`, tasks refuse to run unless **`DEMO_RESET_ALLOWED=1`** is set in the environment. This avoids wiping a real production database by mistake.
+
+**Default admin (override with env):**
+
+| Variable | Default |
+| :--- | :--- |
+| `DEMO_ADMIN_EMAIL` | `demo-admin@demo.ipplanning.local` |
+| `DEMO_ADMIN_PASSWORD` | `demo-demo-demo` |
+
+**Scheduled reset (every 2 hours)** on the demo server, using your app path and deploy user:
+
+```bash
+0 */2 * * * cd /path/to/ipplanning && DEMO_RESET_ALLOWED=1 RAILS_ENV=production /path/to/bundle exec rails demo:reset >> log/demo-reset.log 2>&1
+```
+
+The dataset is defined in `lib/demo/populator.rb` (three VLANs including a `/24` for chunked IP lists, multi-homed host, reserved IP, alias, external IPs). Adjust there if you need different scenarios.
 
 [↑ Back to Top](#-table-of-contents)
 

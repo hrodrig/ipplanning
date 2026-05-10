@@ -7,3 +7,11 @@ details.admin-section-intro > summary .admin-section-intro-chevron {
 details.admin-section-intro[open] > summary .admin-section-intro-chevron {
   transform: rotate(180deg);
 }
+
+/* IP index: collapsible address blocks */
+details.ip-index-chunk > summary .ip-index-chunk-chevron {
+  transition: transform 200ms ease-out;
+}
+details.ip-index-chunk[open] > summary .ip-index-chunk-chevron {
+  transform: rotate(180deg);
+}
