@@ -23,6 +23,7 @@
 !SPECIFICATIONS.md
 !CODE_OF_CONDUCT.md
 !CONTRIBUTING.md
+!CHANGELOG.md
 !config.ru
 !package.json
 !VERSION
@@ -58,6 +59,7 @@
 !/tmp/.keep
 
 # --- Narrow re-ignore inside trees above (must stay after the !/…/** rules) ---
+**/.DS_Store
 /app/assets/builds/*
 !/app/assets/builds/.keep
 /db/*.sqlite3

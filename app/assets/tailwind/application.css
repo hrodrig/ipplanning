@@ -1,4 +1,178 @@
+@custom-variant dark (&:where(.dark, .dark *));
+
 @import "tailwindcss";
+
+/*
+ * Dark mode (class on <html>): content area + footer. Navbar stays dark in both modes.
+ * Broad selectors keep legacy views readable without editing every partial (MVP).
+ */
+.dark main {
+  color: rgb(243 244 246);
+}
+
+.dark main .bg-white {
+  background-color: rgb(17 24 39);
+}
+
+.dark main .bg-white\/95 {
+  background-color: rgb(17 24 39 / 0.95);
+}
+
+.dark main .border-gray-100,
+.dark main .border-gray-200 {
+  border-color: rgb(55 65 81);
+}
+
+.dark main .ring-gray-200 {
+  --tw-ring-color: rgb(55 65 81);
+}
+
+.dark main .ring-gray-300 {
+  --tw-ring-color: rgb(75 85 99);
+}
+
+.dark main .text-gray-900 {
+  color: rgb(243 244 246);
+}
+
+.dark main .text-gray-800 {
+  color: rgb(229 231 235);
+}
+
+.dark main .text-gray-700 {
+  color: rgb(209 213 219);
+}
+
+.dark main .text-gray-600 {
+  color: rgb(156 163 175);
+}
+
+.dark main .text-gray-500 {
+  color: rgb(156 163 175);
+}
+
+.dark main .text-gray-400 {
+  color: rgb(148 163 184);
+}
+
+.dark main .bg-gray-50 {
+  background-color: rgb(31 41 55 / 0.85);
+}
+
+.dark main .bg-gray-100 {
+  background-color: rgb(31 41 55 / 0.55);
+}
+
+.dark main .from-gray-50 {
+  --tw-gradient-from: rgb(31 41 55) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(17 24 39 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.dark main .to-gray-100\/80 {
+  --tw-gradient-to: rgb(17 24 39 / 0.85) var(--tw-gradient-to-position);
+}
+
+.dark main .divide-gray-100,
+.dark main .divide-gray-200 {
+  border-color: rgb(55 65 81);
+}
+
+.dark main .divide-y.divide-gray-100 > :not([hidden]) ~ :not([hidden]),
+.dark main .divide-y.divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
+  border-top-color: rgb(55 65 81);
+}
+
+.dark main a.text-indigo-600,
+.dark main .text-indigo-600 {
+  color: rgb(129 140 248);
+}
+
+.dark main a.text-indigo-700 {
+  color: rgb(165 180 252);
+}
+
+.dark main input[type="text"],
+.dark main input[type="email"],
+.dark main input[type="password"],
+.dark main input[type="number"],
+.dark main input[type="url"],
+.dark main input[type="search"],
+.dark main input[type="tel"],
+.dark main input[type="date"],
+.dark main textarea,
+.dark main select {
+  background-color: rgb(31 41 55);
+  border-color: rgb(75 85 99);
+  color: rgb(243 244 246);
+}
+
+.dark main input::placeholder,
+.dark main textarea::placeholder {
+  color: rgb(107 114 128);
+}
+
+.dark main .shadow-sm {
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.35);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+/* Login card: lighter panel in dark mode (overrides generic .bg-white/95 → gray-900) */
+.dark main .login-form-card {
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.35);
+}
+
+.dark main .bg-red-50\/80 {
+  background-color: rgb(127 29 29 / 0.35);
+}
+
+.dark main .bg-yellow-50 {
+  background-color: rgb(113 63 18 / 0.35);
+}
+
+.dark main .bg-emerald-50 {
+  background-color: rgb(6 78 59 / 0.35);
+}
+
+.dark main .bg-blue-50 {
+  background-color: rgb(30 64 175 / 0.35);
+}
+
+.dark main .border-blue-100 {
+  border-color: rgb(59 130 246 / 0.45);
+}
+
+.dark main .text-blue-800 {
+  color: rgb(191 219 254);
+}
+
+.dark main .bg-red-50 {
+  background-color: rgb(127 29 29 / 0.4);
+}
+
+.dark main .border-red-200 {
+  border-color: rgb(248 113 113 / 0.35);
+}
+
+.dark main .text-red-900 {
+  color: rgb(254 202 202);
+}
+
+/* Devise sign-in: zoomed + blurred network hardware photo (see devise/sessions/new) */
+.login-backdrop-layer {
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.08);
+  filter: blur(10px) brightness(1.12) saturate(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-backdrop-layer {
+    transform: none;
+    filter: blur(6px) brightness(1.08);
+  }
+}
 
 /* Admin “section intro” accordion: rotate chevron when <details> is open */
 details.admin-section-intro > summary .admin-section-intro-chevron {

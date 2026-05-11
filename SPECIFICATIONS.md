@@ -1,6 +1,6 @@
 # IPPLANNING Specifications
 
-**Document version:** aligned with app release **0.9.0** (see [`VERSION`](VERSION)).
+**Document version:** aligned with app release **0.9.2** (see [`VERSION`](VERSION)).
 
 ## 1. Overview
 IPPLANNING is a web-based IP Address Management (IPAM) application designed for network administrators to manage VLANs, IP allocations, and Host assignments. It also supports **physical inventory** cues such as **locations**, **server racks**, and **network switches** (with per-switch ports) for operators who want rack context without modeling switches as hosts. A key unique feature is its ability to generate synchronized `/etc/hosts` files, which is particularly valuable in environments where high-frequency name resolution is required and DNS latency or implementation is a concern (e.g., SAP, Oracle clusters).
@@ -154,6 +154,11 @@ Authenticated **IPs** index and **home** (`welcome#index`) expose a **search** f
 - **Delete IP from VLAN table:** VLAN show lists IPs with a compact **delete** control (`DELETE /ips/:id` with query `from_vlan=<vlan_id>`). When `from_vlan` matches the IP’s VLAN, the controller redirects back to **`vlan_path(vlan)`** and **does not** use a browser confirm dialog; a visible **responsibility notice** (`vlan_ip_delete_responsibility_notice`) explains that deletion is immediate. Other surfaces (e.g. IPs index row partial) keep **`turbo_confirm`** on destroy.
 - **Default gateway flag:** `Ip#is_default_gateway` (boolean, default false). At most one IP per VLAN should be marked: when an IP is saved with `is_default_gateway: true`, other IPs on that VLAN are cleared and **`Vlan#gateway`** is updated to that IP’s `address`. **Row highlight** (gateway styling) uses `Ip#default_gateway_row?(vlan)` — true if the flag is set **or** the legacy condition `address == vlan.gateway` matches (covers older data and manual VLAN edits). The IP edit form and VLAN “add IP” form expose the checkbox; `searchable_text` includes a `defaultgateway` token when the flag is set for client-side filtering.
 
+### 3.12 Theme & sign-in presentation (0.9.2)
+- **Light / dark:** User preference stored in **`localStorage`** (`ipplanning-theme`: `light` | `dark`). If unset, **`prefers-color-scheme: dark`** applies until the user toggles. A short inline script in the layout sets the **`dark` class on `<html>`** before paint to reduce flash. **Stimulus** `theme_controller` toggles the class and syncs moon/sun controls (desktop + mobile). Tailwind v4 uses **`@custom-variant dark`** (class strategy) in `application.css`.
+- **Main chrome:** The **top navbar** stays the same dark bar in both themes for minimal churn; **`main`** and **footer** switch background and text; **`.dark main`** rules map common utility patterns (white cards, gray text, borders, alerts, inputs) so legacy views gain readable dark surfaces without per-view `dark:` everywhere. **Platform settings** dropdown uses explicit `dark:` link styles.
+- **Sign-in (`devise/sessions/new`):** Full-viewport **blurred, slightly brightened** photo backdrop (`login-backdrop-layer`); lighter gradient veil and **login card** (`login-form-card`, `dark:!bg-slate-700/92`) for contrast in dark mode. **Visible Unsplash attribution** (author + photo links with referral parameters), localized EN/ES. README ships **screenshots** under `app/assets/images/` (`ipplanning-login.png`, `ipplanning-ips.png`).
+
 ---
 
 ## 4. Technical Workflows
@@ -193,6 +198,7 @@ sequenceDiagram
 
 ## 5. UI/UX Standards
 - **Framework:** Tailwind CSS v4.
+- **Theme:** Optional **dark mode** for the signed-in layout and sign-in page (§3.12); navbar remains dark in both modes in this release.
 - **Responsiveness:** Mobile-first design with a responsive sidebar/navbar.
 - **Interactivity:** Hotwire (Turbo & Stimulus) for seamless page transitions without full reloads.
 - **Feedback:** Standardized Tailwind-styled alerts for notices and errors.

@@ -50,32 +50,32 @@ class IpTest < ActiveSupport::TestCase
   test "short_hostname for reserved ip uses dashed address" do
     ip = Ip.create!(
       vlan: vlans(:one),
-      address: "10.0.0.7",
+      address: "192.168.10.7",
       is_reserved: true,
       include_in_etc_hosts: true,
       use_vlan_descriptor: true,
       use_domain_name: false
     )
-    assert_equal "reserved-10-0-0-7", ip.short_hostname
+    assert_equal "reserved-192-168-10-7", ip.short_hostname
   end
 
   test "long_hostname for reserved includes vlan descriptor and domain when enabled" do
     ip = Ip.create!(
       vlan: vlans(:one),
-      address: "10.10.10.5",
+      address: "192.168.10.5",
       is_reserved: true,
       include_in_etc_hosts: true,
       use_vlan_descriptor: true,
       use_domain_name: true
     )
-    expected = "#{I18n.t('reserved').downcase}-10-10-10-5-mgmt.#{AppSettings.domain_name}"
+    expected = "#{I18n.t('reserved').downcase}-192-168-10-5-mgmt.#{AppSettings.domain_name}"
     assert_equal expected, ip.long_hostname
   end
 
   test "hostname hostname_with_descriptor and text_hostname use reserved label" do
     ip = Ip.create!(
       vlan: vlans(:one),
-      address: "10.0.0.8",
+      address: "192.168.10.8",
       is_reserved: true,
       include_in_etc_hosts: true,
       use_vlan_descriptor: false,
@@ -89,7 +89,7 @@ class IpTest < ActiveSupport::TestCase
   test "ip with host and no alias uses host name and vlan descriptor in short_hostname" do
     ip = Ip.create!(
       vlan: vlans(:one),
-      address: "10.0.0.30",
+      address: "192.168.10.30",
       hostname_alias: nil,
       complete_hostname_alias: nil,
       include_in_etc_hosts: true,
@@ -106,7 +106,7 @@ class IpTest < ActiveSupport::TestCase
   test "hostname_with_descriptor returns long_hostname when hostname_alias without host" do
     ip = Ip.create!(
       vlan: vlans(:one),
-      address: "10.0.0.40",
+      address: "192.168.10.40",
       hostname_alias: "svc-alias",
       complete_hostname_alias: "svc-alias.#{AppSettings.domain_name}",
       include_in_etc_hosts: true,
@@ -133,7 +133,7 @@ class IpTest < ActiveSupport::TestCase
     )
     short = Ip.create!(
       vlan: vlans(:one),
-      address: "10.0.0.50",
+      address: "192.168.10.100",
       hostname_alias: nil,
       complete_hostname_alias: nil,
       include_in_etc_hosts: true,

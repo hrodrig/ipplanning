@@ -1,10 +1,10 @@
 # IPPLANNING: IP Address Management System (IPAM)
 
 <p align="center">
-  <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80" alt="IPPLANNING Hero Image" width="100%" style="border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+  <img src="app/assets/images/ipplanning-login.png" alt="IPPLANNING sign-in" width="100%" style="border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
 </p>
 
-[![Version](https://img.shields.io/badge/version-0.9.0-blue.svg)](https://github.com/hrodrig/ipplanning/releases)
+[![Version](https://img.shields.io/badge/version-0.9.2-blue.svg)](https://github.com/hrodrig/ipplanning/releases)
 [![Release](https://img.shields.io/github/v/release/hrodrig/ipplanning?sort=semver)](https://github.com/hrodrig/ipplanning/releases)
 [![License](https://img.shields.io/github/license/hrodrig/ipplanning)](https://github.com/hrodrig/ipplanning/blob/main/LICENSE)
 ![Rails Version](https://img.shields.io/badge/Rails-8.0-red)
@@ -46,6 +46,8 @@ Use **Ruby 3.3.0** (see [`.ruby-version`](.ruby-version)) and MySQL. For RVM gem
 
 The **version badge** above tracks the [`VERSION`](VERSION) file; keep them in sync when you cut a release.
 
+**0.9.2** polishes **presentation**: **light / dark theme** (toggle in the nav, `localStorage` key `ipplanning-theme`, optional system preference), Tailwind **class-based** `dark` variant, and broad **main-area** styling for dark mode. **Sign-in** uses a blurred **network hardware** background (bundled asset; Unsplash attribution on the page), tuned overlay and card contrast, and **README** screenshots (`ipplanning-login.png`, `ipplanning-ips.png`) replacing the old hero image. See [SPECIFICATIONS.md](SPECIFICATIONS.md) §3.12 and §5.
+
 **0.9.0** improves **VLAN ↔ IP workflows**: add a **single IP** to a VLAN (CIDR validation), **horizontal VLAN picker** on VLAN show, **delete IP** from that table without a confirm dialog (with an explicit responsibility notice), and **`is_default_gateway`** on IPs (one per VLAN; updates the VLAN `gateway` field and keeps gateway row highlighting in sync). Shared UI strings include **`save` / `cancel`** for forms. See [SPECIFICATIONS.md](SPECIFICATIONS.md) §3.1 and §3.11.
 
 **0.8.10** introduced **network switches** as first-class inventory (not hosts): admin CRUD, optional rack placement, `SwitchPort` labels with batch creation on save, optional **port name pattern** (e.g. `Gi1/0/1` → auto-incrementing suffix), and natural **display order** for port lists. The **rack U diagram** shows switches (indigo) alongside rack-mount hosts (green), with `highlight_network_switch_id` on the rack URL. See [SPECIFICATIONS.md](SPECIFICATIONS.md) §3.9–3.10.
@@ -76,6 +78,11 @@ The **version badge** above tracks the [`VERSION`](VERSION) file; keep them in s
 - **External IP Tracking:** Manage public or external IPs associated with your internal hosts.
 - **Rack visualization:** Vertical **U** layout with hosts and **network switches**, occupancy colors, and deep links that focus a chosen device.
 - **Network switches:** Track switch hardware, ports, firmware, and rack position separately from hosts (Platform settings → Network switches).
+
+<p align="center">
+  <img src="app/assets/images/ipplanning-ips.png" alt="IPPLANNING — IP list by VLAN with search and collapsible ranges" width="100%" style="border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+</p>
+<p align="center"><em>Admin IP overview: client-side search, VLAN sections, and collapsible address blocks for large subnets.</em></p>
 
 [↑ Back to Top](#-table-of-contents)
 

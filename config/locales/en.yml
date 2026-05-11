@@ -307,6 +307,11 @@ en:
   email: Email
   password: Password
   sign_in_to_ipplanning: Sign in to IPPLANNING
+  theme_use_dark: Switch to dark theme
+  theme_use_light: Switch to light theme
+  theme_menu_label: Theme
+  photo_attribution_login_before_author: "Photo by"
+  photo_attribution_login_connector: " on "
   editing_environment: Editing Environment
   editing_external_ip: Editing External IP
   editing_host_type: Editing Host Type

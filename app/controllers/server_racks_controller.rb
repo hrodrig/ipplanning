@@ -72,13 +72,12 @@ class ServerRacksController < ApplicationController
         format.json { head :no_content }
       end
     else
-      msg = @server_rack.errors.full_messages.to_sentence.presence
-      msg ||= if host_count.positive?
+      msg = if host_count.positive?
         t("server_rack_destroy_blocked_hosts", name: rack_name, count: host_count)
       elsif switch_count.positive?
         t("server_rack_destroy_blocked_network_switches", name: rack_name, count: switch_count)
       else
-        t("server_rack_cannot_be_destroyed", name: rack_name)
+        @server_rack.errors.full_messages.to_sentence.presence || t("server_rack_cannot_be_destroyed", name: rack_name)
       end
       respond_to do |format|
         format.html { redirect_to server_racks_url, alert: msg }

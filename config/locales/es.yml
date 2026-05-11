@@ -311,6 +311,11 @@ es:
   email: Correo electrónico
   password: Contraseña
   sign_in_to_ipplanning: Entrar en IPPLANNING
+  theme_use_dark: Cambiar a tema oscuro
+  theme_use_light: Cambiar a tema claro
+  theme_menu_label: Tema
+  photo_attribution_login_before_author: "Foto de"
+  photo_attribution_login_connector: " en "
   editing_environment: Editando ambiente
   editing_external_ip: Editando ip externa
   editing_host_type: Editando tipo de host

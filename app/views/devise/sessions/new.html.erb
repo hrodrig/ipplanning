@@ -1,34 +1,56 @@
-<div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+<%# Background: Unsplash — T-IN5o3kxyA — Lightsaber Collection (attribution below, Unsplash License) %>
+<%
+  unsplash_author = "https://unsplash.com/es/@lightsabercollection?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+  unsplash_photo = "https://unsplash.com/es/fotos/un-monton-de-cables-que-estan-conectados-a-un-servidor-T-IN5o3kxyA?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+  if I18n.locale != :es
+    unsplash_author = "https://unsplash.com/@lightsabercollection?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+    unsplash_photo = "https://unsplash.com/photos/a-bunch-of-wires-that-are-connected-to-a-server-T-IN5o3kxyA?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+  end
+%>
+<div class="relative isolate flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
+    <div
+      class="login-backdrop-layer absolute -inset-[10%] min-h-[120%] min-w-[120%]"
+      style="background-image: url('<%= image_path("login-network-bg.jpg") %>');"
+    ></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-slate-900/38 via-slate-800/28 to-slate-900/42 dark:from-slate-900/48 dark:via-slate-800/38 dark:to-slate-900/52"></div>
+  </div>
+
   <div class="sm:mx-auto sm:w-full sm:max-w-md">
-    <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900"><%= t('sign_in_to_ipplanning') %></h2>
+    <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-white drop-shadow-[0_1px_2px_rgb(0_0_0/0.5)]"><%= t('sign_in_to_ipplanning') %></h2>
   </div>
 
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+    <div class="login-form-card bg-white/95 py-8 px-4 shadow-xl ring-1 ring-white/20 backdrop-blur-sm dark:!bg-slate-700/92 dark:!ring-slate-400/25 sm:rounded-lg sm:px-10">
       <%= render "common/admin_flash" %>
       <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-6" }) do |f| %>
         <div>
-          <%= f.label :email, t('email'), class: "block text-sm font-medium text-gray-700" %>
+          <%= f.label :email, t('email'), class: "block text-sm font-medium text-gray-700 dark:text-gray-200" %>
           <div class="mt-1">
-            <%= f.email_field :email, autofocus: true, class: "block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" %>
+            <%= f.email_field :email, autofocus: true, class: "block w-full appearance-none rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm dark:border-slate-500 dark:bg-slate-600/90 dark:text-gray-50 dark:placeholder-slate-300" %>
           </div>
         </div>
 
         <div>
-          <%= f.label :password, t('password'), class: "block text-sm font-medium text-gray-700" %>
+          <%= f.label :password, t('password'), class: "block text-sm font-medium text-gray-700 dark:text-gray-200" %>
           <div class="mt-1">
-            <%= f.password_field :password, autocomplete: "off", class: "block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" %>
+            <%= f.password_field :password, autocomplete: "off", class: "block w-full appearance-none rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm dark:border-slate-500 dark:bg-slate-600/90 dark:text-gray-50 dark:placeholder-slate-300" %>
           </div>
         </div>
 
         <div>
-          <%= f.submit t('new_sesion'), class: "flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer" %>
+          <%= f.submit t('new_sesion'), class: "flex w-full cursor-pointer justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-700" %>
         </div>
       <% end %>
 
-      <div class="mt-6">
+      <div class="mt-6 dark:text-slate-200 [&_a]:font-medium [&_a]:text-indigo-200 [&_a]:underline [&_a]:hover:text-white">
         <%= render "devise/shared/links" %>
       </div>
     </div>
+
+    <p class="mt-6 px-4 text-center text-xs leading-relaxed text-white/90 drop-shadow-[0_1px_3px_rgb(0_0_0/0.45)]">
+      <%= t("photo_attribution_login_before_author") %>
+      <%= link_to "Lightsaber Collection", unsplash_author, class: "font-medium text-white underline decoration-white/50 underline-offset-2 hover:decoration-white", target: "_blank", rel: "noopener noreferrer" %><%= t("photo_attribution_login_connector") %><%= link_to "Unsplash", unsplash_photo, class: "font-medium text-white underline decoration-white/50 underline-offset-2 hover:decoration-white", target: "_blank", rel: "noopener noreferrer" %>
+    </p>
   </div>
 </div>
