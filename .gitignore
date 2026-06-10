@@ -28,6 +28,16 @@
 !package.json
 !VERSION
 
+# --- Docker ---
+!Dockerfile
+!.dockerignore
+!Makefile
+!docker-compose.yml
+
+# --- GitHub Actions ---
+!.github/
+!.github/**/*
+
 # --- Rails trees (entire contents) ---
 !/app/
 !/app/**/*

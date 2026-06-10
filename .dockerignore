@@ -1,0 +1,12 @@
+.git
+.github
+log/*
+tmp/*
+*.log
+coverage
+.byebug_history
+node_modules
+.env
+.env.*
+!.env.example
+.make-mysql-test.env

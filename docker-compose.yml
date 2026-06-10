@@ -1,0 +1,43 @@
+# Local stack: MySQL + app. First run: docker compose run --rm web bin/rails db:prepare
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ipplanning_production
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  web:
+    build:
+      context: .
+      args:
+        VERSION: local
+        GIT_SHA: local
+        BUILDDATE: local
+    image: ipplanning:local
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: production
+      RAILS_FORCE_SSL: "false"
+      SECRET_KEY_BASE: change_me_use_a_long_random_secret
+      IPPLANNING_DATABASE_HOST: db
+      IPPLANNING_DATABASE_USER: user
+      IPPLANNING_DATABASE_PASSWORD: password
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  mysql_data:

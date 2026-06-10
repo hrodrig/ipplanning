@@ -17,32 +17,17 @@ IPPLANNING is a powerful, lightweight, and modern IP Address Management (IPAM) s
 
 ## ⚡ Quickstart (The 60-Second Setup)
 
-Use **Ruby 3.3.0** (see [`.ruby-version`](.ruby-version)) and MySQL. For RVM gemset and Bundler, follow [Installation & Setup](#-installation--setup) first; then:
+**This repository** ([`hrodrig/ipplanning`](https://github.com/hrodrig/ipplanning)) is the **product**: the Rails application, tests, and contributor-focused tooling (Makefile, Docker image build, CI, and so on).
 
-1. **Clone & install:**
-   ```bash
-   git clone https://github.com/hrodrig/ipplanning.git && cd ipplanning
-   bundle install
-   ```
+**How to run your own instance** is documented in depth in **[ipplanning-selfhosted](https://github.com/hrodrig/ipplanning-selfhosted)**—**Docker Compose** (MySQL + app), **`docker run`** with your own MySQL, **Kubernetes (Helm chart `ipplanning`)**, and pointers for **standalone** (Ruby + MySQL)—with step-by-step install and operations-oriented notes. Use **ipplanning-selfhosted** when you deploy; use this repo when you develop or package the app.
 
-2. **Configure database:**
-   Update `config/database.yml` with your MySQL credentials. If you want to use the defaults, run this in your MySQL console:
-   ```sql
-   CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';
-   CREATE DATABASE ipplanning_development;
-   CREATE DATABASE ipplanning_test;
-   GRANT ALL PRIVILEGES ON ipplanning_development.* TO 'user'@'localhost';
-   GRANT ALL PRIVILEGES ON ipplanning_test.* TO 'user'@'localhost';
-   FLUSH PRIVILEGES;
-   ```
+### Local development (from this repo)
 
-3. **Initialize and run:**
-   ```bash
-   bin/rails db:prepare
-   bin/rails app:setup
-   bin/dev
-   ```
-   Log in at `http://localhost:3000` after creating an admin in the console (see [User Management](#-user-management)).
+For a minimal **developer** setup you still need **Ruby 3.3.0** (see [`.ruby-version`](.ruby-version)) and **MySQL**. Full RVM/gemset and database steps are in [Installation & Setup](#-installation--setup); the short path is:
+
+1. **Clone & install:** `git clone https://github.com/hrodrig/ipplanning.git && cd ipplanning` then `bundle install`.
+2. **Database:** configure `config/database.yml` (or use the default `user` / `password` and create the dev/test databases in MySQL—SQL examples are in [Installation & Setup](#-installation--setup)).
+3. **Run:** `bin/rails db:prepare`, `bin/rails app:setup`, then `bin/dev`. Create an admin in the Rails console (see [User Management](#-user-management)) and open `http://localhost:3000`.
 
 The **version badge** above tracks the [`VERSION`](VERSION) file; keep them in sync when you cut a release.
 
@@ -59,12 +44,13 @@ The **version badge** above tracks the [`VERSION`](VERSION) file; keep them in s
 1. [Key Features](#-key-features)
 2. [Why IPPLANNING?](#-why-ipplanning)
 3. [Tech Stack](#-tech-stack)
-4. [Installation & Setup](#-installation--setup)
-5. [User Management](#-user-management)
-6. [Basic Configuration](#-basic-configuration)
-7. [Demo sandbox reset](#-demo-sandbox-reset)
-8. [Contributing](#-contributing) · [CONTRIBUTING.md](CONTRIBUTING.md)
-9. [License](#-license)
+4. [Installation & Setup](#-installation--setup) (development from this repo)
+5. [Self-hosted installs (Compose, Docker, Helm, standalone)](https://github.com/hrodrig/ipplanning-selfhosted)
+6. [User Management](#-user-management)
+7. [Basic Configuration](#-basic-configuration)
+8. [Demo sandbox reset](#-demo-sandbox-reset)
+9. [Contributing](#-contributing) · [CONTRIBUTING.md](CONTRIBUTING.md)
+10. [License](#-license)
 
 ---
 
@@ -112,6 +98,8 @@ IPPLANNING simplifies this by providing a single source of truth for your networ
 ---
 
 ## 📥 Installation & Setup
+
+For **production-style** or **shared** deployments—**Docker Compose**, **`docker run`**, **Kubernetes (Helm)**, or **standalone** Ruby—follow **[ipplanning-selfhosted](https://github.com/hrodrig/ipplanning-selfhosted)**. The instructions below are for **local development** from a clone of this repository.
 
 ### Prerequisites
 

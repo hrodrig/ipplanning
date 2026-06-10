@@ -15,7 +15,8 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: user
   password: password
-  host: localhost
+  host: <%= ENV["IPPLANNING_DB_HOST"].presence || "localhost" %>
+  port: <%= (ENV["IPPLANNING_DB_PORT"].presence || 3306).to_i %>
 
 development:
   <<: *default
@@ -50,6 +51,7 @@ test:
 production:
   <<: *default
   host: <%= ENV['IPPLANNING_DATABASE_HOST'] %>
+  port: <%= (ENV['IPPLANNING_DATABASE_PORT'].presence || 3306).to_i %>
   database: ipplanning_production
   username: <%= ENV['IPPLANNING_DATABASE_USER'] %>
   password: <%= ENV['IPPLANNING_DATABASE_PASSWORD'] %>
