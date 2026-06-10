@@ -33,6 +33,10 @@ jobs:
     env:
       RAILS_ENV: test
       CI: "true"
+      # Force TCP to the MySQL service: with host: localhost mysql2 falls
+      # back to the UNIX socket, which the GH Actions service does not expose.
+      IPPLANNING_DB_HOST: 127.0.0.1
+      IPPLANNING_DB_PORT: "3306"
 
     steps:
       - uses: actions/checkout@v4
